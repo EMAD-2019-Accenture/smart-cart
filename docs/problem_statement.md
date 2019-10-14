@@ -6,15 +6,15 @@ La grande distribuzione rappresenta il principale mezzo di vendita al dettaglio 
 
 Ciò nonostante, la grande distribuzione viene sempre vista come un'entità lontana dai clienti e dai loro bisogni, ed interessata unicamente al profitto.
 
-Bisogna, inoltre, tenere in conto la forte concorrenza da parte di altre catene, che, soprattutto in alcuni territori, sono portate a gareggiare per offrire l'offerta più vantaggiosa per il cliente. Non solo, ma gli anni recenti hanno visto anche l'ingresso nel mercato del settore del commercio elettronico (e-commerce), che, con ottimi risultati, riesce a mettere insieme tutti i vantaggi della grande distribuzione (alta disponbilità dei prodotti, alta qualità del servizio clienti e prezzi vantaggiosi) con la comodità dell'acquisto direttamente da casa. La domanda sugli e-commerce è salita così tanto che sono nati dei servizi premium che danno la possibilità di poter ricevere a casa un ordine il giorno seguente alla conferma, se non addirittura il giorno stesso.
+Bisogna, inoltre, tenere in conto la forte concorrenza da parte di altre catene, che, soprattutto in alcuni territori, sono portate a gareggiare per offrire l'offerta più vantaggiosa per il cliente. Inoltre, gli anni recenti hanno visto anche l'ingresso nel mercato del settore del commercio elettronico (e-commerce), che, con ottimi risultati, riesce a mettere insieme tutti i vantaggi della grande distribuzione (alta disponbilità dei prodotti, alta qualità del servizio clienti e prezzi vantaggiosi) con la comodità dell'acquisto direttamente da casa. La domanda sugli e-commerce è salita così tanto che sono nati dei servizi premium che danno la possibilità di poter ricevere a casa un ordine il giorno seguente alla conferma, se non addirittura il giorno stesso.
 
-Una catena di supermercati che vuole stare al passo con i tempi non può ignorare l'esistenza di un mondo costantemente connesso e le grandi disponibilità tecnologiche. Sarebbe d'aiuto un sistea che favorisca la fidelizzazione del cliente, aiutandolo negli acquisti e proponendogli anche prodotti simili a quelli che ha già acquistato in passato o che sta per acquistare.
+Una catena di supermercati che vuole stare al passo con i tempi non può ignorare l'esistenza di un mondo costantemente connesso e le grandi disponibilità tecnologiche. Sarebbe d'aiuto un sistema che favorisca la fidelizzazione del cliente, aiutandolo negli acquisti e proponendogli anche prodotti simili a quelli che ha già acquistato in passato o che sta per acquistare.
 
 ## Sistema proposto
 
-Viene proposta un'app per smartphone a supporto degli acquisti in una singola catena di supermercati. L'app vuole dare la possibilità ai clienti di poter leggere il codice a barre dei prodotti presenti sugli scaffali con il proprio smartphone e di poterne ottenere delle informazioni dettagliate, sia quelle già presenti sull'etichetta (allergenti, valori nutrizionali) che altre aggiuntive, come le valutazioni di altri acquirenti e suggerimenti di acquisto di prodotti correlati.
+Viene proposta un'app per smartphone a supporto degli acquisti in una singola catena di supermercati. L'app vuole dare la possibilità ai clienti di poter leggere il codice a barre dei prodotti presenti sugli scaffali con il proprio smartphone e di poterne ottenere delle informazioni dettagliate, sia quelle già presenti sull'etichetta (allergeni, valori nutrizionali, ecc.), sia altre aggiuntive, come le valutazioni di altri acquirenti e suggerimenti di acquisto di prodotti correlati.
 
-L'app sarà la parte front-end del sistema che si occuperà dell'interazione utente e dell'ottenimento delle richieste dei clienti, mentre il database dei prodotti e l'elaborazione ad esso associato saranno collocati nella parte back-end del sistema, messa in esercizio sulla piattaforma Oracle Cloud.
+Il sistema si compone di un backend, che verrà messo in esercizio su servizi Oracle Cloud, e di un front-end, un'app mobile multipiattaforma (Android, iOS).
 
 ## Scenari
 
@@ -24,7 +24,7 @@ L'app sarà la parte front-end del sistema che si occuperà dell'interazione ute
 **Flusso di Eventi:**
 
 1. Matteo sta facendo la spesa al supermercato ed è particolarmente interessato ad un set di chiavi inglesi. Avendo scaricato l'app del supermercato, decide di scansionare il codice a barre del prodotto per saperne di più e per conoscere le valutazioni degli altri acquirenti.
-2. Una volta scansionato il prodotto, l'app fornisce a matteo varie informazioni(*non so bene quali*), tra cui le valutazioni degli altri aquirenti dello stesso prodotto.
+2. Una volta scansionato il prodotto, l'app fornisce a matteo varie informazioni (marca, materiali, ecc.), tra cui le valutazioni degli altri aquirenti dello stesso prodotto.
 3. Matteo, a questo punto, riceve una notifica dall'app che gli consiglia una cassetta degli attrezzi che in quel momento è in offerta al supermercato.
 4. Matteo, incuriosito, scansiona anche la cassetta degli attrezzi e decide, dopo averne letto le informazioni e le valutazioni, di acquistare anche quest'ultima.
 
@@ -39,12 +39,12 @@ L'app sarà la parte front-end del sistema che si occuperà dell'interazione ute
 
 ## Requisiti Funzionali
 
-- Il sistema deve permettere all'acquirente di recuperare informazioni sui prodotti del supermercato tramite scansione di codice a barre
-- Il sistema deve fornire raccomandazioni su offerte agli acquirenti in base a ciò che hanno precedentemente scansionato
-- Il sistema deve fornire raccomandazioni di prodotti similari a quelli precedentemente scansionati dall'acquirente
-- Il sistema deve inviare raccomandazioni agli acquirenti in base a profili di acquirenti simili
-- Il sistema deve fornire ai gestori del supermercato di gestire i prodotti in vendita e di inserire e modificare le varie informazioni relative ad essi
-- Il sistema deve fornire ai gestori del supermercato la possibilità di inserire offerte a sui prodotti in vendita.
+- Il sistema deve permettere all'acquirente di recuperare informazioni sui prodotti del supermercato tramite scansione di codice a barre.
+- Il sistema deve fornire agli acquirenti raccomandazioni su **offerte** attive al momento della spesa, in base a ciò che hanno scansionato durante la spesa corrente.
+- Il sistema deve fornire raccomandazioni di **prodotti** similari a quelli precedentemente scansionati dall'acquirente.
+- Il sistema deve inviare raccomandazioni agli acquirenti in base a profili di acquirenti simili.
+- Il sistema deve fornire ai gestori del supermercato la possibilità di gestire i prodotti in vendita, e di inserire e modificare le varie informazioni relative ad essi
+- Il sistema deve fornire ai gestori del supermercato la possibilità di gestire offerte sui prodotti in vendita.
 - Il sistema deve fornire agli acquirenti la possibilità di registrarsi e autenticarsi alla piattaforma.
 
 ## Requisiti non funzionali
