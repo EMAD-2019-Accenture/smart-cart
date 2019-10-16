@@ -12,7 +12,8 @@ Una catena di supermercati che vuole stare al passo con i tempi non può ignorar
 
 ### Sistema proposto
 
-Viene proposta un'app per smartphone a supporto degli acquisti in una singola catena di supermercati. L'app vuole dare la possibilità ai clienti di poter leggere il codice a barre dei prodotti presenti sugli scaffali con il proprio smartphone e di poterne ottenere delle informazioni dettagliate, sia quelle già presenti sull'etichetta (allergeni, valori nutrizionali, ecc.), sia altre aggiuntive, come le valutazioni di altri acquirenti e suggerimenti di acquisto di prodotti correlati.
+Viene proposta un'app per smartphone a supporto degli acquisti in una singola catena di supermercati. L'app vuole dare la possibilità ai clienti di poter leggere il codice a barre dei prodotti presenti sugli scaffali con il proprio smartphone e di poterne ottenere delle informazioni dettagliate, sia quelle già presenti sull'etichetta (allergeni, valori nutrizionali, ecc.), sia altre aggiuntive, come le valutazioni di altri acquirenti e suggerimenti dei prodotti.
+Il sistema sarà di supporto sia alle vendite del supermercato, proponendo articoli per i quali è necessario aumentare le vendite, sia al compratore, al quale saranno presentate delle offerte sui prodotti. Il sistema suggerirà prodotti correlati a quelli visionati dal cliente durante la sessione di acquisto corrente, e prodotti da vendere secondo le priorità del supermarket (scadenze vicine, prodotti poco venduti, ecc.)   
 
 Il sistema si compone di un back-end, che verrà messo in esercizio su servizi Oracle Cloud, e di un front-end, un'app mobile multipiattaforma (Android, iOS).
 
@@ -45,12 +46,14 @@ Di seguito sono presentati gli scenari che mostrano il sistema nel suo complesso
 Dagli scenari sono emersi i seguenti requisiti funzionali dell'intero sistema:
 
 - Il sistema permetterà agli acquirenti di recuperare informazioni sui prodotti del supermercato tramite **scansione del codice a barre**.
+- Il sistema assisterà l'acquirente nella visualizzazione delle informazioni sui prodotti del supermercato tramite **AR** ( **Augmented-Reality**) 
 - Il sistema fornirà agli acquirenti **raccomandazioni su offerte attive** al momento della spesa, in base a ciò che hanno scansionato durante la spesa corrente.
 - Il sistema fornirà agli acquirenti **raccomandazioni di prodotti similari** a quelli precedentemente scansionati.
 - Il sistema inviarà agli acquirenti **raccomandazioni in base a profili di acquisto simili**.
 - Il sistema fornirà ai gestori del supermercato la possibilità di **gestire i prodotti in vendita**, inserendo e modificarndo le varie informazioni ad essi associati.
 - Il sistema fornirà ai gestori del supermercato la possibilità di **gestire offerte** sui prodotti in vendita.
 - Il sistema fornirà agli acquirenti la possibilità di **registrarsi e autenticarsi** alla piattaforma.
+- Il sistema permetterà agli acquirenti di **ricercare i prodotti offerti dal supermercato** per ricavarne informazioni di utilità.
 
 ## Requisiti non funzionali
 
