@@ -58,6 +58,7 @@ Alcune definizioni, acronomi e abbreviazioni utili per la lettura del documento:
 - **Acquirente**: persona che acquista uno o più prodotti in un supermercato, da non confrondersi con "cliente" di cui sopra;
 - **Filiale**: sinonimo di sede (del supermercato);
 - **Gestore**: persona predisposta alla gestione del sistema informativo delle sedi del supermercato;
+- **AR**: Augmented Reality, realtà aumentata;
 - **RF**: Requisito Funzionale;
 - **NFR**: Requisito Non Funzionale;
 - **UC**: Use case, caso d'uso;
@@ -89,9 +90,86 @@ Il sistema è composto da due parti principali:
 - un sottosistema **front-end** fornito tramite un'app per smartphone Android e iOS accessibile direttamente dagli acquirenti;
 - un sottosistema **back-end** che si occupa dell'interrogazione della base di dati del supermercato tramite opportuni web service. Tutto il back-end è deployato sulla piattaforma Oracle Cloud.
 
-[[Presentare gli attori e funzionalità divise per per attore]]
+Gli utenti del sistema sono gli Acquirenti e i Gestori.
 
 ## Requisiti funzionali
+
+Di seguito sono elencati i requisiti funzionali del sistema. Ciascuno dispone di un identificatore univoco, di un nome, di una breve descrizione, di una priorità e dell'elenco degli attori partecipanti.
+
+- **RF_1** - **Scannerizzazione barcode**
+  - Descrizione: Il sistema permette la scannerizzazione dei codici a barre dei prodotti
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+
+- **RF_2** - **Visualizzazione informazioni prodotti**
+  - Descrizione: Il sistema permette la visualizzazione dei risultati della scannerizzazione tramite AR
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+
+- **RF_3** - **Ricezione raccomandazioni basate su offerte**
+  - Descrizione: Il sistema invia raccomandazioni a seconda delle offerte attive al momento della scannerizzazione, lasciando decidere l'acquirente se accettarla o meno
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+
+- **RF_4** - **Ricezione raccomandazioni di prodotti simili**
+  - Descrizione: Il sistema invia raccomandazioni a seconda della tipologia di prodotto che è stato scanerizzato, lasciando decidere l'acquirente se accettarla o meno
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+
+- **RF_5** - **Registrazione**
+  - Descrizione: 
+  - Attori partecipanti: Acquirente
+  - Priorità: Media
+
+- **RF_6** - **Login**
+  - Descrizione: 
+  - Attori partecipanti: Acquirente
+  - Priorità: Media
+
+- **RF_7** - **Logout**
+  - Descrizione: 
+  - Attori partecipanti: Acquirente
+  - Priorità: Media
+
+- **RF_8** - **Ricezione raccomandazioni basato su profili simili**
+  - Descrizione: 
+  - Attori partecipanti: Acquirente
+  - Priorità: Media
+
+- **RF_9** - **Visualizzazione catalogo prodotti**
+  - Descrizione: 
+  - Attori partecipanti: Acquirente
+  - Priorità: Media
+
+- **RF_10** - **Inserimento di un prodotto**
+  - Descrizione: 
+  - Attori partecipanti: Gestore
+  - Priorità: Media
+
+- **RF_11** - **Modifica di un prodotto**
+  - Descrizione: 
+  - Attori partecipanti: Gestore
+  - Priorità: Media
+
+- **RF_12** - **Rimozione di un prodotto**
+  - Descrizione: 
+  - Attori partecipanti: Gestore
+  - Priorità: Media
+
+- **RF_13** - **Inserimento di un'offerta**
+  - Descrizione: 
+  - Attori partecipanti: Gestore
+  - Priorità: Media
+
+- **RF_14** - **Modifica di un'offerta**
+  - Descrizione: 
+  - Attori partecipanti: Gestore
+  - Priorità: Media
+
+- **RF_15** - **Rimozione di un'offerta**
+  - Descrizione: 
+  - Attori partecipanti: Gestore
+  - Priorità: Media
 
 ## Requisiti non funzionali
 
@@ -113,13 +191,9 @@ Il sistema è composto da due parti principali:
 
 ## Modelli del sistema
 
-### Scenari
-
 ### Modello dei casi d'uso
 
 ### Modello ad oggetti
-
-### Modello dinamico
 
 ### Interfaccia utente - navigational path e mock-up
 
