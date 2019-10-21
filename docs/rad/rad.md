@@ -12,23 +12,26 @@ include-before:
 
 ## Scopo del sistema
 
-La catena di supermercati X non può continuare ad ignorare l'esistenza di un mondo costantemente connesso e le grandi disponibilità tecnologiche. Per far fronte alla concorrenza, specie da parte del mondo e-commerce, X ha chiesto un un'app per smartphone a supporto degli acquisti, in grado di permettere ai clienti la lettura del codice a barre dei prodotti presenti sugli scaffali con il proprio smartphone
+La catena di supermercati Coop non può continuare ad ignorare l'esistenza di un mondo costantemente connesso e le grandi disponibilità tecnologiche. Per far fronte alla concorrenza, specie da parte del mondo e-commerce, Coop ha chiesto un'app per smartphone a supporto degli acquisti, in grado di permettere ai clienti la lettura del codice a barre dei prodotti presenti sugli scaffali con il proprio smartphone
 e di poterne ottenere delle informazioni dettagliate. Inoltre, che sia anche in grado di proporre agli acquirenti nuovi prodotti di interesse tramite un sistema di raccomandazione.  
-Con questo sistema, X vuole attrarre nuovi acquirenti grazie ad un servizio semplice e innovativo nel quale l’utente possa conoscere a fondo i prodotti che sta per acquistare ed essere invogliato ad acquistare altri prodotti, aumentando così gli introiti del supermercato.
+Con questo sistema, Coop vuole attrarre nuovi acquirenti grazie ad un servizio semplice e innovativo nel quale l’utente possa conoscere a fondo i prodotti che sta per acquistare ed essere invogliato ad acquistarne altri, aumentando così gli introiti del supermercato e l'esperienza del cliente.
 
 ## Scope del sistema
 
 Il sistema dovrà fornire una serie di funzionalità:
 
-- Permettere il recupero di informazioni sui prodotti del supermercato tramite **scansione del codice a barre**;
-- Assistere l’acquirente nella visualizzazione delle informazioni sui prodotti tramite **AR (Augmented-Reality)**;
+- Permettere il **recupero di informazioni** sui prodotti del supermercato tramite **scansione del codice a barre**;
+- Permettere all'acquirente di **aggiungere**, **eliminare**, gestire la **numerosità** e il **costo totale** dei prodotti scansionati;
+- Assistere l’acquirente nella **visualizzazione** delle informazioni sui prodotti tramite **AR (Augmented-Reality)**;
 - Fornire **raccomandazioni su offerte attive** al momento della spesa, in base a ciò che un acquirente ha scansionato durante la spesa corrente;
 - Fornire **raccomandazioni di prodotti similari** a quelli precedentemente scansionati da un acquirente;
 - Fornire **raccomandazioni in base a profili di acquisto simili**;
 - Consentire ai gestori del supermercato l'**inserimento e la modifica** delle informazioni associate ai **prodotti in vendita**;
 - Consentire ai gestori del supermercato l'**inserimento e la modifica delle offerte** sui prodotti;
 - Dare agli acquirenti la possibilità di **registrarsi e autenticarsi** alla piattaforma;
-- Permette la **ricercare esplicitamente dei prodotti** in vendita al supermercato.
+- Permettere la **ricerca esplicita dei prodotti** in vendita al supermercato;
+- Permettere all'utente di effettuare il **pagamento** dei prodotti aggiunti al carrello.
+[Fidelizzazione?]: # (Come si gestisce la fidelizzazione? È necessaria una funzionalità che la descriva?)
 
 Il sistema non dovrà:
 
@@ -39,16 +42,19 @@ Il sistema non dovrà:
 
 Il progetto si pone i seguenti **obiettivi**:
 
+- Migliorare l'esperienza di acquisto del cliente fornendogli tutte le informazioni per la scelta dei prodotti con trasparenza.
+- Rendere il sistema prodotto usabile per la maggior parte degli acquirenti tipici del cliente.
 - Migliorare la fidelizzazione degli acquirenti grazie ai sistemi di supporto e di raccomandazione;
 - Incrementare le vendite del cliente grazie al sistema di raccomandazione che favorisce la vendita dei prodotti;
-- Realizzare il front-end del sistema come app multipiattaforma (almeno Android e iOS), colpendo la maggior parte del mercato degli smartphone;
-- Rendere il sistema prodotto usabile per la maggior parte degli acquirenti tipici del cliente.
+- Realizzare il front-end del sistema come app multipiattaforma (almeno Android e iOS), rivolgendosi alla maggior parte del mercato degli smartphone;
 
 Il progetto sarà di successo se, oltre agli obiettivi, rispetta anche i seguenti **criteri di successo**:
 
 - Rispettare tutte le consegne;
 - Implementare le funzionalità a proprità alta prima della consegna finale;
-- Implementare il sistema usando le tecnologie multipiattaforma Angular, Ionic e Cordova.
+- Implementare il sistema usando le tecnologie multipiattaforma Angular, Ionic e Cordova. 
+
+[Capacitor?]: # (Al posto di Cordova si può pensare di usare Capacitor come suggerito da MDS)
 
 ## Definizioni, acronimi e abbreviazioni
 
@@ -68,7 +74,7 @@ Alcune definizioni, acronomi e abbreviazioni utili per la lettura del documento:
 
 Di seguito i riferimenti ad altri documenti relativi al sistema:
 
-- **Problem Statement**, disponibile al link: https://github.com/EMAD-2019-Accenture/App/blob/master/docs/problem_statement/Problem%20Statement.pdf
+- **Problem Statement**, disponibile all'indirizzo: [Problem Statement](https://github.com/EMAD-2019-Accenture/App/blob/master/docs/problem_statement/Problem%20Statement.pdf)
 
 ## Panoramica
 
@@ -76,11 +82,11 @@ Nella sezione *Sistema corrente* viene presentata la situazione attuale per affr
 
 Nella sezione *Sistema proposto* viene presentato nel dettaglio il sistema, anzitutto con una panoramica generale, per poi passare ad elencare i requisiti funzionali e non funzionali. Successivamente, si presentano i vari modelli del sistema: gli scenari, il modello dei casi d'uso, il modello ad oggetti, il modello dinamico e l'interfaccia utente.
 
-Infine, nella sezione *Glossario* vengono raccolti tutti i termini tecnici usati nei vari modelli del sistema.
+Infine, nella sezione *Glossario* vengono raccolti tutti i termini tecnici usati nei vari modelli del sistema che necessitano osservazioni affinché il senso e il contesto di utilizzo siano inequivocabili.
 
 # Sistema corrente
 
-Attualmente il cliente dispone di un proprio sistema informativo, con il quale è in grado di inserire o modificare le informazioni dei prodotti in vendita, delle offerte, del magazzino, dei dipendenti, ecc. Il sistema informativo non si interfaccia in alcun modo con gli acquirenti.
+Attualmente il cliente dispone di un proprio sistema informativo, con il quale è in grado di inserire o modificare le informazioni dei prodotti in vendita, delle offerte, del magazzino, dei dipendenti, ecc. Il sistema informativo **non si interfaccia in alcun modo con gli acquirenti**.
 
 # Sistema proposto
 
@@ -106,69 +112,94 @@ Di seguito sono elencati i requisiti funzionali del sistema. Ciascuno dispone di
   - Attori partecipanti: Acquirente
   - Priorità: Alta
 
-- **RF_3** - **Ricezione raccomandazioni basate su offerte**
+- **RF_3** - **Aggiunta prodotti scansionati al carrello**
+  - Descrizione: Il sistema permette all'utente di aggiungere al carrello i prodotti dopo averne acquisito le informazioni in seguito alla scannerizzazione del barcode, previa conferma dell'utente stesso
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+
+- **RF_4** - **Eliminazione prodotti dal carrello**
+  - Descrizione: Il sistema permette all'utente di rimuovere dal carrello i prodotti che non desidera più acquistare, previa conferma dell'utente stesso
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+
+- **RF_5** - **Gestione numerosità prodotti del carrello**
+  - Descrizione: Il sistema permette all'utente di gestire la numerosità dei prodotti del carrello
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+  
+- **RF_6** - **Monitoraggio costo prodotti carrello**
+  - Descrizione: Il sistema permette all'utente di visionare i prezzi dei prodotti e il conseguente costo totale della spesa corrente
+  - Attori partecipanti: Acquirente
+  - Priorità: Alta
+
+- **RF_7** - **Ricezione raccomandazioni basate su offerte**
   - Descrizione: Il sistema invia raccomandazioni a seconda delle offerte attive al momento della scannerizzazione, lasciando decidere l'acquirente se accettarla o meno
   - Attori partecipanti: Acquirente
   - Priorità: Alta
 
-- **RF_4** - **Ricezione raccomandazioni di prodotti simili**
+- **RF_8** - **Ricezione raccomandazioni di prodotti simili**
   - Descrizione: Il sistema invia raccomandazioni a seconda della tipologia di prodotto che è stato scanerizzato, lasciando decidere l'acquirente se accettarla o meno
   - Attori partecipanti: Acquirente
   - Priorità: Alta
 
-- **RF_5** - **Registrazione**
+- **RF_9** - **Registrazione**
   - Descrizione: 
   - Attori partecipanti: Acquirente
   - Priorità: Media
 
-- **RF_6** - **Login**
+- **RF_10** - **Login**
   - Descrizione: 
   - Attori partecipanti: Acquirente
   - Priorità: Media
 
-- **RF_7** - **Logout**
+- **RF_11** - **Logout**
   - Descrizione: 
   - Attori partecipanti: Acquirente
   - Priorità: Media
 
-- **RF_8** - **Ricezione raccomandazioni basato su profili simili**
+- **RF_12** - **Ricezione raccomandazioni basato su profili simili**
   - Descrizione: 
   - Attori partecipanti: Acquirente
   - Priorità: Media
 
-- **RF_9** - **Visualizzazione catalogo prodotti**
+- **RF_13** - **Visualizzazione catalogo prodotti**
   - Descrizione: 
   - Attori partecipanti: Acquirente
   - Priorità: Media
 
-- **RF_10** - **Inserimento di un prodotto**
+- **RF_14** - **Inserimento di un prodotto**
   - Descrizione: 
   - Attori partecipanti: Gestore
   - Priorità: Media
 
-- **RF_11** - **Modifica di un prodotto**
+- **RF_15** - **Modifica di un prodotto**
   - Descrizione: 
   - Attori partecipanti: Gestore
   - Priorità: Media
 
-- **RF_12** - **Rimozione di un prodotto**
+- **RF_16** - **Rimozione di un prodotto**
   - Descrizione: 
   - Attori partecipanti: Gestore
   - Priorità: Media
 
-- **RF_13** - **Inserimento di un'offerta**
+- **RF_17** - **Inserimento di un'offerta**
   - Descrizione: 
   - Attori partecipanti: Gestore
   - Priorità: Media
 
-- **RF_14** - **Modifica di un'offerta**
+- **RF_18** - **Modifica di un'offerta**
   - Descrizione: 
   - Attori partecipanti: Gestore
   - Priorità: Media
 
-- **RF_15** - **Rimozione di un'offerta**
+- **RF_19** - **Rimozione di un'offerta**
   - Descrizione: 
   - Attori partecipanti: Gestore
+  - Priorità: Media
+
+- **RF_20** - **Pagamento carrello**
+  - Descrizione: Il sistema permette all'utente di effettuare il pagamento dei prodotti contenuti nel carrello
+  - Attori partecipanti: Acquirente
   - Priorità: Media
 
 ## Requisiti non funzionali
@@ -196,7 +227,7 @@ Di seguito sono elencati i requisiti funzionali del sistema. Ciascuno dispone di
 | **Nome**                   | UC_1 - Barcode Scan                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Attori  Partecipanti**   | Acquirente                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| **Flusso  di Eventi**      | 1. L' Acquirente seleziona la voce "Scansiona Prodotto".<br>&nbsp;&nbsp;2. Il sistema apre la camera per la scansione.<br>3. L'acquirente inquadra il codice a barre del prodotto.<br>&nbsp;&nbsp;4. Il sistema, avendo letto correttamente il codice a barre       risponde con una serie di informazioni relative al prodotto       (codice, categoria, stato, marchio, scadenza,peso lordo,       peso netto, durata garanzia, stagionalità, promozione, prezzo promozione) |
+| **Flusso  di Eventi**      | 1. L' Acquirente seleziona la voce "Scansiona Prodotto".<br>&nbsp;&nbsp;2. Il sistema apre la camera per la scansione.<br>3. L'Acquirente inquadra il codice a barre del prodotto.<br>&nbsp;&nbsp;4. Il sistema, avendo letto correttamente il codice a barre       risponde con una serie di informazioni relative al prodotto       (codice, categoria, stato, marchio, scadenza,peso lordo,       peso netto, durata garanzia, stagionalità, promozione, prezzo promozione) |
 | **Condizioni di Ingresso** | L' Acquirente ha avviato il sistema                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | **Condizioni d'uscita**    | L'Acquirente visualizza correttamente le informazioni sul prodotto.                                                                                                                                                                                                                                                                                                                                                                                 |
 | **Flussi alternativi**    | Al punto 4. Il sistema potrebbe rispondere con un messaggio d'errore dovuto ad errori di rete o all'assenza del prodotto nel DB.                                                                                                                                                                                                                                                                                                                    |
