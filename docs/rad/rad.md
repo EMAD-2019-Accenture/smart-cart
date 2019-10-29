@@ -280,8 +280,14 @@ Di seguito sono elencati i requisiti non funzionali del sistema, raggruppate per
 | **Condizioni d'uscita**    | L'Acquirente visualizza correttamente le informazioni sull'articolo.                                                                                                                                                                                                    |
 | **Flussi alternativi**    | Al punto 2. Il sistema potrebbe rispondere con un messaggio d'errore dovuto a problemi di rete.<br> Al punto 2. Il sistema potrebbe notificare l'Acquirente sull'assenza di prodotti in catalogo che matchino con la ricerca da lui effettuata.<br>Al punto 4. Il sistema potrebbe rispondere con un messaggio d'errore dovuto ad errori di rete o all'assenza del'articolo nel DB.             |    
 
-
-
 ### Modello ad oggetti
 
+#### Entity diagram
+![Entity Diagram](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/entity_diagram.png)
+
+#### Sequence diagram
+![Sequence Diagram](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/SD_Scan_Rac.png)
+
 ### Interfaccia utente - navigational path e mock-up
+
+![Navigational path](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/navigational_path.png)
