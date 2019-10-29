@@ -101,6 +101,16 @@ Gli utenti del sistema sono gli Acquirenti e i Gestori.
 
 Di seguito sono elencati i requisiti funzionali del sistema. Ciascuno dispone di un identificatore univoco (*RFn*, dove *n* è un numero intero positivo), di un nome, di una breve descrizione, di una priorità e dell'elenco degli attori partecipanti.
 
+La seguente legenda mostra quali sono le scadenze in base alla priosità del requisito funzionale:
+
+| Priorità RF |                Scadenza                |
+|:-----------:|:--------------------------------------:|
+|   **Alta**  | 15.01.2020 - Seconda release prototipo |
+|  **Media**  |      N/A - Release prodotto finale     |
+|  **Bassa**  | N/A - Patch del prodotto in produzione |
+
+I requisiti funzionali del sistema sono riportati nella seguente tabella:
+
 | Id | Nome | Descrizione | Attori Partecipanti | Priorità |
 |------|--------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|----------|
 | **RF1** | Scannerizzazione barcode | Il sistema permetterà la scannerizzazione<br> dei codici a barre degli articoli. | Acquirente | Alta |
