@@ -99,107 +99,30 @@ Gli utenti del sistema sono gli Acquirenti e i Gestori.
 
 ## Requisiti funzionali
 
-Di seguito sono elencati i requisiti funzionali del sistema. Ciascuno dispone di un identificatore univoco (*RF_n*, dove *n* è un numero intero positivo), di un nome, di una breve descrizione, di una priorità e dell'elenco degli attori partecipanti.
+Di seguito sono elencati i requisiti funzionali del sistema. Ciascuno dispone di un identificatore univoco (*RFn*, dove *n* è un numero intero positivo), di un nome, di una breve descrizione, di una priorità e dell'elenco degli attori partecipanti.
 
-- **RF_1** - **Scannerizzazione barcode**
-  - Descrizione: Il sistema permetterà la scannerizzazione dei codici a barre degli articoli
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_2** - **Visualizzazione informazioni articoli**
-  - Descrizione: Il sistema permetterà la visualizzazione dei risultati della scannerizzazione tramite AR
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_3** - **Avvio sessione di acquisto**
-  - Descrizione: Il sistema permetterà l'avvio di una sessione di acquisto, che abilita l'inserimento degli articoli scannerizzati in un carrello
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_4** - **Aggiunta articoli scansionati nel carrello**
-  - Descrizione: Il sistema permetterà l'aggiunta degli articoli scannerizzati al carrello se è stata avviata una sessione di acquisto
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_5** - **Eliminazione articoli dal carrello**
-  - Descrizione: Il sistema permetterà la rimozione di articoli precedentemente inseriti nel carrello
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_6** - **Modifica quantità articoli del carrello**
-  - Descrizione: Il sistema permetterà la modifica della quantità degli articoli presenti nel carrello
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-  
-- **RF_7** - **Visualizzazione carrello**
-  - Descrizione: Il sistema permetterà all'utente di visionare gli articoli presenti nel carrello con le relative informazioni; inoltre è possibile monitorare il costo totale della spesa corrente
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_8** - **Terminazione sessione di acquisto**
-  - Descrizione: Il sistema permetterà la terminazione di una sessione di acquisto attiva
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_9** - **Ricezione raccomandazioni basate su promozioni**
-  - Descrizione: Il sistema invierà raccomandazioni tramite notifiche a seconda delle promozioni attive al momento della scannerizzazione, lasciando decidere all'acquirente se accettarle o meno
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_10** - **Ricezione raccomandazioni di articoli simili**
-  - Descrizione: Il sistema invierà raccomandazioni tramite notifiche a seconda della categoria dell'articolo che è stato scanerizzato, lasciando decidere l'acquirente se accettarle o meno
-  - Attori partecipanti: Acquirente
-  - Priorità: Alta
-
-- **RF_11** - **Pagamento carrello**
-  - Descrizione: Il sistema permetterà al termine di una sessione di acquisto di poter procedere al pagamento degli articoli inseriti nel carrello
-  - Attori partecipanti: Acquirente
-  - Priorità: Media
-
-- **RF_12** - **Registrazione**
-  - Descrizione: Il sistema permetterà agli acquirenti di registrarsi, inserendo alcuni dati personali e di accesso
-  - Attori partecipanti: Acquirente
-  - Priorità: Media
-
-- **RF_13** - **Login**
-  - Descrizione: Il sistema permetterà di compiere il login all'area riservata, permettendo l'accesso ad alcune funzionalità speciali
-  - Attori partecipanti: Acquirente, Gestore
-  - Priorità: Media
-
-- **RF_14** - **Logout**
-  - Descrizione: Il sistema permetterà di uscire dalla propria area riservata, impedendo l'accesso alle funzionalità speciali
-  - Attori partecipanti: Acquirente, Gestore
-  - Priorità: Media
-
-- **RF_15** - **Ricezione raccomandazioni basate su profili simili**
-  - Descrizione: Il sistema invierà raccomandazioni tramite notifiche a seconda di profili utente simili, lasciando decidere l'acquirente se accettarle o meno
-  - Attori partecipanti: Acquirente
-  - Priorità: Media
-
-- **RF_16** - **Visualizzazione catalogo articoli**
-  - Descrizione: Il sistema permetterà l'accesso al catalogo completo degli articoli presenti in tutti i punti vendita
-  - Attori partecipanti: Acquirente
-  - Priorità: Media
-
-- **RF_17** - **Ricerca articolo nel catalogo**
-  - Descrizione: Il sistema permetterà di compiere una ricerca nel catalogo degli articoli basandosi su alcuni filtri
-  - Attori partecipanti: Acquirente
-  - Priorità: Media
-
-- **RF_18** - **Inserimento di un articolo**
-  - Descrizione: Il sistema permetterà di inserire un nuovo articolo al catalogo
-  - Attori partecipanti: Gestore
-  - Priorità: Media
-
-- **RF_19** - **Modifica informazioni di un articolo**
-  - Descrizione: Il sistema permetterà la modifica delle informazioni relativa ad articoli presenti nel catalogo
-  - Attori partecipanti: Gestore
-  - Priorità: Media
-
-- **RF_20** - **Rimozione di un articolo**
-  - Descrizione: Il sistema permetterà di rimuovere un articolo presente nel catalogo
-  - Attori partecipanti: Gestore
-  - Priorità: Media
+| Id | Nome | Descrizione | Attori Partecipanti | Priorità |
+|------|--------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|----------|
+| **RF1** | Scannerizzazione barcode | Il sistema permetterà la scannerizzazione<br> dei codici a barre degli articoli. | Acquirente | Alta |
+| **RF2** | Visualizzazione  informazioni articoli | Il sistema permetterà la visualizzazione<br> dei risultati della scannerizzazione<br>  tramite AR. | Acquirente | Alta |
+| **RF3** | Avvio sessione di acquisto | Il sistema permetterà l'avvio di una<br> sessione di acquisto, che abilita l'inserimento<br> degli articoli scannerizzati in un carrello. | Acquirente | Alta |
+| **RF4** | Aggiunta articoli al carrello | Durante una sessione di acquisto, il sistema<br> permetterà all'utente di aggiungere gli articoli<br> scansionati al carrello. | Acquirente | Alta |
+| **RF5** | Eliminazione articoli dal carrello | Il sistema permetterà la rimozione di articoli<br> precedentemente inseriti nel carrello. | Acquirente | Alta |
+| **RF6** | Modifica quantità articoli del carrello | Il sistema permetterà la modifica<br> della quantità degli articoli presenti<br> nel carrello. | Acquirente | Alta |
+| **RF7** | Visualizzazione carrello | Il sistema permetterà all'utente di visionare<br> gli articoli presenti nel carrello con le relative<br> informazioni; inoltre è possibile monitorare il<br> costo totale della spesa corrente. | Acquirente | Alta |
+| **RF8** | Terminazione sessione di acquisto | Il sistema permetterà la terminazione<br> di una sessione di acquisto attiva. | Acquirente | Alta |
+| **RF9** | Raccomandazioni basate su Promozioni | Il sistema invierà raccomandazioni tramite<br> notifiche a seconda delle promozioni attive<br> al momento della scannerizzazione,<br> lasciando decidere all'acquirente se accettarle o meno. | Acquirente | Alta |
+| **RF10** | Raccomandazioni di articoli simili | Il sistema invierà raccomandazioni<br> tramite notifiche a seconda della categoria<br> dell'articolo che è stato scanerizzato, lasciando<br> decidere l'acquirente se accettarle o meno. | Acquirente | Alta |
+| **RF11** | Checkout carrello | Il sistema permetterà al termine di una<br> sessione di acquisto di poter procedere<br>  al pagamento degli articoli inseriti nel carrello. | Acquirente | Alta |
+| **RF12** | Registrazione | Il sistema permetterà agli acquirenti di registrarsi,<br> inserendo alcuni dati personali e di accesso | Acquirente | Media |
+| **RF13** | Login | Il sistema permetterà di compiere il login all'area riservata,<br> permettendo l'accesso ad alcune funzionalità speciali | Acquirente | Media |
+| **RF14** | Logout | Il sistema permetterà di uscire dalla propria area riservata,<br> impedendo l'accesso alle funzionalità speciali | Acquirente | Media |
+| **RF15** | Ricezione raccomandazioni<br> basate su profili simili | Il sistema invierà raccomandazioni tramite notifiche<br> a seconda di profili utente simili,<br> lasciando decidere l'acquirente se accettarle o meno. | Acquirente | Media |
+| **RF16** | Visualizzazione catalogo articoli | Il sistema permetterà l'accesso al catalogo<br> completo degli articoli presenti in tutti i punti vendita. | Acquirente | Media |
+| **RF17** | Ricerca articolo nel catalogo | Il sistema permetterà di compiere una ricerca<br> nel catalogo degli articoli basandosi su alcuni filtri. | Acquirente | Media |
+| **RF18** | Inserimento di un articolo | Il sistema permetterà di inserire un nuovo articolo al catalogo. | Gestore | Media |
+| **RF19** | Modifica informazioni di un articolo | Il sistema permetterà la modifica delle<br> informazioni relativa ad articoli. presenti nel catalogo. | Gestore | Media |
+| **RF20** | Rimozione di un articolo | Il sistema permetterà di rimuovere un articolo presente nel catalogo | Gestore | Media |
 
 ## Requisiti non funzionali
 
