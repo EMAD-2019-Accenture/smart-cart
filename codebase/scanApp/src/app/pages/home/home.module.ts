@@ -13,18 +13,26 @@ const routes: Routes = [
     component: HomePage,
     children: [
       {
-        path: 'dashboard',
-        loadChildren: '../dashboard/dashboard.module#DashboardPageModule'
-      },
-      {
         path: 'scan',
         loadChildren: '../scan/scan.module#ScanPageModule'
-      }
+      },
+      {
+        path: 'cart',
+        loadChildren: '../cart/cart.module#CartPageModule'
+      },
+      { 
+        path: 'settings', 
+        loadChildren: '../settings/settings.module#SettingsPageModule'
+      },
+      { 
+        path: 'search', 
+        loadChildren: '../search/search.module#SearchPageModule'
+      },
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/dashboard',
+    redirectTo: '/tabs/scan',
     pathMatch: 'full'
   }
 ];
@@ -38,4 +46,4 @@ const routes: Routes = [
   ],
   declarations: [HomePage]
 })
-export class HomePageModule {}
+export class HomePageModule { }
