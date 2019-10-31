@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartPage implements OnInit {
 
-  constructor() { }
+  public isEmptyCart: boolean;
+
+  constructor() {
+    this.isEmptyCart = true;
+  }
 
   ngOnInit() {
   }
