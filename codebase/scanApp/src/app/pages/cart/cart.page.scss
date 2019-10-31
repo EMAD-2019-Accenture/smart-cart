@@ -1,7 +1,14 @@
-.ion-thumbnail{
-    --border-radius:1;
+.ion-thumbnail {
+  --border-radius: 1;
 }
 
-.ion-list-header{
-    --background:dark;
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.new-cart-text{
+  margin-top: 15vh;
 }
