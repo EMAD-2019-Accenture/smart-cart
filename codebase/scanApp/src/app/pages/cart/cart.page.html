@@ -22,7 +22,7 @@
     <ion-thumbnail slot="start">
       <img src="http://getdrawings.com/free-icon/shopping-cart-icon-transparent-70.png">
     </ion-thumbnail>
-    <ion-label>JoJo cart</ion-label>
+    <ion-label>User cart</ion-label>
     <ion-note class="top-note">
       Total amount: <b>40.32 €</b>
       <br>
@@ -30,7 +30,7 @@
     </ion-note>
   </ion-item>
   <ion-content style="margin-bottom:1000px!important">
-    <ion-list lines=full>
+    <ion-list lines=full id="cartItems">
       <ion-list-header><b>Cart items</b>
         <ion-note slot="end">
         </ion-note>
@@ -119,7 +119,7 @@
         </ion-item-options>
       </ion-item-sliding>
 
-      <ion-item-sliding id="item103">
+      <ion-item-sliding id="item103" routerLink="/product">
         <ion-item detail>
           <ion-avatar slot="start">
             <img src="https://www.cicalia.com/it/img/imgproducts/43465/l_43465.jpg">
