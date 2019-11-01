@@ -4,6 +4,13 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-searchbar placeholder="Food" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
+
 <ion-content>
+  <ion-list *ngFor="let item of filteredCategories">
+    <ion-item>
+      <ion-label>{{item}}</ion-label>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

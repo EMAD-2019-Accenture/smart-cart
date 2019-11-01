@@ -7,9 +7,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchPage implements OnInit {
 
-  constructor() { }
+  public categories = [];
+  public filteredCategories = [];
+  public searchTerm : String;
 
-  ngOnInit() {
+  constructor() { 
+    this.categories = [
+      "Animals & Pet Supplies",
+      "Apparel & Accessories",
+      "Arts & Entertainment",
+      "Baby & Toddler",
+      "Business",
+      "Books",
+      "Cameras",
+      "Food",
+      "Drugs",
+    ];
+    this.searchTerm = "";
+  }
+
+  ngOnInit() {    
+    this.setFilteredItems();
+  }
+
+  public setFilteredItems(){
+    this.filteredCategories = this.categories.filter(item => {      
+      if(item.toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0){
+        return item;
+      }
+      
+    });
   }
 
 }
