@@ -1,7 +1,20 @@
+<div *ngIf="isEmptyCart; then noScanButton else scanButton"></div>
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Cart</ion-title>
-  </ion-toolbar>
+  <ng-template #scanButton>
+    <ion-toolbar color="primary">
+      <ion-title>Cart</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button routerLink="/tabs/scan" routerDirection="forward">
+          <ion-icon slot="icon-only" name="barcode"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ng-template>
+  <ng-template #noScanButton>
+    <ion-toolbar color="primary">
+      <ion-title>Cart</ion-title>
+    </ion-toolbar>
+  </ng-template>
 </ion-header>
 <div *ngIf="isEmptyCart; then emptyCart else notEmptyCart"></div>
 <ng-template #notEmptyCart>
@@ -10,7 +23,7 @@
       <img src="http://getdrawings.com/free-icon/shopping-cart-icon-transparent-70.png">
     </ion-thumbnail>
     <ion-label>JoJo cart</ion-label>
-    <ion-note slot="end">
+    <ion-note class="top-note">
       Total amount: <b>40.32 €</b>
       <br>
       Product number: <b>22 pc.</b>
@@ -139,25 +152,24 @@
   </ion-content>
 
   <section>
-    <ion-button expand="block" shape="round" class="ion-margin">End session <ion-icon slot="end"
-        name="checkmark-circle"></ion-icon>
+    <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="isEmptyCart=true">End session
+      <ion-icon slot="end" name="checkmark-circle"></ion-icon>
     </ion-button>
   </section>
 </ng-template>
 <ng-template #emptyCart>
   <ion-text class="ion-text-center new-cart-text" color="secondary">
-      <h3>It seems you don't have a cart ...</h3>
-      <h1><b>Start a new session!</b></h1>
-    </ion-text>
+    <h3>It seems you don't have a cart ...</h3>
+    <h1><b>Start a new session!</b></h1>
+  </ion-text>
   <div class="vertical-center">
     <div class="center">
       <ion-img [src]="'https://www.anartline.com/image/catalog/cartEmpty.png'" class="ion-align-self-end"></ion-img>
     </div>
   </div>
   <section>
-      <ion-button expand="block" shape="round" class="ion-margin">Start session <ion-icon slot="end"
-          name="cart"></ion-icon>
-      </ion-button>
-    </section>
-
+    <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="isEmptyCart=false">Start
+      session <ion-icon slot="end" name="cart"></ion-icon>
+    </ion-button>
+  </section>
 </ng-template>
