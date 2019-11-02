@@ -6,8 +6,9 @@ const routes: Routes = [
   { path: 'product', loadChildren: './pages/product/product.module#ProductPageModule' },
   {
     path: 'scan',
-    loadChildren: '../scan/scan.module#ScanPageModule'
-  }
+    loadChildren: './pages/scan/scan.module#ScanPageModule'
+  },
+  { path: 'recommendation', loadChildren: './pages/recommendation/recommendation.module#RecommendationPageModule' }
  
 ];
 
