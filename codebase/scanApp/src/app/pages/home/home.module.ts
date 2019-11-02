@@ -11,11 +11,7 @@ const routes: Routes = [
   {
     path: 'tabs',
     component: HomePage,
-    children: [
-      {
-        path: 'scan',
-        loadChildren: '../scan/scan.module#ScanPageModule'
-      },
+    children: [      
       {
         path: 'cart',
         loadChildren: '../cart/cart.module#CartPageModule'
@@ -32,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/scan',
+    redirectTo: '/tabs/cart',
     pathMatch: 'full'
   }
 ];
