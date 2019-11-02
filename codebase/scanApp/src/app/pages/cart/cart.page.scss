@@ -25,3 +25,14 @@
   padding-right: 1vw;
   font-size: small;
 }
+
+#notification-btn {
+  position: relative;
+}
+
+#notification-badge {
+  font-size: small;
+  position: relative;
+  bottom: 8px;
+  right: 15px;
+}

@@ -3,6 +3,12 @@
   <ng-template #scanButton>
     <ion-toolbar color="primary">
       <ion-title>Cart</ion-title>
+      <ion-buttons slot="secondary">
+        <ion-button id="notification-btn" routerLink="/recommendation" routerDirection="forward">
+          <ion-icon name="information-circle"></ion-icon>
+        </ion-button>
+        <ion-badge id="notification-badge" color="danger" style="font-size: xx-small;">2</ion-badge>
+      </ion-buttons>
       <ion-buttons slot="primary">
         <ion-button routerLink="/scan" routerDirection="forward">
           <ion-icon slot="icon-only" name="barcode"></ion-icon>
