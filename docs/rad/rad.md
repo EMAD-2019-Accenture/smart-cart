@@ -293,12 +293,12 @@ Di seguito vengono mostrati i sequence diagram.
 
 Il seguente sequence diagram mostra le operazioni che un Acquirente deve fare per scansionare un articolo e le risposte del sistema per l'aggiunta dell'articolo nel carrello e per la raccomandazione basata sulle promozioni.  
 
-![Sequence Diagram](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/SD_Scan_Rac.png)
+![Sequence Diagram](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/sd_scan_rac.png)
 
 ### Interfaccia utente - Navigational Path e Mock-up
 
 Di seguito vengono mostrati i navigational path dell'intera app.
 
-![Navigational path](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/navigational_path.png)
+![Navigational path](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/nav_path.png)
 
 Inoltre, è stato progettato un prototipo dell'interfaccia utente dell'app: [Prototipo](https://github.com/EMAD-2019-Accenture/App/tree/development/codebase/scanApp)
