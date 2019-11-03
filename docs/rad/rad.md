@@ -65,14 +65,13 @@ Alcune definizioni, acronomi e abbreviazioni utili per la lettura del documento:
 - **RF**: Requisito Funzionale;
 - **NFR**: Requisito Non Funzionale;
 - **UC**: Use case, caso d'uso;
-- **UCD**: Use case diagram, diagramma dei casi d'uso;
 - **SD**: Sequence diagram.
 
 ## Riferimenti
 
 Di seguito i riferimenti ad altri documenti relativi al sistema:
 
-- **Problem Statement**, disponibile all'indirizzo: [Problem Statement](https://github.com/EMAD-2019-Accenture/App/blob/master/docs/problem_statement/Problem%20Statement.pdf)
+- **Problem Statement**, disponibile all'indirizzo: *<https://github.com/EMAD-2019-Accenture/App/blob/master/docs/problem_statement/Problem%20Statement.pdf>*
 
 ## Panoramica
 
@@ -110,26 +109,27 @@ I requisiti funzionali del sistema sono riportati nella seguente tabella:
 
 | ID | Nome | Descrizione | Attori Partecipanti | Priorità |
 |------|--------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|----------|
-| **RF1** | Scansione codice a barre | Il sistema permetterà la scansione<br> dei codici a barre degli articoli. | Acquirente | Alta |
-| **RF2** | Visualizzazione informazioni articoli | Il sistema permetterà la visualizzazione<br> dei risultati della scansione. | Acquirente | Alta |
-| **RF3** | Avvio sessione di acquisto | Il sistema permetterà l'avvio di una<br> sessione di acquisto, che fornisce un carrello dove poter inserire gli articoli scansionati. | Acquirente | Alta |
-| **RF4** | Aggiunta articoli al carrello | Il sistema<br> permetterà l'aggiunta di articoli scansionati al carrello se è presente una sessione avviata. | Acquirente | Alta |
-| **RF5** | Eliminazione articoli dal carrello | Il sistema permetterà la rimozione di articoli<br> precedentemente inseriti nel carrello se è presente una sessione avviata. | Acquirente | Alta |
-| **RF6** | Modifica quantità articoli nel carrello | Il sistema permetterà la modifica<br> della quantità degli articoli presenti<br> nel carrello se è presente una sessione avviata. | Acquirente | Alta |
-| **RF7** | Visualizzazione carrello | Il sistema permetterà di visionare<br> gli articoli presenti nel carrello con le relative<br> informazioni se è presente una sessione avviata; inoltre sarà possibile visionare il<br> costo totale della spesa corrente. | Acquirente | Alta |
-| **RF8** | Terminazione sessione di acquisto | Il sistema permetterà la terminazione<br> di una sessione di acquisto precedentemente avviata. | Acquirente | Alta |
-| **RF9** | Ricezione raccomandazione basata su promozioni | Il sistema invierà raccomandazioni tramite<br> notifiche a seconda delle promozioni attive<br> al momento della scansione,<br> lasciando decidere all'Acquirente se accettarle o meno. | Acquirente | Alta |
-| **RF10** | Ricezione raccomandazione basata su articoli simili | Il sistema invierà raccomandazioni<br> tramite notifiche a seconda della categoria<br> dell'articolo che è stato scansionato, lasciando<br> decidere l'Acquirente se accettarle o meno. | Acquirente | Alta |
-| **RF11** | Checkout carrello | Il sistema permetterà al termine di una<br> sessione di acquisto di poter procedere<br> al pagamento degli articoli inseriti nel carrello. | Acquirente | Media |
-| **RF12** | Registrazione | Il sistema permetterà agli acquirenti di registrarsi,<br> inserendo alcuni dati personali e di accesso | Acquirente | Media |
-| **RF13** | Login | Il sistema permetterà di compiere il login all'area riservata,<br> fornendo l'accesso ad alcune funzionalità speciali | Acquirente | Media |
+| **RF1** | Scansione codice a barre | Il sistema permetterà la scansione dei codici a barre degli articoli in vendita. | Acquirente | Alta |
+| **RF2** | Visualizzazione informazioni articoli | Il sistema permetterà la visualizzazione una serie di informazioni relative all'articolo. | Acquirente | Alta |
+| **RF3** | Avvio sessione di acquisto | Il sistema permetterà l'avvio di una sessione di acquisto, che fornisce un carrello dove poter inserire gli articoli scansionati. | Acquirente | Alta |
+| **RF4** | Aggiunta articoli al carrello | Il sistema permetterà l'aggiunta di articoli scansionati al carrello se è presente una sessione avviata. | Acquirente | Alta |
+| **RF5** | Eliminazione articoli dal carrello | Il sistema permetterà la rimozione di articoli precedentemente inseriti nel carrello se è presente una sessione avviata. | Acquirente | Alta |
+| **RF6** | Modifica quantità articoli nel carrello | Il sistema permetterà la modifica della quantità degli articoli presenti nel carrello se è presente una sessione avviata. | Acquirente | Alta |
+| **RF7** | Visualizzazione carrello | Il sistema permetterà di visionare gli articoli presenti nel carrello con le relative informazioni se è presente una sessione avviata; inoltre sarà possibile visionare il costo totale della spesa corrente. | Acquirente | Alta |
+| **RF8** | Terminazione sessione di acquisto | Il sistema permetterà la terminazione di una sessione di acquisto precedentemente avviata. | Acquirente | Alta |
+| **RF9** | Ricezione raccomandazione basata su promozioni | Il sistema invierà raccomandazioni tramite notifiche a seconda delle promozioni attive al momento della scansione, lasciando decidere all'Acquirente se accettarle o meno. | Acquirente | Alta |
+| **RF10** | Ricezione raccomandazione basata su articoli simili | Il sistema invierà raccomandazioni tramite notifiche a seconda della categoria dell'articolo che è stato scansionato, lasciando decidere l'Acquirente se accettarle o meno. | Acquirente | Alta |
+| **RF11** | Checkout carrello | Il sistema permetterà al termine di una sessione di acquisto di poter procedere al pagamento degli articoli inseriti nel carrello. | Acquirente | Media |
+| **RF12** | Registrazione | Il sistema permetterà agli acquirenti di registrarsi, inserendo alcuni dati personali e di accesso | Acquirente | Media |
+| **RF13** | Login | Il sistema permetterà di compiere il login all'area riservata, fornendo l'accesso ad alcune funzionalità speciali | Acquirente | Media |
 | **RF14** | Logout | Il sistema permetterà di uscire dalla propria area riservata. | Acquirente | Media |
-| **RF15** | Ricezione raccomandazione basata su profili simili | Il sistema invierà raccomandazioni tramite notifiche<br> a seconda di profili utente simili,<br> lasciando decidere l'acquirente se accettarle o meno. | Acquirente | Media |
-| **RF16** | Visualizzazione catalogo articoli | Il sistema permetterà l'accesso al catalogo<br> completo degli articoli presenti in tutti i punti vendita. | Acquirente | Media |
-| **RF17** | Ricerca articolo nel catalogo | Il sistema permetterà di compiere una ricerca<br> nel catalogo degli articoli basandosi su alcuni filtri. | Acquirente | Media |
-| **RF18** | Inserimento di un articolo | Il sistema permetterà di inserire un nuovo articolo nel catalogo. | Gestore | Media |
-| **RF19** | Modifica informazioni di un articolo | Il sistema permetterà di modificare le<br> informazioni relativa agli articoli presenti nel catalogo. | Gestore | Media |
-| **RF20** | Rimozione di un articolo | Il sistema permetterà di rimuovere un articolo presente nel catalogo. | Gestore | Media |
+| **RF15** | Modifica impostazioni | Il sistema permetterà ad un'Acquirente loggato di accedere e modificare le sue informazioni personali. | Acquirente | Media |
+| **RF16** | Ricezione raccomandazione basata su profili simili | Il sistema invierà raccomandazioni tramite notifiche a seconda di profili utente simili, lasciando decidere l'acquirente se accettarle o meno. | Acquirente | Media |
+| **RF17** | Visualizzazione catalogo articoli | Il sistema permetterà l'accesso al catalogo completo degli articoli presenti in tutti i punti vendita. | Acquirente | Media |
+| **RF18** | Ricerca articolo nel catalogo | Il sistema permetterà di compiere una ricerca nel catalogo degli articoli basandosi su alcuni filtri. | Acquirente | Media |
+| **RF19** | Inserimento di un articolo | Il sistema permetterà di inserire un nuovo articolo nel catalogo. | Gestore | Media |
+| **RF20** | Modifica informazioni di un articolo | Il sistema permetterà di modificare le\newline  informazioni relativa agli articoli presenti nel catalogo. | Gestore | Media |
+| **RF21** | Rimozione di un articolo | Il sistema permetterà di rimuovere un articolo presente nel catalogo. | Gestore | Media |
 
 ## Requisiti non funzionali
 
@@ -196,7 +196,6 @@ Di seguito sono elencati i requisiti non funzionali del sistema, raggruppate per
   - Descrizione: Si farà in modo che il sistema supporti centinaia di usi contemporanei dei servizi di back-end del sistema, grazie all'altà scalabilità fornita dall'ambiente cloud
   - Priorità: Bassa
 
-
 ### Supportabilità
 
 - **NFR_S1** - **Disaccoppiamento frond-end e back-end**
@@ -244,19 +243,19 @@ Di seguito sono elencati i requisiti non funzionali del sistema, raggruppate per
 | **Nome**                   | UC1 - Scansione codice a barre                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Attori Partecipanti**   | Acquirente                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| **Flusso di Eventi**       | 1. L'Acquirente seleziona la voce "Scan".<br>&nbsp;&nbsp;2. Il sistema apre la fotocamera e mostra l'interfaccia per inquadrare correttamente il codice a barre.<br>3. L'Acquirente inquadra il codice a barre dell'articolo.<br>&nbsp;&nbsp;4. Il sistema, avendo letto correttamente il codice a barre, risponde mostrando una finestra con una serie di informazioni relative all'articolo: codice, categoria, stato, marchio, scadenza,peso lordo, peso netto, durata garanzia, stagionalità, promozione, prezzo promozione. |
-| **Condizioni di Ingresso** | L'Acquirente ha avviato l'app                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Flusso di Eventi**       | 1. L'Acquirente seleziona l'icona relativa allo Scan (simbolo di un codice a barre).\newline 2. Il sistema apre la fotocamera e mostra l'interfaccia per inquadrare correttamente il codice a barre.\newline 3. L'Acquirente inquadra il codice a barre dell'articolo.\newline 4. Il sistema, avendo letto correttamente il codice a barre, mostra una finestra con una serie di informazioni relative all'articolo: codice, categoria, stato, marchio, scadenza,peso lordo, peso netto, durata garanzia, stagionalità, promozione, prezzo promozione. |
+| **Condizioni di ingresso** | L'Acquirente ha avviato l'app e si trova nel tab "Carrello"                                                                                                                                                                                                                                                                                                                                                                                                                |
 | **Condizioni d'uscita**    | L'Acquirente visualizza correttamente le informazioni relative all'articolo scansionato.                                                                                                                                                                                                                                                                                                                                                                                 |
-| **Flussi alternativi**    | Al punto *4* il sistema potrebbe segnalare l'assenza di rete o dell'articolo nel database con un messaggio di errore.                                                                                                                                                                                                                                                                                                                    |
+| **Flussi alternativi**    | Al punto *4* il sistema potrebbe rilevare l'assenza di rete o dell'articolo nel database, informando l'Acquirente con un messaggio di errore.                                                                                                                                                                                                                                                                                                                    |
 
 
-| **Nome**                   | UC2 - Proposta articoli in promozione |
+| **Nome**                   | UC2 - Raccomandazione articolo in promozione |
 |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Attori Partecipanti**    | Acquirente |
-| **Flusso di Eventi**       | 1. L'Acquirente invia al sistema il codice di un articolo.<br>&nbsp;2. Il sistema ricerca gli articoli appartenenti alla stessa categoria, presenti nello stessa filiale, che sono in promozione oppure prossimi alla scadenza e, se vengono trovati, li propone all'Acquirente, altrimenti non viene fatto null'altro. |
-| **Condizioni di Ingresso** | L'Acquirente ha effettuato UC1 correttamente. |
-| **Condizioni d'uscita**    | L'Acquirente visualizza correttamente le promozioni proposte solo se presenti. |
-| **Flussi alternativi**    | Al punto *2* . |
+| **Flusso di Eventi**       | 1. L'Acquirente invia al sistema il codice di un articolo.\newline 2. Il sistema compie una ricerca degli articoli della stessa categoria e filiale dell'articolo scansionato, o in promozione oppure prossimi alla scadenza. Viene così creata e inviata una raccomandazione all'Acquirente segnalata tramite una notifica di un'icona presente nel tab "Carrello". |
+| **Condizioni di ingresso** | L'Acquirente ha effettuato UC1 correttamente. |
+| **Condizioni d'uscita**    | L'Acquirente riceve una raccomandazione. |
+| **Flussi alternativi**    | Al punto *2* il sistema potrebbe segnalare l'assenza di rete, informando l'Acquirente con un messaggio di errore.\newline Al punto *2* il sistema potrebbe non trovare alcun articolo da raccomandare, non compiendo alcuna azione. |
 
 
 
@@ -264,26 +263,26 @@ Di seguito sono elencati i requisiti non funzionali del sistema, raggruppate per
 | **Nome**                   | UC3 - Aggiunta articoli scansionati al carrello                                                                                                                                                                                                                                       |
 |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Attori Partecipanti**    | Acquirente                                                                                                                                                                                                                                                                   |
-| **Flusso di Eventi**       | 1. L'Acquirente, dalla finestra contenente le informazioni relative all'articolo scansionato, clicca sul bottone "Aggiungi al carrello".<br>&nbsp; 2. Il sistema aggiunge l'articolo al carrello dell'Acquirente e aggiorna l'ammontare complessivo con il prezzo dell'articolo appena aggiunto.|
-| **Condizioni di Ingresso** | L'Acquirente ha avviato una sessione di acquisto ed ha effettuato UC1 correttamente.                                                                                                                                                                                                                             |
+| **Flusso di Eventi**       | 1. L'Acquirente, dalla finestra contenente le informazioni relative all'articolo scansionato, clicca sul bottone "Aggiungi al carrello".\newline  2. Il sistema aggiunge l'articolo al carrello dell'Acquirente e aggiorna l'ammontare complessivo con il prezzo dell'articolo appena aggiunto.|
+| **Condizioni di ingresso** | L'Acquirente ha avviato una sessione di acquisto ed ha effettuato UC1 correttamente.                                                                                                                                                                                                                             |
 | **Condizioni d'uscita**    | Il sistema aggiunge l'articolo scansionato al carrello dell'Acquirente aggiornando l'ammontare complessivo.                                                                                                                                                                                                   |
-| **Flussi alternativi**    | Al punto *2* il sistema potrebbe segnalare l'assenza di rete con un messaggio di errore.                                                                                                                                                             |
+| **Flussi alternativi**    | Al punto *2* il sistema potrebbe rilevare l'assenza di rete o dell'articolo nel database, informando l'Acquirente con un messaggio di errore.                                                                                                                                                             |
 
 | **Nome**                   | UC4 - Visualizzazione catalogo e ricerca                                                                                                                                                                                                                                       |
 |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Attori Partecipanti**    | Acquirente                                                                                                                                                                                                                                                                   |
-| **Flusso di Eventi**       | 1. L'Acquirente seleziona la voce "Ricerca".<br>&nbsp; 2. Il sistema mostra una lista di articoli del catalogo.<br> 3. L' Acquirente inserisce nella barra di ricerca il nome del prodotto che vuole ricercare <br>&nbsp; 4. Il sistema aggiorna la lista di articoli secondo il nome inserito nella barra di ricerca. <br> 5. L'Acquirente seleziona uno degli articoli presenti nella lista, inviando al sistema l'identificativo dell'articolo.<br>&nbsp; 6. Il sistema, tramite l'identificativo dell'articolo selezionato, risponde con una serie di informazioni relative all'articolo: codice, categoria, stato, marchio, scadenza,peso lordo, peso netto, durata garanzia, stagionalità, promozione, prezzo promozione.|
+| **Flusso di Eventi**       | 1. L'Acquirente seleziona il tab "Ricerca".\newline  2. Il sistema mostra una lista di articoli del catalogo.\newline  3. L'Acquirente inserisce nella barra di ricerca il nome del prodotto che vuole ricercare \newline  4. Il sistema aggiorna la lista di articoli secondo il nome inserito nella barra di ricerca. \newline  5. L'Acquirente seleziona uno degli articoli presenti nella lista, inviando al sistema l'identificativo dell'articolo.\newline  6. Il sistema, tramite l'identificativo dell'articolo selezionato, risponde con una serie di informazioni relative all'articolo: codice, categoria, stato, marchio, scadenza, peso lordo, peso netto, durata garanzia, stagionalità, promozione, prezzo promozione.|
 | **Condizioni di Ingresso** | L'Acquirente ha avviato l'app.                                                                                                                                                                                                                              |
 | **Condizioni d'uscita**    | L'Acquirente visualizza correttamente le informazioni dell'articolo selezionato.                                                                                                                                                                                                    |
-| **Flussi alternativi**    | Ai punti *2*, *4* e *6* il sistema potrebbe segnalare l'assenza di rete con un messaggio di errore.<br> Al punto *4* il sistema potrebbe segnalare l'assenza di articoli che rispondono al nome inserito nella barra di ricerca, mostrando una lista vuota ed un piccolo messaggio di errore.            |    
+| **Flussi alternativi**    | Ai punti *2*, *4* e *6* il sistema potrebbe rilevare l'assenza di rete o dell'articolo nel database, informando l'Acquirente con un messaggio di errore.\newline  Al punto *4* il sistema potrebbe segnalare l'assenza di articoli che rispondono al nome inserito nella barra di ricerca, mostrando una lista vuota ed un piccolo messaggio informativo.            |    
 
 ### Modello ad oggetti
 
 #### Entity Class Diagram
 
-Di seguito viene mostrato il class diagram degli oggetti *Entity* individuati nell'analisi dei requisiti funzionali e dei casi d'uso precedentemente illustrati.
+La figura \ref{ent} mostra il class diagram degli oggetti *Entity* individuati nell'analisi dei requisiti funzionali e dei casi d'uso precedentemente illustrati.
 
-![Entity Diagram](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/entity_diagram.png)
+![Entity Diagram\label{ent}](diagrammi/entity_diagram.png)
 
 #### Sequence Diagram
 
@@ -291,14 +290,14 @@ Di seguito vengono mostrati i sequence diagram.
 
 ##### SD1 - Scansione e Raccomandazione
 
-Il seguente sequence diagram mostra le operazioni che un Acquirente deve fare per scansionare un articolo e le risposte del sistema per l'aggiunta dell'articolo nel carrello e per la raccomandazione basata sulle promozioni.  
+La figura \ref{seq} mostra il sequence diagram con le operazioni che un Acquirente deve fare per scansionare un articolo e le risposte del sistema per l'aggiunta dell'articolo nel carrello e per la raccomandazione basata sulle promozioni.  
 
-![Sequence Diagram](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/sd_scan_rac.png)
+![Sequence Diagram\label{seq}](diagrammi/sd_scan_rac.png)
 
 ### Interfaccia utente - Navigational Path e Mock-up
 
-Di seguito vengono mostrati i navigational path dell'intera app.
+La figura \ref{nav_path} mostra i navigational path dell'intera app.
 
-![Navigational path](https://github.com/EMAD-2019-Accenture/App/blob/development/docs/rad/Diagrammi/nav_path.png)
+![Navigational path\label{nav_path}](diagrammi/nav_path.png)
 
-Inoltre, è stato progettato un prototipo dell'interfaccia utente dell'app: [Prototipo](https://github.com/EMAD-2019-Accenture/App/tree/development/codebase/scanApp)
+Inoltre, è stato progettato un prototipo dell'interfaccia utente dell'app: *<https://github.com/EMAD-2019-Accenture/App/tree/development/codebase/scanApp>*
