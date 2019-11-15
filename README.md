@@ -32,4 +32,4 @@ Sono riportati di seguito i documenti preliminari alla realizzazione dell'applic
 ## Presentazioni
 Sono riportate di seguito le presentazioni realizzate per presentare i vari stadi di avanzamento dell'applicativo:
 
-[https://docs.google.com/presentation/d/1GQsWLQSfWDhM_0LFhZG48rJcqyhhnBDaPY3lhChTYj4/edit?usp=sharing](Presentazione analisi progetto)
+[Presentazione analisi progetto](https://docs.google.com/presentation/d/1GQsWLQSfWDhM_0LFhZG48rJcqyhhnBDaPY3lhChTYj4/edit?usp=sharing)
