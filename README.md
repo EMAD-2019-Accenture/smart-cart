@@ -28,3 +28,8 @@ Sono riportati di seguito i documenti preliminari alla realizzazione dell'applic
 
 - [Problem Statement](https://github.com/EMAD-2019-Accenture/Smart-Cart/blob/master/docs/problem_statement/problem_statement.md)
 - [Requirements Analysis Document](https://github.com/EMAD-2019-Accenture/Smart-Cart/blob/master/docs/rad/rad.md)
+
+## Presentazioni
+Sono riportate di seguito le presentazioni realizzate per presentare i vari stadi di avanzamento dell'applicativo:
+
+[https://docs.google.com/presentation/d/1GQsWLQSfWDhM_0LFhZG48rJcqyhhnBDaPY3lhChTYj4/edit?usp=sharing](Presentazione analisi progetto)
