@@ -1,0 +1,46 @@
+{
+    "name": "Sconto",
+    "fields": [
+        {
+            "fieldName": "inizio",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "fine",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ammontare",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "articolo",
+            "otherEntityRelationshipName": "sconto",
+            "relationshipName": "articolo",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20191120170139",
+    "entityTableName": "sconto",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

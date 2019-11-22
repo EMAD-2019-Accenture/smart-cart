@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    
+    <!--
+        Added the entity Articolo.
+    -->
+    <changeSet id="20191120170137-1" author="jhipster">
+        <createTable tableName="articolo">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="barcode" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="descrizione" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="etichetta" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="prezzo" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="marchio" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="peso_lordo" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="peso_netto" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="provenienza" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="quantita" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="sconto_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_articolo_sconto_id" />
+            </column>
+            <column name="percentuale_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_articolo_percentuale_id" />
+            </column>
+            <column name="k_forn_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_articolo_k_forn_id" />
+            </column>
+            <column name="alimentare_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_articolo_alimentare_id" />
+            </column>
+            <column name="farmacologico_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_articolo_farmacologico_id" />
+            </column>
+            <column name="vestiario_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_articolo_vestiario_id" />
+            </column>
+            <column name="transazione_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20191120170137-1-relations" author="jhipster">
+
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20191120170137-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/articolo.csv"
+                  separator=";"
+                  tableName="articolo">
+            <column name="id" type="numeric"/>
+            <column name="barcode" type="string"/>
+            <column name="descrizione" type="string"/>
+            <column name="etichetta" type="string"/>
+            <column name="prezzo" type="numeric"/>
+            <column name="marchio" type="string"/>
+            <column name="peso_lordo" type="numeric"/>
+            <column name="peso_netto" type="numeric"/>
+            <column name="provenienza" type="string"/>
+            <column name="quantita" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

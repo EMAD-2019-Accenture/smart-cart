@@ -1,0 +1,36 @@
+{
+    "name": "Transazione",
+    "fields": [
+        {
+            "fieldName": "data",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "articolo",
+            "otherEntityRelationshipName": "transazione",
+            "relationshipName": "articolo"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "acquirente",
+            "otherEntityRelationshipName": "transazione",
+            "relationshipName": "acquirente",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191120170143",
+    "entityTableName": "transazione",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

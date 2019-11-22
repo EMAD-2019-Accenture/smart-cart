@@ -1,0 +1,68 @@
+{
+    "name": "Acquirente",
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[A-Za-z]"
+        },
+        {
+            "fieldName": "cognome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[A-Za-z]"
+        },
+        {
+            "fieldName": "dataNascita",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "nazionalita",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vegano",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "vegetariano",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "celiaco",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "transazione",
+            "otherEntityRelationshipName": "acquirente",
+            "relationshipName": "transazione"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "allergene",
+            "otherEntityRelationshipName": "acquirente",
+            "relationshipName": "allergene",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20191120170142",
+    "entityTableName": "acquirente",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,51 @@
+{
+    "name": "Vestiario",
+    "fields": [
+        {
+            "fieldName": "taglia",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "colore",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "materiale",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "staglione",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "articolo",
+            "otherEntityRelationshipName": "vestiario",
+            "relationshipName": "articolo",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20191120170147",
+    "entityTableName": "vestiario",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

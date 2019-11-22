@@ -3,13 +3,13 @@
   <ng-template #scanButton>
     <ion-toolbar color="primary">
       <ion-title>Cart</ion-title>
-      <ion-buttons slot="secondary">
+      <ion-buttons slot="start">
         <ion-button id="notification-btn" routerLink="/recommendation" routerDirection="forward">
           <ion-icon name="information-circle"></ion-icon>
         </ion-button>
         <ion-badge id="notification-badge" color="danger" style="font-size: xx-small;">2</ion-badge>
       </ion-buttons>
-      <ion-buttons slot="primary">
+      <ion-buttons slot="end">
         <ion-button routerLink="/scan" routerDirection="forward">
           <ion-icon slot="icon-only" name="barcode"></ion-icon>
         </ion-button>
@@ -30,9 +30,8 @@
     </ion-thumbnail>
     <ion-label>User cart</ion-label>
     <ion-note class="top-note">
-      Total amount: <b>40.32 €</b>
-      <br>
-      Product number: <b>22 pc.</b>
+      <p>Total amount: <b>40.32 €</b></p>
+      <p>Product number: <b>22 pc.</b></p>            
     </ion-note>
   </ion-item>
   <ion-content style="margin-bottom:1000px!important">

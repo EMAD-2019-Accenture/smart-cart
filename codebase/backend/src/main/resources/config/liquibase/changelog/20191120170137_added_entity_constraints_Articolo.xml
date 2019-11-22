@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Articolo.
+    -->
+    <changeSet id="20191120170137-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="sconto_id"
+                                 baseTableName="articolo"
+                                 constraintName="fk_articolo_sconto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sconto"/>
+
+        <addForeignKeyConstraint baseColumnNames="percentuale_id"
+                                 baseTableName="articolo"
+                                 constraintName="fk_articolo_percentuale_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="percentuale"/>
+
+        <addForeignKeyConstraint baseColumnNames="k_forn_id"
+                                 baseTableName="articolo"
+                                 constraintName="fk_articolo_k_forn_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="k_for_n"/>
+
+        <addForeignKeyConstraint baseColumnNames="alimentare_id"
+                                 baseTableName="articolo"
+                                 constraintName="fk_articolo_alimentare_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="alimentare"/>
+
+        <addForeignKeyConstraint baseColumnNames="farmacologico_id"
+                                 baseTableName="articolo"
+                                 constraintName="fk_articolo_farmacologico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="farmacologico"/>
+
+        <addForeignKeyConstraint baseColumnNames="vestiario_id"
+                                 baseTableName="articolo"
+                                 constraintName="fk_articolo_vestiario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="vestiario"/>
+
+        <addForeignKeyConstraint baseColumnNames="transazione_id"
+                                 baseTableName="articolo"
+                                 constraintName="fk_articolo_transazione_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transazione"/>
+
+    </changeSet>
+</databaseChangeLog>

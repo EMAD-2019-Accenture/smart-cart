@@ -1,0 +1,98 @@
+
+entity Articolo {
+  barcode String required pattern(/^\d{13}$/)
+  descrizione String required
+  etichetta String
+  prezzo Double required min(0)
+  marchio String required
+  pesoLordo Double required min(0)
+  pesoNetto Double required min(0)
+  provenienza String required
+  quantita Integer required min(0)
+}
+
+entity Categoria{
+	nome String required
+}
+
+relationship OneToMany {
+  Articolo
+  to 
+  Categoria 
+}
+
+entity Sconto {
+	inizio LocalDate required
+    fine LocalDate required
+    ammontare Double required min(0)
+}
+
+entity Percentuale {
+	inizio LocalDate required
+    fine LocalDate required
+    valore Double required min(0) max(100)
+}
+
+entity KForN {
+	inizio LocalDate required
+    fine LocalDate required
+	condizione Integer required min(0)
+    omaggio Integer required min(0)
+}
+
+entity Acquirente {
+	nome String required pattern(/[A-Za-z]/)
+    cognome String required pattern(/[A-Za-z]/)
+    dataNascita LocalDate 
+    nazionalita String
+    vegano Boolean
+    vegetariano Boolean
+    celiaco Boolean    
+}
+
+entity Transazione {
+	data LocalDate required
+}
+
+entity Allergene {
+	nome String required
+}
+
+entity Alimentare {
+	giorniAllaScadenza Integer required min(0)
+    stagione String
+    bio Boolean
+}
+
+entity Farmacologico {
+	assunzione String required
+    giorniAllaScadenza Integer required min(0)
+    avvertenze String required
+}
+
+entity Vestiario {
+	taglia String required
+    colore String required
+    materiale String required
+    staglione String required
+}
+
+relationship OneToOne{
+	Articolo to Sconto, 
+    Articolo to Percentuale,
+    Articolo to KForN,
+    Articolo to Alimentare,
+    Articolo to Farmacologico,
+    Articolo to Vestiario
+}
+
+relationship OneToMany {
+	Transazione to Articolo,
+    Acquirente to Transazione
+}
+
+relationship ManyToMany{
+	Alimentare to Allergene,
+    Acquirente to Allergene
+}
+

@@ -1,0 +1,147 @@
+{
+    "name": "Articolo",
+    "fields": [
+        {
+            "fieldName": "barcode",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "^\\d{13}$"
+        },
+        {
+            "fieldName": "descrizione",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "etichetta",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prezzo",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "marchio",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "pesoLordo",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "pesoNetto",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "provenienza",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quantita",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "sconto",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "sconto",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "percentuale",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "percentuale",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "kForN",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "kForN",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "alimentare",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "alimentare",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "farmacologico",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "farmacologico",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "vestiario",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "vestiario",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "categoria",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "categoria"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "transazione",
+            "otherEntityRelationshipName": "articolo",
+            "relationshipName": "transazione",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191120170137",
+    "entityTableName": "articolo",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

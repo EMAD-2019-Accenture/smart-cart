@@ -14,6 +14,22 @@
     <property name="uuidType" value="uuid" dbms="h2, oracle"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170137_added_entity_Articolo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170138_added_entity_Categoria.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170139_added_entity_Sconto.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170140_added_entity_Percentuale.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170141_added_entity_KForN.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170142_added_entity_Acquirente.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170143_added_entity_Transazione.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170144_added_entity_Allergene.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170145_added_entity_Alimentare.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170146_added_entity_Farmacologico.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170147_added_entity_Vestiario.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20191120170137_added_entity_constraints_Articolo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170138_added_entity_constraints_Categoria.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170142_added_entity_constraints_Acquirente.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170143_added_entity_constraints_Transazione.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191120170145_added_entity_constraints_Alimentare.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

@@ -1,0 +1,46 @@
+{
+    "name": "Farmacologico",
+    "fields": [
+        {
+            "fieldName": "assunzione",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "giorniAllaScadenza",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "avvertenze",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "articolo",
+            "otherEntityRelationshipName": "farmacologico",
+            "relationshipName": "articolo",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20191120170146",
+    "entityTableName": "farmacologico",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
