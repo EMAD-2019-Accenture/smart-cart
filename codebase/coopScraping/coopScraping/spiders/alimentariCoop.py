@@ -32,17 +32,35 @@ class AlimentaricoopSpider(scrapy.Spider):
         urls = alimenti_preparati + baby_food + carne_pesce + formaggi + gastronomia + latticini + salumi + surgelati + verdura + aromi + bevande + dolci + snack_salati + pasta + merenda + condimenti_scatolame + infusi + cibo_animali + celiaci + integratori + yogurt 
 
         for url in urls:
-            yield SplashRequest(url=url, callback=self.get_page_product)
+            yield SplashRequest(url=url, callback=self.parse_page_products)
 
 
     def parse_page_products(self, response):
         urls = ["{}{}".format('http://www.catalogoprodotti.coop.it',i) for i in response.css('div.productGridItem .thumb a::attr(href)').getall()]
 
         for url in urls:
-            yield SplashRequest(url=url, callback=self.get_info,args={'wait':2})
+            yield SplashRequest(url=url, callback=self.get_info,args={'wait':4})
 
 
     def get_info(self, response):
+        preparazione = response.css('.preparazione div div::text')
+
+        if not preparazione:
+            preparazione = []
+        else:
+            try:
+                preparazione = preparazione[1].get()
+            except:
+                preparazione = []
+
+
+        immagine = response.css('#primary_image_id::attr(src)')
+
+        try:
+            immagine = "http://www.catalogoprodotti.coop.it"+immagine.get()
+        except:
+            immagine = []
+        
         yield {
             'ean': response.css('.ean div.descrizione::text').get(),
             'nome': response.css('.manufacturer span ::text').get(),
@@ -50,14 +68,14 @@ class AlimentaricoopSpider(scrapy.Spider):
             'origine': response.css('.origini p.descrizione::text').getall(),
             'descrizione': response.css('div.description div.descrizione ::text').get(),
             'ingredienti': "".join(response.css('#div_descrizione_id::text').getall()),
-            'immagine': "http://www.catalogoprodotti.coop.it"+response.css('#primary_image_id::attr(src)').get(),
+            'immagine': immagine,
             'conservazione': response.css('.conservazione div div::text').get(),
-            'preparazione': response.css('.preparazione div div::text')[1].get(),
+            'preparazione': preparazione,
             'nutrienti': [i +': '+ j for i, j in zip(response.css('.valori_nutrizionali td.c1::text').getall(),response.css('.valori_nutrizionali td.c2::text').getall())],
             'allergeni': response.css('#allergeni_table td::text').getall(),
         }
 
-        print(response.css('.ean div.descrizione::text').get())
+        print(response.css('.manufacturer span ::text').get())
 
     def get_page_product(self, response):
         url = response.url.split("/")[-3]
