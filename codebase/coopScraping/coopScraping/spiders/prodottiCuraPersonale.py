@@ -20,20 +20,24 @@ class ProdotticurapersonaleSpider(scrapy.Spider):
         urls = ["{}{}".format('http://www.catalogoprodotti.coop.it',i) for i in response.css('div.productGridItem .thumb a::attr(href)').getall()]
 
         for url in urls:
-            yield SplashRequest(url=url, callback=self.get_info,args={'wait':4})
+            yield SplashRequest(url=url, callback=self.get_info,args={'wait':2})
 
 
     def get_info(self, response):
-        preparazione = response.css('.preparazione div div::text')
 
-        if not preparazione:
-            preparazione = []
-        else:
-            try:
-                preparazione = preparazione.getall()
-            except:
-                preparazione = []
+        ean = response.css('.ean div.descrizione::text').get()
 
+        nome = ', '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
+        nome = self.remove_double_quotes(nome)
+
+        marchio = response.css('.manufacturer h1 ::text').get()
+        marchio = self.remove_tabs(marchio)
+        marchio = self.remove_new_lines(marchio)
+
+        descrizione = ''.join(response.css('div.description div.descrizione ::text').getall()) + ', '.join(response.css('div.description div.descrizione2 ::text').getall())
+        descrizione = self.remove_tabs(descrizione)
+        descrizione = self.remove_new_lines(descrizione)
+        descrizione = self.remove_double_quotes(descrizione)
 
         immagine = response.css('#primary_image_id::attr(src)')
 
@@ -41,16 +45,33 @@ class ProdotticurapersonaleSpider(scrapy.Spider):
             immagine = "http://www.catalogoprodotti.coop.it"+immagine.get()
         except:
             immagine = []
-        
+
+        preparazione = ', '.join(response.css('.preparazione div div::text').getall())
+        preparazione = self.remove_double_quotes(preparazione)
+
+        attributi = [i +': '+ j for i, j in zip( response.css('.productFeatureClasses .attrib::text').getall(), response.css('.productFeatureClasses .borderLeftDashed::text').getall())]
+
+        attributi = [self.remove_tabs(x) for x in attributi]
+        attributi = [self.remove_new_lines(x) for x in attributi]
+        attributi = ', '.join(attributi)
+
         yield {
-            'ean': response.css('.ean div.descrizione::text').get(),
-            'nome': response.css('.manufacturer span ::text').get(),
-            'marchio': response.css('.manufacturer h1 ::text').get(),
-            'descrizione': response.css('div.description div.descrizione ::text').getall() + response.css('div.description div.descrizione2 ::text').getall(),
+            'ean': ean,
+            'nome': nome,
+            'marchio': marchio,
+            'descrizione': descrizione,
             'immagine': immagine,
             'preparazione': preparazione,
-            'attributi': [i +': '+ j for i, j in zip( response.css('.productFeatureClasses .attrib::text').getall(), response.css('.productFeatureClasses .borderLeftDashed::text').getall())],
+            'attributi': attributi,
         }
 
-        print(response.css('.manufacturer span ::text').get())
+        print(marchio + ' - '+nome)
 
+    def remove_tabs(self, string):
+        return string.replace('\t','')
+
+    def remove_new_lines(self, string):
+        return string.replace('\n','')
+
+    def remove_double_quotes(self, string):
+        return string.replace('\"',"")
