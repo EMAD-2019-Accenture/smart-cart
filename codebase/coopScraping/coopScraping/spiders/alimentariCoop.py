@@ -39,40 +39,63 @@ class AlimentaricoopSpider(scrapy.Spider):
         urls = ["{}{}".format('http://www.catalogoprodotti.coop.it',i) for i in response.css('div.productGridItem .thumb a::attr(href)').getall()]
 
         for url in urls:
-            yield SplashRequest(url=url, callback=self.get_info,args={'wait':4})
+            yield SplashRequest(url=url, callback=self.get_info,args={'wait':2})
 
 
     def get_info(self, response):
-        preparazione = response.css('.preparazione div div::text')
 
-        if not preparazione:
-            preparazione = []
-        else:
-            try:
-                preparazione = preparazione[1].get()
-            except:
-                preparazione = []
+        ean = response.css('.ean div.descrizione::text').get()
 
+        nome = ', '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
+        nome = self.remove_double_quotes(nome)
+
+        marchio = response.css('.manufacturer h1 ::text').get()
+        marchio = self.remove_tabs(marchio)
+        marchio = self.remove_new_lines(marchio)
+
+        origine = ', '.join(response.css('.origini p.descrizione::text').getall())
+        origine = self.remove_tabs(origine)
+        origine = self.remove_new_lines(origine)
+        origine = self.remove_double_quotes(origine)
+
+        descrizione = ''.join(response.css('div.description div.descrizione ::text').getall()) + ', '.join(response.css('div.description div.descrizione2 ::text').getall())
+        descrizione = self.remove_tabs(descrizione)
+        descrizione = self.remove_new_lines(descrizione)
+        descrizione = self.remove_double_quotes(descrizione)
+        
+        ingredienti = ''.join(response.css('#div_descrizione_id::text').getall())
+        ingredienti = self.remove_double_quotes(ingredienti)
 
         immagine = response.css('#primary_image_id::attr(src)')
-
         try:
             immagine = "http://www.catalogoprodotti.coop.it"+immagine.get()
         except:
             immagine = []
-        
+
+        conservazione = ', '.join(response.css('.conservazione div div::text').getall())
+
+        preparazione = ', '.join(response.css('.preparazione div div::text').getall())
+        preparazione = self.remove_double_quotes(preparazione)
+
+        nutrienti = [i +': '+ j for i, j in zip(response.css('.valori_nutrizionali td.c1::text').getall(),response.css('.valori_nutrizionali td.c2::text').getall())]
+
+        allergeni = response.css('#allergeni_table td::text').getall()
+        allergeni = [self.remove_tabs(x) for x in allergeni]
+        allergeni = [self.remove_new_lines(x) for x in allergeni]
+
+
         yield {
-            'ean': response.css('.ean div.descrizione::text').get(),
-            'nome': response.css('.manufacturer span ::text').get(),
-            'marchio': response.css('.manufacturer h1 ::text').get(),
-            'origine': response.css('.origini p.descrizione::text').getall(),
-            'descrizione': response.css('div.description div.descrizione ::text').get(),
-            'ingredienti': "".join(response.css('#div_descrizione_id::text').getall()),
+            'ean': ean,
+            'nome': nome,
+            'marchio': marchio,
+            'origine': origine,
+            'descrizione': descrizione,
+            'ingredienti': ingredienti,
             'immagine': immagine,
-            'conservazione': response.css('.conservazione div div::text').get(),
+            'conservazione': conservazione,
             'preparazione': preparazione,
-            'nutrienti': [i +': '+ j for i, j in zip(response.css('.valori_nutrizionali td.c1::text').getall(),response.css('.valori_nutrizionali td.c2::text').getall())],
-            'allergeni': response.css('#allergeni_table td::text').getall(),
+            'nutrienti': nutrienti,
+            'allergeni': allergeni,
         }
 
         print(response.css('.manufacturer span ::text').get())
@@ -87,3 +110,11 @@ class AlimentaricoopSpider(scrapy.Spider):
         }
         print('Parsata:{}'.format(response.url))
 
+    def remove_tabs(self, string):
+        return string.replace('\t','')
+
+    def remove_new_lines(self, string):
+        return string.replace('\n','')
+
+    def remove_double_quotes(self, string):
+        return string.replace('\"',"")
