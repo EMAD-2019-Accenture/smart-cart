@@ -44,58 +44,58 @@ class AlimentaricoopSpider(scrapy.Spider):
 
     def get_info(self, response):
 
-        ean = response.css('.ean div.descrizione::text').get()
+        barcode = response.css('.ean div.descrizione::text').get()
 
-        nome = ', '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
-        nome = self.remove_double_quotes(nome)
+        name = ', '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
+        name = self.remove_double_quotes(name)
 
-        marchio = response.css('.manufacturer h1 ::text').get()
-        marchio = self.remove_tabs(marchio)
-        marchio = self.remove_new_lines(marchio)
+        brand = response.css('.manufacturer h1 ::text').get()
+        brand = self.remove_tabs(brand)
+        brand = self.remove_new_lines(brand)
 
-        origine = ', '.join(response.css('.origini p.descrizione::text').getall())
-        origine = self.remove_tabs(origine)
-        origine = self.remove_new_lines(origine)
-        origine = self.remove_double_quotes(origine)
+        source = ', '.join(response.css('.origini p.descrizione::text').getall())
+        source = self.remove_tabs(source)
+        source = self.remove_new_lines(source)
+        source = self.remove_double_quotes(source)
 
-        descrizione = ''.join(response.css('div.description div.descrizione ::text').getall()) + ', '.join(response.css('div.description div.descrizione2 ::text').getall())
-        descrizione = self.remove_tabs(descrizione)
-        descrizione = self.remove_new_lines(descrizione)
-        descrizione = self.remove_double_quotes(descrizione)
+        description = ''.join(response.css('div.description div.descrizione ::text').getall()) + ', '.join(response.css('div.description div.descrizione2 ::text').getall())
+        description = self.remove_tabs(description)
+        description = self.remove_new_lines(description)
+        description = self.remove_double_quotes(description)
         
-        ingredienti = ''.join(response.css('#div_descrizione_id::text').getall())
-        ingredienti = self.remove_double_quotes(ingredienti)
+        ingredients = ''.join(response.css('#div_descrizione_id::text').getall())
+        ingredients = self.remove_double_quotes(ingredients)
 
-        immagine = response.css('#primary_image_id::attr(src)')
+        image_url = response.css('#primary_image_id::attr(src)')
         try:
-            immagine = "http://www.catalogoprodotti.coop.it"+immagine.get()
+            image_url = "http://www.catalogoprodotti.coop.it"+immagine.get()
         except:
-            immagine = []
+            image_url = []
 
-        conservazione = ', '.join(response.css('.conservazione div div::text').getall())
+        conservation = ', '.join(response.css('.conservazione div div::text').getall())
 
-        preparazione = ', '.join(response.css('.preparazione div div::text').getall())
-        preparazione = self.remove_double_quotes(preparazione)
+        preparation = ', '.join(response.css('.preparazione div div::text').getall())
+        preparation = self.remove_double_quotes(preparation)
 
-        nutrienti = [i +': '+ j for i, j in zip(response.css('.valori_nutrizionali td.c1::text').getall(),response.css('.valori_nutrizionali td.c2::text').getall())]
+        nutrients = [i +': '+ j for i, j in zip(response.css('.valori_nutrizionali td.c1::text').getall(),response.css('.valori_nutrizionali td.c2::text').getall())]
 
-        allergeni = response.css('#allergeni_table td::text').getall()
-        allergeni = [self.remove_tabs(x) for x in allergeni]
-        allergeni = [self.remove_new_lines(x) for x in allergeni]
+        allergens = response.css('#allergeni_table td::text').getall()
+        allergens = [self.remove_tabs(x) for x in allergens]
+        allergens = [self.remove_new_lines(x) for x in allergens]
 
 
         yield {
-            'ean': ean,
-            'nome': nome,
-            'marchio': marchio,
-            'origine': origine,
-            'descrizione': descrizione,
-            'ingredienti': ingredienti,
-            'immagine': immagine,
-            'conservazione': conservazione,
-            'preparazione': preparazione,
-            'nutrienti': nutrienti,
-            'allergeni': allergeni,
+            'barcode': barcode,
+            'name': name,
+            'brand': brand,
+            'source': source,
+            'description': description,
+            'ingredients': ingredients,
+            'image_url': image_url,
+            'conservation': conservation,
+            'preparation': preparation,
+            'nutrients': nutrients,
+            'allergens': allergens,
         }
 
         print(response.css('.manufacturer span ::text').get())
