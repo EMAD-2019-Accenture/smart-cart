@@ -18,8 +18,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing {@link it.unisa.scanapp.domain.KForN}.
@@ -85,18 +83,10 @@ public class KForNResource {
      * {@code GET  /k-for-ns} : get all the kForNS.
      *
 
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of kForNS in body.
      */
     @GetMapping("/k-for-ns")
-    public List<KForN> getAllKForNS(@RequestParam(required = false) String filter) {
-        if ("articolo-is-null".equals(filter)) {
-            log.debug("REST request to get all KForNs where articolo is null");
-            return StreamSupport
-                .stream(kForNRepository.findAll().spliterator(), false)
-                .filter(kForN -> kForN.getArticolo() == null)
-                .collect(Collectors.toList());
-        }
+    public List<KForN> getAllKForNS() {
         log.debug("REST request to get all KForNS");
         return kForNRepository.findAll();
     }

@@ -1,0 +1,58 @@
+{
+    "name": "Customer",
+    "fields": [
+        {
+            "fieldName": "birth",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "nationality",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vegan",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "vegetarian",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "celiac",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "customer",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "transaction",
+            "otherEntityRelationshipName": "customer",
+            "relationshipName": "transaction"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "allergen",
+            "otherEntityRelationshipName": "customer",
+            "relationshipName": "allergen",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20191129085650",
+    "entityTableName": "customer",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

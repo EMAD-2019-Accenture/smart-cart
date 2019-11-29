@@ -37,8 +37,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/scanappbackend;DB_CLOSE_DELAY=-1
-    username: ScanAppBackend
+    url: jdbc:h2:file:./target/h2db/db/smartcart;DB_CLOSE_DELAY=-1
+    username: SmartCart
     password:
     hikari:
       poolName: Hikari
@@ -58,7 +58,7 @@ spring:
       hibernate.generate_statistics: false
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev #, faker
+    contexts: dev, faker
   mail:
     host: localhost
     port: 25
@@ -95,7 +95,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: ZTFmMjU2NzNkOWU2MDUyMTMwNGNmMjFiMmQzNjcxNDYwNTg4MWRiNTFmMGRmMGMyN2JjOGIxYjg2MWE3OWY5ZTEwMTJmOGRjYjIwZTNmZmFkNzEwNTViYjE2YjMyYWU1M2NhZmY0ZDM1NDQ3NjBkNDIxMmE5OGQxMjJiYmUyNjM=
+        base64-secret: NjExMzA2NmQwY2VlNDNmMmY4N2RkMWY0M2I2YzA3MDM0YmFkYzA4MWI2OTUzM2IxZmJmOWI5Y2ExMjk3ZGFmYzVkNWJhNDkwNWFmYzkxYjU3MzFmOGUxZTYzNzhlYTkxMjkwYWRhNDhkYWIxZTFhMzkyOTQ1YzYyZmE5NGQ2YmE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

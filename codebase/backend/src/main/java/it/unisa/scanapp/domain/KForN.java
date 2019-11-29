@@ -1,11 +1,12 @@
 package it.unisa.scanapp.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A KForN.
@@ -22,26 +23,25 @@ public class KForN implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "inizio", nullable = false)
-    private LocalDate inizio;
+    @Column(name = "jhi_start", nullable = false)
+    private LocalDate start;
 
     @NotNull
-    @Column(name = "fine", nullable = false)
-    private LocalDate fine;
-
-    @NotNull
-    @Min(value = 0)
-    @Column(name = "condizione", nullable = false)
-    private Integer condizione;
+    @Column(name = "jhi_end", nullable = false)
+    private LocalDate end;
 
     @NotNull
     @Min(value = 0)
-    @Column(name = "omaggio", nullable = false)
-    private Integer omaggio;
+    @Column(name = "condition", nullable = false)
+    private Integer condition;
 
-    @OneToOne(mappedBy = "kForN")
-    @JsonIgnore
-    private Articolo articolo;
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "free", nullable = false)
+    private Integer free;
+
+    @OneToMany(mappedBy = "kForN")
+    private Set<Product> products = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -52,69 +52,81 @@ public class KForN implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getInizio() {
-        return inizio;
+    public LocalDate getStart() {
+        return start;
     }
 
-    public KForN inizio(LocalDate inizio) {
-        this.inizio = inizio;
+    public KForN start(LocalDate start) {
+        this.start = start;
         return this;
     }
 
-    public void setInizio(LocalDate inizio) {
-        this.inizio = inizio;
+    public void setStart(LocalDate start) {
+        this.start = start;
     }
 
-    public LocalDate getFine() {
-        return fine;
+    public LocalDate getEnd() {
+        return end;
     }
 
-    public KForN fine(LocalDate fine) {
-        this.fine = fine;
+    public KForN end(LocalDate end) {
+        this.end = end;
         return this;
     }
 
-    public void setFine(LocalDate fine) {
-        this.fine = fine;
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
-    public Integer getCondizione() {
-        return condizione;
+    public Integer getCondition() {
+        return condition;
     }
 
-    public KForN condizione(Integer condizione) {
-        this.condizione = condizione;
+    public KForN condition(Integer condition) {
+        this.condition = condition;
         return this;
     }
 
-    public void setCondizione(Integer condizione) {
-        this.condizione = condizione;
+    public void setCondition(Integer condition) {
+        this.condition = condition;
     }
 
-    public Integer getOmaggio() {
-        return omaggio;
+    public Integer getFree() {
+        return free;
     }
 
-    public KForN omaggio(Integer omaggio) {
-        this.omaggio = omaggio;
+    public KForN free(Integer free) {
+        this.free = free;
         return this;
     }
 
-    public void setOmaggio(Integer omaggio) {
-        this.omaggio = omaggio;
+    public void setFree(Integer free) {
+        this.free = free;
     }
 
-    public Articolo getArticolo() {
-        return articolo;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public KForN articolo(Articolo articolo) {
-        this.articolo = articolo;
+    public KForN products(Set<Product> products) {
+        this.products = products;
         return this;
     }
 
-    public void setArticolo(Articolo articolo) {
-        this.articolo = articolo;
+    public KForN addProduct(Product product) {
+        this.products.add(product);
+        product.setKForN(this);
+        return this;
+    }
+
+    public KForN removeProduct(Product product) {
+        this.products.remove(product);
+        product.setKForN(null);
+        return this;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -138,10 +150,10 @@ public class KForN implements Serializable {
     public String toString() {
         return "KForN{" +
             "id=" + getId() +
-            ", inizio='" + getInizio() + "'" +
-            ", fine='" + getFine() + "'" +
-            ", condizione=" + getCondizione() +
-            ", omaggio=" + getOmaggio() +
+            ", start='" + getStart() + "'" +
+            ", end='" + getEnd() + "'" +
+            ", condition=" + getCondition() +
+            ", free=" + getFree() +
             "}";
     }
 }

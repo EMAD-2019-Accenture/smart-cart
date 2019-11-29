@@ -1,6 +1,6 @@
 package it.unisa.scanapp.web.rest;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.config.Constants;
 import it.unisa.scanapp.domain.Authority;
 import it.unisa.scanapp.domain.User;
@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@link AccountResource} REST controller.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 public class AccountResourceIT {
 
     @Autowired

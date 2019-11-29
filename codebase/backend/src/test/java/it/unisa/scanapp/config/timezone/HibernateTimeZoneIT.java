@@ -1,6 +1,6 @@
 package it.unisa.scanapp.config.timezone;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.repository.timezone.DateTimeWrapper;
 import it.unisa.scanapp.repository.timezone.DateTimeWrapperRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for the UTC Hibernate configuration.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 public class HibernateTimeZoneIT {
 
     @Autowired

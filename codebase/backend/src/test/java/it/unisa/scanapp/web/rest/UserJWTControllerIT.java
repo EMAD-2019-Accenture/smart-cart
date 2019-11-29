@@ -1,6 +1,6 @@
 package it.unisa.scanapp.web.rest;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.domain.User;
 import it.unisa.scanapp.repository.UserRepository;
 import it.unisa.scanapp.security.jwt.TokenProvider;
@@ -27,7 +27,7 @@ import static org.hamcrest.Matchers.not;
 /**
  * Integration tests for the {@link UserJWTController} REST controller.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 public class UserJWTControllerIT {
 
     @Autowired

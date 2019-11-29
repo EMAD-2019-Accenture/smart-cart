@@ -2,21 +2,21 @@
     "name": "KForN",
     "fields": [
         {
-            "fieldName": "inizio",
+            "fieldName": "start",
             "fieldType": "LocalDate",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "fine",
+            "fieldName": "end",
             "fieldType": "LocalDate",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "condizione",
+            "fieldName": "condition",
             "fieldType": "Integer",
             "fieldValidateRules": [
                 "required",
@@ -25,7 +25,7 @@
             "fieldValidateRulesMin": 0
         },
         {
-            "fieldName": "omaggio",
+            "fieldName": "free",
             "fieldType": "Integer",
             "fieldValidateRules": [
                 "required",
@@ -36,14 +36,13 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "articolo",
+            "relationshipType": "one-to-many",
+            "otherEntityName": "product",
             "otherEntityRelationshipName": "kForN",
-            "relationshipName": "articolo",
-            "ownerSide": false
+            "relationshipName": "product"
         }
     ],
-    "changelogDate": "20191120170141",
+    "changelogDate": "20191129085649",
     "entityTableName": "k_for_n",
     "dto": "no",
     "pagination": "no",

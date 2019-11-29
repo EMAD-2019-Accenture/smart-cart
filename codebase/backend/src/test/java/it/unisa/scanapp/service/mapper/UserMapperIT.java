@@ -1,7 +1,7 @@
 package it.unisa.scanapp.service.mapper;
 
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.domain.User;
 import it.unisa.scanapp.service.dto.UserDTO;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for {@link UserMapper}.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 public class UserMapperIT {
 
     private static final String DEFAULT_LOGIN = "johndoe";

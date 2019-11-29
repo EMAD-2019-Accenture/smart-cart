@@ -1,6 +1,6 @@
 package it.unisa.scanapp.security;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.domain.User;
 import it.unisa.scanapp.repository.UserRepository;
 
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 /**
  * Integrations tests for {@link DomainUserDetailsService}.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 @Transactional
 public class DomainUserDetailsServiceIT {
 

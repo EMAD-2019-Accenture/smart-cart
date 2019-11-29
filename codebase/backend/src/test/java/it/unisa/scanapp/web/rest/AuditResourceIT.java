@@ -1,6 +1,6 @@
 package it.unisa.scanapp.web.rest;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import io.github.jhipster.config.JHipsterProperties;
 import it.unisa.scanapp.config.audit.AuditEventConverter;
 import it.unisa.scanapp.domain.PersistentAuditEvent;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@link AuditResource} REST controller.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 @Transactional
 public class AuditResourceIT {
 

@@ -2,7 +2,7 @@ package it.unisa.scanapp.service;
 
 import it.unisa.scanapp.domain.PersistentAuditEvent;
 import it.unisa.scanapp.repository.PersistenceAuditEventRepository;
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for {@link AuditEventService}.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 @Transactional
 public class AuditEventServiceIT {
     @Autowired

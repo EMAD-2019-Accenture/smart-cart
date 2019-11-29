@@ -1,98 +1,79 @@
 
-entity Articolo {
+entity Product {
   barcode String required pattern(/^\d{13}$/)
-  descrizione String required
-  etichetta String
-  prezzo Double required min(0)
-  marchio String required
-  pesoLordo Double required min(0)
-  pesoNetto Double required min(0)
-  provenienza String required
-  quantita Integer required min(0)
+  description String required
+  price Double required min(0)
+  brand String required
+  amount Integer min(0)
+  imageUrl String
+  source String 
+  ingredients String 
+  conservation String 
+  preparation String
+  nutrients String
 }
 
-entity Categoria{
-	nome String required
+entity Category{
+	name String required
 }
 
 relationship OneToMany {
-  Articolo
+  Product
   to 
-  Categoria 
+  Category 
 }
 
-entity Sconto {
-	inizio LocalDate required
-    fine LocalDate required
-    ammontare Double required min(0)
+entity Discount {
+	start LocalDate required
+    end LocalDate required
+    amount Double required min(0)
 }
 
-entity Percentuale {
-	inizio LocalDate required
-    fine LocalDate required
-    valore Double required min(0) max(100)
+entity PercentDiscount {
+	start LocalDate required
+    end LocalDate required
+    value Double required min(0) max(100)
 }
 
 entity KForN {
-	inizio LocalDate required
-    fine LocalDate required
-	condizione Integer required min(0)
-    omaggio Integer required min(0)
+	start LocalDate required
+    end LocalDate required
+	condition Integer required min(0)
+    free Integer required min(0)
 }
 
-entity Acquirente {
-	nome String required pattern(/[A-Za-z]/)
-    cognome String required pattern(/[A-Za-z]/)
-    dataNascita LocalDate 
-    nazionalita String
-    vegano Boolean
-    vegetariano Boolean
-    celiaco Boolean    
-}
-
-entity Transazione {
-	data LocalDate required
-}
-
-entity Allergene {
-	nome String required
-}
-
-entity Alimentare {
-	giorniAllaScadenza Integer required min(0)
-    stagione String
-    bio Boolean
-}
-
-entity Farmacologico {
-	assunzione String required
-    giorniAllaScadenza Integer required min(0)
-    avvertenze String required
-}
-
-entity Vestiario {
-	taglia String required
-    colore String required
-    materiale String required
-    staglione String required
+entity Customer {
+    birth LocalDate 
+    nationality String
+    vegan Boolean
+    vegetarian Boolean
+    celiac Boolean    
 }
 
 relationship OneToOne{
-	Articolo to Sconto, 
-    Articolo to Percentuale,
-    Articolo to KForN,
-    Articolo to Alimentare,
-    Articolo to Farmacologico,
-    Articolo to Vestiario
+	Customer{user} to User
+}
+
+entity Transaction {
+	date LocalDate required
+}
+
+entity Allergen {
+	name String required
+}
+
+relationship ManyToOne{
+	Product to Discount, 
+    Product to PercentDiscount,
+    Product to KForN,
 }
 
 relationship OneToMany {
-	Transazione to Articolo,
-    Acquirente to Transazione
+	Transaction to Product,
+    Customer to Transaction
 }
 
 relationship ManyToMany{
-	Alimentare to Allergene,
-    Acquirente to Allergene
+	Product to Allergen,
+    Customer to Allergen
 }
-

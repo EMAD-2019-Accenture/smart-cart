@@ -1,7 +1,7 @@
 {
-  "name": "scan-app-backend",
+  "name": "smart-cart",
   "version": "0.0.0",
-  "description": "Description for ScanAppBackend",
+  "description": "Description for SmartCart",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [

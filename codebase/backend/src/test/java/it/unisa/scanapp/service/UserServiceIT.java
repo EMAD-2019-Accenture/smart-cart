@@ -1,6 +1,6 @@
 package it.unisa.scanapp.service;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.config.Constants;
 import it.unisa.scanapp.domain.User;
 import it.unisa.scanapp.repository.UserRepository;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 /**
  * Integration tests for {@link UserService}.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 @Transactional
 public class UserServiceIT {
 

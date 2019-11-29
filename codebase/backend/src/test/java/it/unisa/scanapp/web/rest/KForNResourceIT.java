@@ -1,6 +1,6 @@
 package it.unisa.scanapp.web.rest;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.domain.KForN;
 import it.unisa.scanapp.repository.KForNRepository;
 import it.unisa.scanapp.web.rest.errors.ExceptionTranslator;
@@ -32,24 +32,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@link KForNResource} REST controller.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 public class KForNResourceIT {
 
-    private static final LocalDate DEFAULT_INIZIO = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_INIZIO = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_INIZIO = LocalDate.ofEpochDay(-1L);
+    private static final LocalDate DEFAULT_START = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_START = LocalDate.ofEpochDay(-1L);
 
-    private static final LocalDate DEFAULT_FINE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_FINE = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_FINE = LocalDate.ofEpochDay(-1L);
+    private static final LocalDate DEFAULT_END = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_END = LocalDate.ofEpochDay(-1L);
 
-    private static final Integer DEFAULT_CONDIZIONE = 0;
-    private static final Integer UPDATED_CONDIZIONE = 1;
-    private static final Integer SMALLER_CONDIZIONE = 0 - 1;
+    private static final Integer DEFAULT_CONDITION = 0;
+    private static final Integer UPDATED_CONDITION = 1;
+    private static final Integer SMALLER_CONDITION = 0 - 1;
 
-    private static final Integer DEFAULT_OMAGGIO = 0;
-    private static final Integer UPDATED_OMAGGIO = 1;
-    private static final Integer SMALLER_OMAGGIO = 0 - 1;
+    private static final Integer DEFAULT_FREE = 0;
+    private static final Integer UPDATED_FREE = 1;
+    private static final Integer SMALLER_FREE = 0 - 1;
 
     @Autowired
     private KForNRepository kForNRepository;
@@ -93,10 +93,10 @@ public class KForNResourceIT {
      */
     public static KForN createEntity(EntityManager em) {
         KForN kForN = new KForN()
-            .inizio(DEFAULT_INIZIO)
-            .fine(DEFAULT_FINE)
-            .condizione(DEFAULT_CONDIZIONE)
-            .omaggio(DEFAULT_OMAGGIO);
+            .start(DEFAULT_START)
+            .end(DEFAULT_END)
+            .condition(DEFAULT_CONDITION)
+            .free(DEFAULT_FREE);
         return kForN;
     }
     /**
@@ -107,10 +107,10 @@ public class KForNResourceIT {
      */
     public static KForN createUpdatedEntity(EntityManager em) {
         KForN kForN = new KForN()
-            .inizio(UPDATED_INIZIO)
-            .fine(UPDATED_FINE)
-            .condizione(UPDATED_CONDIZIONE)
-            .omaggio(UPDATED_OMAGGIO);
+            .start(UPDATED_START)
+            .end(UPDATED_END)
+            .condition(UPDATED_CONDITION)
+            .free(UPDATED_FREE);
         return kForN;
     }
 
@@ -134,10 +134,10 @@ public class KForNResourceIT {
         List<KForN> kForNList = kForNRepository.findAll();
         assertThat(kForNList).hasSize(databaseSizeBeforeCreate + 1);
         KForN testKForN = kForNList.get(kForNList.size() - 1);
-        assertThat(testKForN.getInizio()).isEqualTo(DEFAULT_INIZIO);
-        assertThat(testKForN.getFine()).isEqualTo(DEFAULT_FINE);
-        assertThat(testKForN.getCondizione()).isEqualTo(DEFAULT_CONDIZIONE);
-        assertThat(testKForN.getOmaggio()).isEqualTo(DEFAULT_OMAGGIO);
+        assertThat(testKForN.getStart()).isEqualTo(DEFAULT_START);
+        assertThat(testKForN.getEnd()).isEqualTo(DEFAULT_END);
+        assertThat(testKForN.getCondition()).isEqualTo(DEFAULT_CONDITION);
+        assertThat(testKForN.getFree()).isEqualTo(DEFAULT_FREE);
     }
 
     @Test
@@ -162,10 +162,10 @@ public class KForNResourceIT {
 
     @Test
     @Transactional
-    public void checkInizioIsRequired() throws Exception {
+    public void checkStartIsRequired() throws Exception {
         int databaseSizeBeforeTest = kForNRepository.findAll().size();
         // set the field null
-        kForN.setInizio(null);
+        kForN.setStart(null);
 
         // Create the KForN, which fails.
 
@@ -180,10 +180,10 @@ public class KForNResourceIT {
 
     @Test
     @Transactional
-    public void checkFineIsRequired() throws Exception {
+    public void checkEndIsRequired() throws Exception {
         int databaseSizeBeforeTest = kForNRepository.findAll().size();
         // set the field null
-        kForN.setFine(null);
+        kForN.setEnd(null);
 
         // Create the KForN, which fails.
 
@@ -198,10 +198,10 @@ public class KForNResourceIT {
 
     @Test
     @Transactional
-    public void checkCondizioneIsRequired() throws Exception {
+    public void checkConditionIsRequired() throws Exception {
         int databaseSizeBeforeTest = kForNRepository.findAll().size();
         // set the field null
-        kForN.setCondizione(null);
+        kForN.setCondition(null);
 
         // Create the KForN, which fails.
 
@@ -216,10 +216,10 @@ public class KForNResourceIT {
 
     @Test
     @Transactional
-    public void checkOmaggioIsRequired() throws Exception {
+    public void checkFreeIsRequired() throws Exception {
         int databaseSizeBeforeTest = kForNRepository.findAll().size();
         // set the field null
-        kForN.setOmaggio(null);
+        kForN.setFree(null);
 
         // Create the KForN, which fails.
 
@@ -243,10 +243,10 @@ public class KForNResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(kForN.getId().intValue())))
-            .andExpect(jsonPath("$.[*].inizio").value(hasItem(DEFAULT_INIZIO.toString())))
-            .andExpect(jsonPath("$.[*].fine").value(hasItem(DEFAULT_FINE.toString())))
-            .andExpect(jsonPath("$.[*].condizione").value(hasItem(DEFAULT_CONDIZIONE)))
-            .andExpect(jsonPath("$.[*].omaggio").value(hasItem(DEFAULT_OMAGGIO)));
+            .andExpect(jsonPath("$.[*].start").value(hasItem(DEFAULT_START.toString())))
+            .andExpect(jsonPath("$.[*].end").value(hasItem(DEFAULT_END.toString())))
+            .andExpect(jsonPath("$.[*].condition").value(hasItem(DEFAULT_CONDITION)))
+            .andExpect(jsonPath("$.[*].free").value(hasItem(DEFAULT_FREE)));
     }
     
     @Test
@@ -260,10 +260,10 @@ public class KForNResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(kForN.getId().intValue()))
-            .andExpect(jsonPath("$.inizio").value(DEFAULT_INIZIO.toString()))
-            .andExpect(jsonPath("$.fine").value(DEFAULT_FINE.toString()))
-            .andExpect(jsonPath("$.condizione").value(DEFAULT_CONDIZIONE))
-            .andExpect(jsonPath("$.omaggio").value(DEFAULT_OMAGGIO));
+            .andExpect(jsonPath("$.start").value(DEFAULT_START.toString()))
+            .andExpect(jsonPath("$.end").value(DEFAULT_END.toString()))
+            .andExpect(jsonPath("$.condition").value(DEFAULT_CONDITION))
+            .andExpect(jsonPath("$.free").value(DEFAULT_FREE));
     }
 
     @Test
@@ -287,10 +287,10 @@ public class KForNResourceIT {
         // Disconnect from session so that the updates on updatedKForN are not directly saved in db
         em.detach(updatedKForN);
         updatedKForN
-            .inizio(UPDATED_INIZIO)
-            .fine(UPDATED_FINE)
-            .condizione(UPDATED_CONDIZIONE)
-            .omaggio(UPDATED_OMAGGIO);
+            .start(UPDATED_START)
+            .end(UPDATED_END)
+            .condition(UPDATED_CONDITION)
+            .free(UPDATED_FREE);
 
         restKForNMockMvc.perform(put("/api/k-for-ns")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -301,10 +301,10 @@ public class KForNResourceIT {
         List<KForN> kForNList = kForNRepository.findAll();
         assertThat(kForNList).hasSize(databaseSizeBeforeUpdate);
         KForN testKForN = kForNList.get(kForNList.size() - 1);
-        assertThat(testKForN.getInizio()).isEqualTo(UPDATED_INIZIO);
-        assertThat(testKForN.getFine()).isEqualTo(UPDATED_FINE);
-        assertThat(testKForN.getCondizione()).isEqualTo(UPDATED_CONDIZIONE);
-        assertThat(testKForN.getOmaggio()).isEqualTo(UPDATED_OMAGGIO);
+        assertThat(testKForN.getStart()).isEqualTo(UPDATED_START);
+        assertThat(testKForN.getEnd()).isEqualTo(UPDATED_END);
+        assertThat(testKForN.getCondition()).isEqualTo(UPDATED_CONDITION);
+        assertThat(testKForN.getFree()).isEqualTo(UPDATED_FREE);
     }
 
     @Test

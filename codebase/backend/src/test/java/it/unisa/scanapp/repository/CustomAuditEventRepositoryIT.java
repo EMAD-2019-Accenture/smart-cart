@@ -1,6 +1,6 @@
 package it.unisa.scanapp.repository;
 
-import it.unisa.scanapp.ScanAppBackendApp;
+import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.config.Constants;
 import it.unisa.scanapp.config.audit.AuditEventConverter;
 import it.unisa.scanapp.domain.PersistentAuditEvent;
@@ -27,7 +27,7 @@ import static it.unisa.scanapp.repository.CustomAuditEventRepository.EVENT_DATA_
 /**
  * Integration tests for {@link CustomAuditEventRepository}.
  */
-@SpringBootTest(classes = ScanAppBackendApp.class)
+@SpringBootTest(classes = SmartCartApp.class)
 @Transactional
 public class CustomAuditEventRepositoryIT {
 
