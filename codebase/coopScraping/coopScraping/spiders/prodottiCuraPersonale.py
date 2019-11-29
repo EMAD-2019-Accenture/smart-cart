@@ -25,47 +25,46 @@ class ProdotticurapersonaleSpider(scrapy.Spider):
 
     def get_info(self, response):
 
-        ean = response.css('.ean div.descrizione::text').get()
+        barcode = response.css('.ean div.descrizione::text').get()
 
-        nome = ', '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
-        nome = self.remove_double_quotes(nome)
+        name = ' '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
+        name = self.remove_double_quotes(name)
 
-        marchio = response.css('.manufacturer h1 ::text').get()
-        marchio = self.remove_tabs(marchio)
-        marchio = self.remove_new_lines(marchio)
+        brand = response.css('.manufacturer h1 ::text').get()
+        brand = self.remove_tabs(brand)
+        brand = self.remove_new_lines(brand)
 
-        descrizione = ''.join(response.css('div.description div.descrizione ::text').getall()) + ', '.join(response.css('div.description div.descrizione2 ::text').getall())
-        descrizione = self.remove_tabs(descrizione)
-        descrizione = self.remove_new_lines(descrizione)
-        descrizione = self.remove_double_quotes(descrizione)
+        description = ''.join(response.css('div.description div.descrizione ::text').getall()) + ' '.join(response.css('div.description div.descrizione2 ::text').getall())
+        description = self.remove_tabs(description)
+        description = self.remove_new_lines(description)
+        description = self.remove_double_quotes(description)
 
-        immagine = response.css('#primary_image_id::attr(src)')
-
+        image_url = response.css('#primary_image_id::attr(src)')
         try:
-            immagine = "http://www.catalogoprodotti.coop.it"+immagine.get()
+            image_url = "http://www.catalogoprodotti.coop.it"+immagine.get()
         except:
-            immagine = []
+            image_url = []
 
-        preparazione = ', '.join(response.css('.preparazione div div::text').getall())
-        preparazione = self.remove_double_quotes(preparazione)
+        preparation = ', '.join(response.css('.preparazione div div::text').getall())
+        preparation = self.remove_double_quotes(preparation)
 
-        attributi = [i +': '+ j for i, j in zip( response.css('.productFeatureClasses .attrib::text').getall(), response.css('.productFeatureClasses .borderLeftDashed::text').getall())]
+        attributes = [i +': '+ j for i, j in zip( response.css('.productFeatureClasses .attrib::text').getall(), response.css('.productFeatureClasses .borderLeftDashed::text').getall())]
 
-        attributi = [self.remove_tabs(x) for x in attributi]
-        attributi = [self.remove_new_lines(x) for x in attributi]
-        attributi = ', '.join(attributi)
+        attributes = [self.remove_tabs(x) for x in attributes]
+        attributes = [self.remove_new_lines(x) for x in attributes]
+        attributes = ', '.join(attributes)
 
         yield {
-            'ean': ean,
-            'nome': nome,
-            'marchio': marchio,
-            'descrizione': descrizione,
-            'immagine': immagine,
-            'preparazione': preparazione,
-            'attributi': attributi,
+            'barcode': barcode,
+            'name': name,
+            'brand': brand,
+            'description': description,
+            'image_url': image_url,
+            'preparation': preparation,
+            'attributi': attributes,
         }
 
-        print(marchio + ' - '+nome)
+        print(brand + ' - '+name +' - '+barcode)
 
     def remove_tabs(self, string):
         return string.replace('\t','')
