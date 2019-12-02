@@ -4,6 +4,8 @@ from scrapy_splash import SplashRequest
 
 class AlimentaricoopSpider(scrapy.Spider):
     name = 'alimentariCoop'
+    allergeni = set()
+    alim_dict = dict()
 
     def start_requests(self):
 
@@ -41,64 +43,72 @@ class AlimentaricoopSpider(scrapy.Spider):
         for url in urls:
             yield SplashRequest(url=url, callback=self.get_info,args={'wait':2})
 
-
-    def get_info(self, response):
-
+    def get_info(self, response):        
         barcode = response.css('.ean div.descrizione::text').get()
+        if barcode:
+            if not barcode in self.alim_dict:     
+                self.alim_dict[barcode] = 1
 
-        name = ', '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
-        name = self.remove_double_quotes(name)
+                name = ', '.join(response.css('.manufacturer span ::text').getall()).replace('\"','')
+                name = self.remove_double_quotes(name)
 
-        brand = response.css('.manufacturer h1 ::text').get()
-        brand = self.remove_tabs(brand)
-        brand = self.remove_new_lines(brand)
+                brand = response.css('.manufacturer h1 ::text').get()
+                try:
+                    brand = self.remove_tabs(brand)
+                    brand = self.remove_new_lines(brand)
+                except:
+                    brand = []
 
-        source = ', '.join(response.css('.origini p.descrizione::text').getall())
-        source = self.remove_tabs(source)
-        source = self.remove_new_lines(source)
-        source = self.remove_double_quotes(source)
+                source = ', '.join(response.css('.origini p.descrizione::text').getall())
+                source = self.remove_tabs(source)
+                source = self.remove_new_lines(source)
+                source = self.remove_double_quotes(source)
 
-        description = ''.join(response.css('div.description div.descrizione ::text').getall()) + ', '.join(response.css('div.description div.descrizione2 ::text').getall())
-        description = self.remove_tabs(description)
-        description = self.remove_new_lines(description)
-        description = self.remove_double_quotes(description)
-        
-        ingredients = ''.join(response.css('#div_descrizione_id::text').getall())
-        ingredients = self.remove_double_quotes(ingredients)
+                description = ''.join(response.css('div.description div.descrizione ::text').getall()) + ', '.join(response.css('div.description div.descrizione2 ::text').getall())
+                description = self.remove_tabs(description)
+                description = self.remove_new_lines(description)
+                description = self.remove_double_quotes(description)
+                
+                ingredients = ''.join(response.css('#div_descrizione_id::text').getall())
+                ingredients = self.remove_double_quotes(ingredients)
 
-        image_url = response.css('#primary_image_id::attr(src)')
-        try:
-            image_url = "http://www.catalogoprodotti.coop.it"+immagine.get()
-        except:
-            image_url = []
+                image_url = response.css('#primary_image_id::attr(src)')
+                try:
+                    image_url = "http://www.catalogoprodotti.coop.it"+immagine.get()
+                except:
+                    image_url = []
 
-        conservation = ', '.join(response.css('.conservazione div div::text').getall())
+                conservation = ', '.join(response.css('.conservazione div div::text').getall())
 
-        preparation = ', '.join(response.css('.preparazione div div::text').getall())
-        preparation = self.remove_double_quotes(preparation)
+                preparation = ', '.join(response.css('.preparazione div div::text').getall())
+                preparation = self.remove_double_quotes(preparation)
 
-        nutrients = [i +': '+ j for i, j in zip(response.css('.valori_nutrizionali td.c1::text').getall(),response.css('.valori_nutrizionali td.c2::text').getall())]
+                nutrients = [i +': '+ j for i, j in zip(response.css('.valori_nutrizionali td.c1::text').getall(),response.css('.valori_nutrizionali td.c2::text').getall())]
+                try:
+                    del nutrients[1]
+                    nutrients = ', '.join(nutrients)
+                except:
+                    nutrients = []
+                
+                allergens = response.css('#allergeni_table td::text').getall()
+                allergens = [self.remove_tabs(x) for x in allergens]
+                allergens = [self.remove_new_lines(x) for x in allergens]
 
-        allergens = response.css('#allergeni_table td::text').getall()
-        allergens = [self.remove_tabs(x) for x in allergens]
-        allergens = [self.remove_new_lines(x) for x in allergens]
+                yield {
+                    'barcode': barcode,
+                    'name': name,
+                    'brand': brand,
+                    'source': source,
+                    'description': description,
+                    'ingredients': ingredients,
+                    'image_url': image_url,
+                    'conservation': conservation,
+                    'preparation': preparation,
+                    'nutrients': nutrients,
+                    'allergens': allergens,
+                }
 
-
-        yield {
-            'barcode': barcode,
-            'name': name,
-            'brand': brand,
-            'source': source,
-            'description': description,
-            'ingredients': ingredients,
-            'image_url': image_url,
-            'conservation': conservation,
-            'preparation': preparation,
-            'nutrients': nutrients,
-            'allergens': allergens,
-        }
-
-        print(response.css('.manufacturer span ::text').get())
+                print(name)       
 
     def get_page_product(self, response):
         url = response.url.split("/")[-3]
