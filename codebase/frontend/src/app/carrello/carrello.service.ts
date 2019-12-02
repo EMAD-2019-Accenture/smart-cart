@@ -1,5 +1,6 @@
-import { Carrello } from '../shared/model/carrello';
-import { Articolo } from '../shared/model/articolo';
+import { Cart } from '../shared/model/cart';
+import { Product } from '../shared/model/product';
+import { CartItem } from '../shared/model/cart-item';
 
 export class CarrelloService {
 
@@ -7,51 +8,42 @@ export class CarrelloService {
 
   }
 
-  public makeCarrello(): Carrello {
-    const carrello = new Carrello();
-    let articoli: Array<Articolo>;
-    // Toy da modificare
-    articoli = [
-      {
-        id: '00',
-        nome: 'Mela Coop',
-        prezzo: 50,
-        info: 'ciao'
-      },
-      {
-        id: '01',
-        nome: 'Pera Coop',
-        prezzo: 100,
-        info: 'peppe'
-      }
-    ];
-    carrello.setArticoli(articoli);
+  public makeCarrello(): Cart {
+    const carrello = new Cart();
+    let items: Array<CartItem>;
+    items = new Array<CartItem>();
+    // Aggiungere elementi di test for debugging
+    carrello.setItems(items);
     carrello.setActive(false);
     return carrello;
   }
 
-  public activateCarrello(carrello: Carrello) {
+  public activateCarrello(carrello: Cart) {
     // Aggiornare stato persistente
     carrello.setActive(true);
   }
 
-  public deactivateCarrello(carrello: Carrello) {
+  public deactivateCarrello(carrello: Cart) {
     // Aggiornare stato persistente
     carrello.setActive(false);
   }
 
-  public deleteItem(carrello: Carrello, index: number) {
+  public deleteItem(carrello: Cart, index: number) {
     // Aggiornare stato persistente
-    carrello.getArticoli().splice(index, 1);
+    carrello.getItems().splice(index, 1);
   }
 
-  public increaseItem(carrello: Carrello, index: number) {
+  public increaseItem(carrello: Cart, index: number) {
     // Aggiornare stato persstente
-    // Aumentare quantitò di Voce Carrello
+    const cartItem = carrello.getItems()[index];
+    // Check disponibilità con query
+    cartItem.setQuantity(cartItem.getQuantity() + 1);
   }
 
-  public decreaseItem(carrello: Carrello, index: number) {
+  public decreaseItem(carrello: Cart, index: number) {
     // Aggiornare stato persstente
-    // Aumentare quantitò di Voce Carrello
+    const cartItem = carrello.getItems()[index];
+    // Check se 1
+    cartItem.setQuantity(cartItem.getQuantity() - 1);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Carrello } from '../../shared/model/carrello';
+import { Cart } from '../../shared/model/cart';
 import { CarrelloService } from '../carrello.service';
 import { ScanService } from '../scan.service';
 
@@ -10,7 +10,7 @@ import { ScanService } from '../scan.service';
 })
 export class CarrelloPageComponent implements OnInit {
 
-  carrello: Carrello;
+  carrello: Cart;
 
   constructor(private carrelloService: CarrelloService,
               private scanService: ScanService) {
@@ -30,7 +30,9 @@ export class CarrelloPageComponent implements OnInit {
   }
 
   public startScan() {
-    this.scanService.startScan();
+    const barcode = this.scanService.startScan();
+    // attendere che i dati diventino disponibili (una callback?)
+    // Contattare il service di fetch dei dati dal server
   }
 
   public deleteItem(index: number) {
@@ -38,12 +40,12 @@ export class CarrelloPageComponent implements OnInit {
     this.carrelloService.deleteItem(this.carrello, index);
   }
 
-  public increaseItem(carrello: Carrello, index: number) {
+  public increaseItem(carrello: Cart, index: number) {
     // Aggiornare stato persstente
     this.carrelloService.increaseItem(this.carrello, index);
   }
 
-  public decreaseItem(carrello: Carrello, index: number) {
+  public decreaseItem(carrello: Cart, index: number) {
     // Aggiornare stato persstente
     this.carrelloService.decreaseItem(this.carrello, index);
   }
