@@ -1,8 +1,0 @@
-{
-  "name": "scanApp",
-  "integrations": {
-    "capacitor": {},
-    "cordova": {}
-  },
-  "type": "angular"
-}
