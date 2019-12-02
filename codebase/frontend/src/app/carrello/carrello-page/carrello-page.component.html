@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Carrello</ion-title>
+    <ng-template [ngIf]="carrello.isActive()">
+      <ion-buttons slot="start">
+        <ion-button id="notification-btn" routerLink="./raccomandazioni" routerDirection="forward">
+          <ion-icon name="information-circle"></ion-icon>
+        </ion-button>
+        <!--Serve conoscere il numero di raccomandazioni... forse questa è una componente a parte...-->
+        <ion-badge id="notification-badge" color="danger" style="font-size: xx-small;">2</ion-badge>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="startScan()">
+          <ion-icon slot="icon-only" name="barcode"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-template [ngIf]="!carrello.isActive()">
+    <ion-text class="ion-text-center new-cart-text" color="secondary">
+      <h3>Non hai un carrello</h3>
+      <h1><b>Avvia una sessione di spesa!</b></h1>
+    </ion-text>
+    <div class="vertical-center">
+      <div class="center">
+        <ion-img [src]="'https://www.anartline.com/image/catalog/cartEmpty.png'" class="ion-align-self-end"></ion-img>
+      </div>
+    </div>
+    <section>
+      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="activateCarrello()">Avvia
+        sessione
+        <ion-icon slot="end" name="cart"></ion-icon>
+      </ion-button>
+    </section>
+  </ng-template>
+  <ng-template [ngIf]="carrello.isActive()">
+    <ion-item lines="full" color="light">
+      <ion-thumbnail slot="start">
+        <img src="http://getdrawings.com/free-icon/shopping-cart-icon-transparent-70.png">
+      </ion-thumbnail>
+      <ion-label>Ciao, Acquirente</ion-label>
+      <ion-note slot="end">
+        <div>Totale: <b>40.32 €</b></div>
+        <div>Pezzi: <b>22</b></div>
+      </ion-note>
+    </ion-item>
+    <!--Fare una componente ad hoc? Non penso ce ne sia bisogno...-->
+    <ion-list lines=full>
+      <ion-item-sliding *ngFor="let art of carrello.getArticoli(); let i = index">
+        <ion-item detail>
+          <ion-avatar slot="start">
+            <!-- Serve Immagine effettiva -->
+            <img src="http://www.biofruitservice.com/wp-content/uploads/05-mele.png">
+          </ion-avatar>
+          <ion-label>
+            <h4>{{art.nome}}</h4>
+            <p>{{art.info}}</p>
+          </ion-label>
+          <ion-note slot="end">
+            <!-- Serve quantità effettiva-->
+            Qt.5 <br> {{art.prezzo}} €
+          </ion-note>
+        </ion-item>
+        <ion-item-options side="start">
+          <ion-item-option color="danger" expandable type="reset" (click)="deleteItem(i)"> Delete
+            <ion-icon style="font-size:large" slot="top" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+        <ion-item-options side="end">
+          <ion-item-option color="success" (click)="increaseItem(i)">
+            <ion-icon style="font-size:large" slot="icon-only" name="add-circle"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="medium" (click)="decreaseItem(i)">
+            <ion-icon style="font-size:large" slot="icon-only" name="remove-circle">
+            </ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <section>
+      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="deactivateCarrello()">Chiudi
+        sessione
+        <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+      </ion-button>
+    </section>
+  </ng-template>
+</ion-content>

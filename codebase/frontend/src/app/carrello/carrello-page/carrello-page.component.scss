@@ -1,0 +1,38 @@
+.ion-thumbnail {
+  --border-radius: 1;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.new-cart-text {
+  margin-top: 10vh;
+}
+
+.session-button {
+  margin-bottom: 5vh;
+}
+
+.top-note {
+  font-size: small;
+}
+
+#cartItems ion-note {
+  padding-right: 1vw;
+  font-size: small;
+}
+
+#notification-btn {
+  position: relative;
+}
+
+#notification-badge {
+  font-size: small;
+  position: relative;
+  bottom: 8px;
+  right: 15px;
+}
