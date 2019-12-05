@@ -1,9 +1,24 @@
-import { CartItem } from './cart-item';
+import { CartItem, ICartItem } from './cart-item';
+
+export interface ICart {
+    active: boolean;
+    items: ICartItem[];
+}
 
 export class Cart {
     private active: boolean;
-    // Lista di "voci carrello" e non di articoli
     private items: Array<CartItem>;
+
+    constructor(cart?: ICart) {
+        this.active = false;
+        this.items = new Array<CartItem>();
+        if (cart) {
+            this.active = cart.active;
+            cart.items.forEach(element => {
+                this.items.push(new CartItem(element));
+            });
+        }
+    }
 
     public isActive(): boolean {
         return this.active;

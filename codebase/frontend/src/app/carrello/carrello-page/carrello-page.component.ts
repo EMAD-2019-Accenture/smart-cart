@@ -8,25 +8,34 @@ import { ScanService } from '../scan.service';
   templateUrl: './carrello-page.component.html',
   styleUrls: ['./carrello-page.component.scss'],
 })
+// tslint:disable: align
 export class CarrelloPageComponent implements OnInit {
 
-  carrello: Cart;
+  cart: Cart;
 
   constructor(private carrelloService: CarrelloService,
-              private scanService: ScanService) {
-    this.carrello = this.carrelloService.makeCarrello();
+    private scanService: ScanService) {
+    this.cart = this.carrelloService.makeCarrello();
   }
 
   ngOnInit() {
 
   }
 
-  public activateCarrello() {
-    this.carrelloService.activateCarrello(this.carrello);
+  public activateCart() {
+    this.carrelloService.activateCart(this.cart);
   }
 
-  public deactivateCarrello() {
-    this.carrelloService.deactivateCarrello(this.carrello);
+  public deactivateCart() {
+    this.carrelloService.deactivateCart(this.cart);
+  }
+
+  public getTotalPrice() {
+    return this.carrelloService.getTotalPrice(this.cart);
+  }
+
+  public getTotalQuantity() {
+    return this.carrelloService.getTotalQuantity(this.cart);
   }
 
   public startScan() {
@@ -36,17 +45,14 @@ export class CarrelloPageComponent implements OnInit {
   }
 
   public deleteItem(index: number) {
-    // Aggiornare stato persistente
-    this.carrelloService.deleteItem(this.carrello, index);
+    this.carrelloService.deleteItem(this.cart, index);
   }
 
-  public increaseItem(carrello: Cart, index: number) {
-    // Aggiornare stato persstente
-    this.carrelloService.increaseItem(this.carrello, index);
+  public increaseItem(index: number) {
+    this.carrelloService.increaseItem(this.cart, index);
   }
 
-  public decreaseItem(carrello: Cart, index: number) {
-    // Aggiornare stato persstente
-    this.carrelloService.decreaseItem(this.carrello, index);
+  public decreaseItem(index: number) {
+    this.carrelloService.decreaseItem(this.cart, index);
   }
 }

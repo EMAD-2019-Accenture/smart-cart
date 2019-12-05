@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Carrello</ion-title>
-    <ng-template [ngIf]="carrello.isActive()">
+    <ng-template [ngIf]="cart.isActive()">
       <ion-buttons slot="start">
         <ion-button id="notification-btn" routerLink="./raccomandazioni" routerDirection="forward">
           <ion-icon name="information-circle"></ion-icon>
@@ -19,7 +19,7 @@
 </ion-header>
 
 <ion-content>
-  <ng-template [ngIf]="!carrello.isActive()">
+  <ng-template [ngIf]="!cart.isActive()">
     <ion-text class="ion-text-center new-cart-text" color="secondary">
       <h3>Non hai un carrello</h3>
       <h1><b>Avvia una sessione di spesa!</b></h1>
@@ -30,38 +30,42 @@
       </div>
     </div>
     <section>
-      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="activateCarrello()">Avvia
+      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="activateCart()">Avvia
         sessione
         <ion-icon slot="end" name="cart"></ion-icon>
       </ion-button>
     </section>
   </ng-template>
-  <ng-template [ngIf]="carrello.isActive()">
+  <ng-template [ngIf]="cart.isActive()">
     <ion-item lines="full" color="light">
       <ion-thumbnail slot="start">
         <img src="http://getdrawings.com/free-icon/shopping-cart-icon-transparent-70.png">
       </ion-thumbnail>
       <ion-label>Ciao, Acquirente</ion-label>
       <ion-note slot="end">
-        <div>Totale: <b>40.32 €</b></div>
-        <div>Pezzi: <b>22</b></div>
+        <div>Totale: <b>{{getTotalPrice()}} €</b></div>
+        <div>Pezzi: <b>{{getTotalQuantity()}}</b></div>
       </ion-note>
     </ion-item>
     <!--Fare una componente ad hoc? Non penso ce ne sia bisogno...-->
     <ion-list lines=full>
-      <ion-item-sliding *ngFor="let art of carrello.getArticoli(); let i = index">
+      <ng-template [ngIf]="cart.getItems().length <= 0">
+        <ion-text class="ion-text-center" color="secondary">
+          <h3>Non hai articoli nel carrello</h3>
+        </ion-text>
+      </ng-template>
+      <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index">
         <ion-item detail>
           <ion-avatar slot="start">
-            <!-- Serve Immagine effettiva -->
-            <img src="http://www.biofruitservice.com/wp-content/uploads/05-mele.png">
+            <img src="{{item.getProduct().getImageUrl()}}">
           </ion-avatar>
           <ion-label>
-            <h4>{{art.name}}</h4>
-            <p>{{art.description}}</p>
+            <h4>{{item.getProduct().getName()}}</h4>
+            <p>{{item.getProduct().getDescription()}}</p>
+            <p>{{item.getProduct().getPrice()}} €</p>
           </ion-label>
           <ion-note slot="end">
-            <!-- Serve quantità effettiva-->
-            Qt.5 <br> €
+            x {{item.getQuantity()}}
           </ion-note>
         </ion-item>
         <ion-item-options side="start">
@@ -70,18 +74,18 @@
           </ion-item-option>
         </ion-item-options>
         <ion-item-options side="end">
-          <ion-item-option color="success" (click)="increaseItem(i)">
-            <ion-icon style="font-size:large" slot="icon-only" name="add-circle"></ion-icon>
-          </ion-item-option>
           <ion-item-option color="medium" (click)="decreaseItem(i)">
             <ion-icon style="font-size:large" slot="icon-only" name="remove-circle">
             </ion-icon>
+          </ion-item-option>
+          <ion-item-option color="success" (click)="increaseItem(i)">
+            <ion-icon style="font-size:large" slot="icon-only" name="add-circle"></ion-icon>
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
     <section>
-      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="deactivateCarrello()">Chiudi
+      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="deactivateCart()">Chiudi
         sessione
         <ion-icon slot="end" name="checkmark-circle"></ion-icon>
       </ion-button>
