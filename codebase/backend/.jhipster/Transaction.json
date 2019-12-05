@@ -18,9 +18,9 @@
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "customer",
+            "otherEntityName": "user",
             "otherEntityRelationshipName": "transaction",
-            "relationshipName": "customer",
+            "relationshipName": "user",
             "otherEntityField": "id"
         }
     ],

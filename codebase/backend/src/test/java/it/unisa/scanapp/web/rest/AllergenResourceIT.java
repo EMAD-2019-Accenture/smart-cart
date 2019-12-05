@@ -7,9 +7,12 @@ import it.unisa.scanapp.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -19,11 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.unisa.scanapp.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -36,8 +41,17 @@ public class AllergenResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_IMAGE_URL = "AAAAAAAAAA";
+    private static final String UPDATED_IMAGE_URL = "BBBBBBBBBB";
+
     @Autowired
     private AllergenRepository allergenRepository;
+
+    @Mock
+    private AllergenRepository allergenRepositoryMock;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -78,7 +92,9 @@ public class AllergenResourceIT {
      */
     public static Allergen createEntity(EntityManager em) {
         Allergen allergen = new Allergen()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .description(DEFAULT_DESCRIPTION)
+            .imageUrl(DEFAULT_IMAGE_URL);
         return allergen;
     }
     /**
@@ -89,7 +105,9 @@ public class AllergenResourceIT {
      */
     public static Allergen createUpdatedEntity(EntityManager em) {
         Allergen allergen = new Allergen()
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .imageUrl(UPDATED_IMAGE_URL);
         return allergen;
     }
 
@@ -114,6 +132,8 @@ public class AllergenResourceIT {
         assertThat(allergenList).hasSize(databaseSizeBeforeCreate + 1);
         Allergen testAllergen = allergenList.get(allergenList.size() - 1);
         assertThat(testAllergen.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testAllergen.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testAllergen.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
     }
 
     @Test
@@ -156,6 +176,24 @@ public class AllergenResourceIT {
 
     @Test
     @Transactional
+    public void checkDescriptionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = allergenRepository.findAll().size();
+        // set the field null
+        allergen.setDescription(null);
+
+        // Create the Allergen, which fails.
+
+        restAllergenMockMvc.perform(post("/api/allergens")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(allergen)))
+            .andExpect(status().isBadRequest());
+
+        List<Allergen> allergenList = allergenRepository.findAll();
+        assertThat(allergenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllAllergens() throws Exception {
         // Initialize the database
         allergenRepository.saveAndFlush(allergen);
@@ -165,9 +203,44 @@ public class AllergenResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(allergen.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllAllergensWithEagerRelationshipsIsEnabled() throws Exception {
+        AllergenResource allergenResource = new AllergenResource(allergenRepositoryMock);
+        when(allergenRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restAllergenMockMvc = MockMvcBuilders.standaloneSetup(allergenResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restAllergenMockMvc.perform(get("/api/allergens?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(allergenRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllAllergensWithEagerRelationshipsIsNotEnabled() throws Exception {
+        AllergenResource allergenResource = new AllergenResource(allergenRepositoryMock);
+            when(allergenRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restAllergenMockMvc = MockMvcBuilders.standaloneSetup(allergenResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restAllergenMockMvc.perform(get("/api/allergens?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(allergenRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getAllergen() throws Exception {
@@ -179,7 +252,9 @@ public class AllergenResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(allergen.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL.toString()));
     }
 
     @Test
@@ -203,7 +278,9 @@ public class AllergenResourceIT {
         // Disconnect from session so that the updates on updatedAllergen are not directly saved in db
         em.detach(updatedAllergen);
         updatedAllergen
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .imageUrl(UPDATED_IMAGE_URL);
 
         restAllergenMockMvc.perform(put("/api/allergens")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -215,6 +292,8 @@ public class AllergenResourceIT {
         assertThat(allergenList).hasSize(databaseSizeBeforeUpdate);
         Allergen testAllergen = allergenList.get(allergenList.size() - 1);
         assertThat(testAllergen.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testAllergen.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testAllergen.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
     }
 
     @Test

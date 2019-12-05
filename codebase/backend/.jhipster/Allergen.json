@@ -7,22 +7,33 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "imageUrl",
+            "fieldType": "String"
         }
     ],
     "relationships": [
         {
             "relationshipType": "many-to-many",
-            "otherEntityName": "product",
+            "otherEntityName": "user",
             "otherEntityRelationshipName": "allergen",
-            "relationshipName": "product",
+            "relationshipName": "user",
             "otherEntityField": "id",
-            "ownerSide": false
+            "ownerSide": true
         },
         {
             "relationshipType": "many-to-many",
-            "otherEntityName": "customer",
+            "otherEntityName": "product",
             "otherEntityRelationshipName": "allergen",
-            "relationshipName": "customer",
+            "relationshipName": "product",
             "otherEntityField": "id",
             "ownerSide": false
         }

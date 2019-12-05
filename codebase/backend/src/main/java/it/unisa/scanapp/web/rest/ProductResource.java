@@ -116,4 +116,12 @@ public class ProductResource {
         productRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
+
+
+    @GetMapping("/products/scan/{barcode}")
+    public ResponseEntity<Product> scanProduct(@PathVariable String barcode){
+        log.debug("REST request to get Product with barcode: {}", barcode);
+        Optional<Product> scannedProduct = productRepository.findOneByBarcodeWithEagerRelationships(barcode);
+        return ResponseUtil.wrapOrNotFound(scannedProduct);
+    }
 }

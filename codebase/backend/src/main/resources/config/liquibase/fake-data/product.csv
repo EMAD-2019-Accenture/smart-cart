@@ -1,1 +1,1 @@
-id;barcode;description;price;brand;amount;image_url;source;ingredients;conservation;preparation;nutrients
+id;barcode;name;description;price;brand;amount;image_url;source;ingredients;conservation;preparation;nutrients

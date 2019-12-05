@@ -19,6 +19,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
@@ -40,6 +41,9 @@ public class ProductResourceIT {
 
     private static final String DEFAULT_BARCODE = "1645290541801";
     private static final String UPDATED_BARCODE = "2076256663897";
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -119,6 +123,7 @@ public class ProductResourceIT {
     public static Product createEntity(EntityManager em) {
         Product product = new Product()
             .barcode(DEFAULT_BARCODE)
+            .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .price(DEFAULT_PRICE)
             .brand(DEFAULT_BRAND)
@@ -140,6 +145,7 @@ public class ProductResourceIT {
     public static Product createUpdatedEntity(EntityManager em) {
         Product product = new Product()
             .barcode(UPDATED_BARCODE)
+            .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .price(UPDATED_PRICE)
             .brand(UPDATED_BRAND)
@@ -174,6 +180,7 @@ public class ProductResourceIT {
         assertThat(productList).hasSize(databaseSizeBeforeCreate + 1);
         Product testProduct = productList.get(productList.size() - 1);
         assertThat(testProduct.getBarcode()).isEqualTo(DEFAULT_BARCODE);
+        assertThat(testProduct.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testProduct.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testProduct.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testProduct.getBrand()).isEqualTo(DEFAULT_BRAND);
@@ -226,10 +233,10 @@ public class ProductResourceIT {
 
     @Test
     @Transactional
-    public void checkDescriptionIsRequired() throws Exception {
+    public void checkNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = productRepository.findAll().size();
         // set the field null
-        product.setDescription(null);
+        product.setName(null);
 
         // Create the Product, which fails.
 
@@ -290,6 +297,7 @@ public class ProductResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(product.getId().intValue())))
             .andExpect(jsonPath("$.[*].barcode").value(hasItem(DEFAULT_BARCODE.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].brand").value(hasItem(DEFAULT_BRAND.toString())))
@@ -347,6 +355,7 @@ public class ProductResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(product.getId().intValue()))
             .andExpect(jsonPath("$.barcode").value(DEFAULT_BARCODE.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
             .andExpect(jsonPath("$.brand").value(DEFAULT_BRAND.toString()))
@@ -381,6 +390,7 @@ public class ProductResourceIT {
         em.detach(updatedProduct);
         updatedProduct
             .barcode(UPDATED_BARCODE)
+            .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .price(UPDATED_PRICE)
             .brand(UPDATED_BRAND)
@@ -402,6 +412,7 @@ public class ProductResourceIT {
         assertThat(productList).hasSize(databaseSizeBeforeUpdate);
         Product testProduct = productList.get(productList.size() - 1);
         assertThat(testProduct.getBarcode()).isEqualTo(UPDATED_BARCODE);
+        assertThat(testProduct.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testProduct.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testProduct.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testProduct.getBrand()).isEqualTo(UPDATED_BRAND);

@@ -82,13 +82,13 @@ public class AllergenResource {
     /**
      * {@code GET  /allergens} : get all the allergens.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of allergens in body.
      */
     @GetMapping("/allergens")
-    public List<Allergen> getAllAllergens() {
+    public List<Allergen> getAllAllergens(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Allergens");
-        return allergenRepository.findAll();
+        return allergenRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -100,7 +100,7 @@ public class AllergenResource {
     @GetMapping("/allergens/{id}")
     public ResponseEntity<Allergen> getAllergen(@PathVariable Long id) {
         log.debug("REST request to get Allergen : {}", id);
-        Optional<Allergen> allergen = allergenRepository.findById(id);
+        Optional<Allergen> allergen = allergenRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(allergen);
     }
 

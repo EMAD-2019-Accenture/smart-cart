@@ -13,7 +13,7 @@ import java.util.Set;
  * A Transaction.
  */
 @Entity
-@Table(name = "c_trasac")
+@Table(name = "jhi_trans")
 public class Transaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class Transaction implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("transactions")
-    private Customer customer;
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -81,17 +81,17 @@ public class Transaction implements Serializable {
         this.products = products;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public Transaction customer(Customer customer) {
-        this.customer = customer;
+    public Transaction user(User user) {
+        this.user = user;
         return this;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

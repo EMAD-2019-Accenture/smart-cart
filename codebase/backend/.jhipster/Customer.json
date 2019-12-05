@@ -30,20 +30,6 @@
             "relationshipName": "user",
             "otherEntityField": "id",
             "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "transaction",
-            "otherEntityRelationshipName": "customer",
-            "relationshipName": "transaction"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "allergen",
-            "otherEntityRelationshipName": "customer",
-            "relationshipName": "allergen",
-            "otherEntityField": "id",
-            "ownerSide": true
         }
     ],
     "changelogDate": "20191129085650",

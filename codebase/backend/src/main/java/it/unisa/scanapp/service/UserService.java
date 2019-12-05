@@ -2,8 +2,10 @@ package it.unisa.scanapp.service;
 
 import it.unisa.scanapp.config.Constants;
 import it.unisa.scanapp.domain.Authority;
+import it.unisa.scanapp.domain.Customer;
 import it.unisa.scanapp.domain.User;
 import it.unisa.scanapp.repository.AuthorityRepository;
+import it.unisa.scanapp.repository.CustomerRepository;
 import it.unisa.scanapp.repository.UserRepository;
 import it.unisa.scanapp.security.AuthoritiesConstants;
 import it.unisa.scanapp.security.SecurityUtils;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -42,11 +45,14 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final CustomerRepository customerRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager, CustomerRepository customerRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.customerRepository = customerRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -86,7 +92,7 @@ public class UserService {
             });
     }
 
-    public User registerUser(UserDTO userDTO, String password) {
+    public User registerUser(UserDTO userDTO, String password, LocalDate birth, String nationality, Boolean vegan, Boolean vegetarian, Boolean celiac) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -119,6 +125,17 @@ public class UserService {
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
+
+        //customer info
+        Customer customer = new Customer();
+        customer.setBirth(birth);
+        customer.setCeliac(celiac);
+        customer.setVegan(vegan);
+        customer.setVegetarian(vegetarian);
+        customer.setNationality(nationality);
+        customerRepository.save(customer);
+        log.debug("Created Information for Customer: {}", customer);
+
         return newUser;
     }
 

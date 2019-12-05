@@ -1,16 +1,17 @@
 
 entity Product {
   barcode String required pattern(/^\d{13}$/)
-  description String required
+  name String required
+  description TextBlob required
   price Double required min(0)
   brand String required
   amount Integer min(0)
   imageUrl String
   source String 
-  ingredients String 
-  conservation String 
-  preparation String
-  nutrients String
+  ingredients TextBlob 
+  conservation TextBlob 
+  preparation TextBlob
+  nutrients TextBlob
 }
 
 entity Category{
@@ -60,20 +61,25 @@ entity Transaction {
 
 entity Allergen {
 	name String required
+    description String required
+    imageUrl String
 }
 
 relationship ManyToOne{
 	Product to Discount, 
     Product to PercentDiscount,
     Product to KForN,
+    Transaction to User
 }
 
 relationship OneToMany {
 	Transaction to Product,
-    Customer to Transaction
 }
 
 relationship ManyToMany{
 	Product to Allergen,
-    Customer to Allergen
+    Allergen{user} to User
 }
+
+
+

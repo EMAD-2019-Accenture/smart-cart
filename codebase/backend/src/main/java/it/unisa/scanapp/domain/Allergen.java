@@ -26,13 +26,22 @@ public class Allergen implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "allergens")
-    @JsonIgnore
-    private Set<Product> products = new HashSet<>();
+    @NotNull
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @ManyToMany
+    @JoinTable(name = "allergen_user",
+               joinColumns = @JoinColumn(name = "allergen_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "allergens")
     @JsonIgnore
-    private Set<Customer> customers = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -54,6 +63,55 @@ public class Allergen implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Allergen description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Allergen imageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Allergen users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Allergen addUser(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public Allergen removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Set<Product> getProducts() {
@@ -80,31 +138,6 @@ public class Allergen implements Serializable {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
-
-    public Set<Customer> getCustomers() {
-        return customers;
-    }
-
-    public Allergen customers(Set<Customer> customers) {
-        this.customers = customers;
-        return this;
-    }
-
-    public Allergen addCustomer(Customer customer) {
-        this.customers.add(customer);
-        customer.getAllergens().add(this);
-        return this;
-    }
-
-    public Allergen removeCustomer(Customer customer) {
-        this.customers.remove(customer);
-        customer.getAllergens().remove(this);
-        return this;
-    }
-
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -128,6 +161,8 @@ public class Allergen implements Serializable {
         return "Allergen{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", imageUrl='" + getImageUrl() + "'" +
             "}";
     }
 }

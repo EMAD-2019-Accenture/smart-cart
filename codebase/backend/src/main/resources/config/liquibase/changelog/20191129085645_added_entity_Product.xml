@@ -18,7 +18,10 @@
             <column name="barcode" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="varchar(255)">
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="${clobType}">
                 <constraints nullable="false" />
             </column>
             <column name="price" type="double">
@@ -36,16 +39,16 @@
             <column name="source" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="ingredients" type="varchar(255)">
+            <column name="ingredients" type="${clobType}">
                 <constraints nullable="true" />
             </column>
-            <column name="conservation" type="varchar(255)">
+            <column name="conservation" type="${clobType}">
                 <constraints nullable="true" />
             </column>
-            <column name="preparation" type="varchar(255)">
+            <column name="preparation" type="${clobType}">
                 <constraints nullable="true" />
             </column>
-            <column name="nutrients" type="varchar(255)">
+            <column name="nutrients" type="${clobType}">
                 <constraints nullable="true" />
             </column>
             <column name="discount_id" type="bigint">
@@ -95,16 +98,17 @@
                   tableName="product">
             <column name="id" type="numeric"/>
             <column name="barcode" type="string"/>
-            <column name="description" type="string"/>
+            <column name="name" type="string"/>
+            <column name="description" type="clob"/>
             <column name="price" type="numeric"/>
             <column name="brand" type="string"/>
             <column name="amount" type="numeric"/>
             <column name="image_url" type="string"/>
             <column name="source" type="string"/>
-            <column name="ingredients" type="string"/>
-            <column name="conservation" type="string"/>
-            <column name="preparation" type="string"/>
-            <column name="nutrients" type="string"/>
+            <column name="ingredients" type="clob"/>
+            <column name="conservation" type="clob"/>
+            <column name="preparation" type="clob"/>
+            <column name="nutrients" type="clob"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

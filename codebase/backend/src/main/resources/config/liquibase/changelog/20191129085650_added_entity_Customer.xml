@@ -39,17 +39,6 @@
 
     <changeSet id="20191129085650-1-relations" author="jhipster">
 
-        <createTable tableName="customer_allergen">
-            <column name="allergen_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="customer_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="customer_id, allergen_id" tableName="customer_allergen"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

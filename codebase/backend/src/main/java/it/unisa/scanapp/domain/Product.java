@@ -28,6 +28,11 @@ public class Product implements Serializable {
     private String barcode;
 
     @NotNull
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    
+    @Lob
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -50,15 +55,19 @@ public class Product implements Serializable {
     @Column(name = "source")
     private String source;
 
+    @Lob
     @Column(name = "ingredients")
     private String ingredients;
 
+    @Lob
     @Column(name = "conservation")
     private String conservation;
 
+    @Lob
     @Column(name = "preparation")
     private String preparation;
 
+    @Lob
     @Column(name = "nutrients")
     private String nutrients;
 
@@ -107,6 +116,19 @@ public class Product implements Serializable {
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Product name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -363,6 +385,7 @@ public class Product implements Serializable {
         return "Product{" +
             "id=" + getId() +
             ", barcode='" + getBarcode() + "'" +
+            ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", price=" + getPrice() +
             ", brand='" + getBrand() + "'" +

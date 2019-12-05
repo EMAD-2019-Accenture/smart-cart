@@ -4,8 +4,6 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Customer.
@@ -17,8 +15,6 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "birth")
@@ -37,17 +33,8 @@ public class Customer implements Serializable {
     private Boolean celiac;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @MapsId
     private User user;
-
-    @OneToMany(mappedBy = "customer")
-    private Set<Transaction> transactions = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "customer_allergen",
-               joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "allergen_id", referencedColumnName = "id"))
-    private Set<Allergen> allergens = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -134,56 +121,6 @@ public class Customer implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public Customer transactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-        return this;
-    }
-
-    public Customer addTransaction(Transaction transaction) {
-        this.transactions.add(transaction);
-        transaction.setCustomer(this);
-        return this;
-    }
-
-    public Customer removeTransaction(Transaction transaction) {
-        this.transactions.remove(transaction);
-        transaction.setCustomer(null);
-        return this;
-    }
-
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
-
-    public Set<Allergen> getAllergens() {
-        return allergens;
-    }
-
-    public Customer allergens(Set<Allergen> allergens) {
-        this.allergens = allergens;
-        return this;
-    }
-
-    public Customer addAllergen(Allergen allergen) {
-        this.allergens.add(allergen);
-        allergen.getCustomers().add(this);
-        return this;
-    }
-
-    public Customer removeAllergen(Allergen allergen) {
-        this.allergens.remove(allergen);
-        allergen.getCustomers().remove(this);
-        return this;
-    }
-
-    public void setAllergens(Set<Allergen> allergens) {
-        this.allergens = allergens;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
