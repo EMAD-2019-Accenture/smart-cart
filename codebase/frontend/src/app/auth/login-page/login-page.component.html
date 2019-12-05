@@ -1,3 +1,36 @@
-<p>
-  login-page works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="login-form">
+    <ion-grid>
+      <ion-row color="primary" class="ion-justify-content-center">
+        <ion-col class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
+            <h1>Login to your account!</h1>
+          </div>
+          <div class="ion-padding">
+            <ion-item>
+              <ion-input class="ion-padding" name="name" type="text" placeholder="Name" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input class="ion-padding" name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+            </ion-item>
+            <ion-item >
+              <ion-input class="ion-padding" name="password" type="password" placeholder="Password" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input class="ion-padding" name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
+            </ion-item>
+          </div>
+          <div class="ion-padding">
+            <ion-button  class="login-button" size="large" type="submit" expand="block" shape="round" >Login &nbsp;<ion-icon name="log-in" slot="end"></ion-icon></ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
