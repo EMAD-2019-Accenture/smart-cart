@@ -6,6 +6,9 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageComponent } from './login-page/login-page.component';
 
 import { AuthService } from './auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent }
@@ -16,7 +19,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
+    FormsModule
   ],
   providers: [
     AuthService
