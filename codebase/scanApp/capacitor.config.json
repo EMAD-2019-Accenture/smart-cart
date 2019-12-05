@@ -1,9 +1,0 @@
-{
-  "appId": "io.ionic.starter",
-  "appName": "scanApp",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh",
-  "cordova": {}
-}
