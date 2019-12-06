@@ -14,23 +14,30 @@ export class CarrelloService {
     const cart = new Cart();
     const items: Array<CartItem> = new Array<CartItem>();
 
-    let token: string;
+
     this.storage.get('ACCESS_TOKEN')
-      .then(response => {
-        console.log('Recuperato dallo storage' + response);
-        token = response;
+      .then(token => {
+        console.log('Recuperato dallo storage' + token);
+
+
+        const options = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+            'Access-Control-Allow-Origin': 'http://localhost:8100'
+          })
+        };
+
+        console.log(options);
+
+        this.http.get('http://localhost:8080/api/allergens', options).subscribe(response => {
+          console.log(response);
+        });
+
+
       });
 
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer' + token
-      })
-    };
 
-    this.http.get('localhost:8080/api/allergens', options).subscribe(response => {
-      console.log(response);
-    });
 
     // DEBUG ONLY - Must be removed
     const itemJs: ICartItem = {

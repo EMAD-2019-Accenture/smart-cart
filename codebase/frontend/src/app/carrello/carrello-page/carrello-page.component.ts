@@ -15,6 +15,7 @@ export class CarrelloPageComponent implements OnInit {
 
   constructor(private carrelloService: CarrelloService,
     private scanService: ScanService) {
+    console.log('Make carrello')
     this.cart = this.carrelloService.makeCarrello();
   }
 
