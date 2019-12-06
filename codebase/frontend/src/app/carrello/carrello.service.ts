@@ -1,45 +1,18 @@
 import { Cart } from '../shared/model/cart';
 import { CartItem, ICartItem } from '../shared/model/cart-item';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
 
 // tslint:disable: max-line-length
 export class CarrelloService {
 
-  constructor(private http: HttpClient, private storage: Storage) {
+  constructor() {
 
   }
 
-  public makeCarrello(): Cart {
+  // DEBUG Helper function
+  private mockCart() {
     const cart = new Cart();
+    // Convert into Array of cartItem
     const items: Array<CartItem> = new Array<CartItem>();
-
-
-    this.storage.get('ACCESS_TOKEN')
-      .then(token => {
-        console.log('Recuperato dallo storage' + token);
-
-
-        const options = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
-            'Access-Control-Allow-Origin': 'http://localhost:8100'
-          })
-        };
-
-        console.log(options);
-
-        this.http.get('http://localhost:8080/api/allergens', options).subscribe(response => {
-          console.log(response);
-        });
-
-
-      });
-
-
-
-    // DEBUG ONLY - Must be removed
     const itemJs: ICartItem = {
       product: {
         barcode: '2148693000000',
@@ -60,10 +33,13 @@ export class CarrelloService {
     };
     const item: CartItem = new CartItem(itemJs);
     items.push(item);
-
+    cart.setActive(true);
     cart.setItems(items);
-    cart.setActive(false);
     return cart;
+  }
+
+  public makeCart(): Cart {
+    return this.mockCart();
   }
 
   public activateCart(cart: Cart) {
@@ -100,6 +76,7 @@ export class CarrelloService {
 
   public increaseItem(cart: Cart, index: number) {
     const cartItem = cart.getItems()[index];
+    // Ci vuole?
     if (cartItem.getQuantity() < cartItem.getProduct().getAmount()) {
       cartItem.setQuantity(cartItem.getQuantity() + 1);
     } else {

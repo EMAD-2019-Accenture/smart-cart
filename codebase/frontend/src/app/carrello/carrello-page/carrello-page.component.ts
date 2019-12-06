@@ -15,8 +15,7 @@ export class CarrelloPageComponent implements OnInit {
 
   constructor(private carrelloService: CarrelloService,
     private scanService: ScanService) {
-    console.log('Make carrello')
-    this.cart = this.carrelloService.makeCarrello();
+    this.cart = this.carrelloService.makeCart();
   }
 
   ngOnInit() {
@@ -40,9 +39,8 @@ export class CarrelloPageComponent implements OnInit {
   }
 
   public startScan() {
-    const barcode = this.scanService.startScan();
-    // attendere che i dati diventino disponibili (una callback?)
-    // Contattare il service di fetch dei dati dal server
+    const product = this.scanService.startScan();
+    // TODO come attendere che i dati diventino disponibili?
   }
 
   public deleteItem(index: number) {
