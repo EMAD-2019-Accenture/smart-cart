@@ -1,6 +1,12 @@
 import { Allergen, IAllergen } from './allergen';
+import { ICategory, Category } from './category';
+import { IDiscount, Discount } from './discount';
+import { IPercentDiscount, PercentDiscount } from './percent-discount';
+import { IKForN, KForN } from './k-for-n';
+import { ITransaction, Transaction } from './transaction';
 
 export interface IProduct {
+    id: number;
     barcode: string;
     name: string;
     description: string;
@@ -13,10 +19,16 @@ export interface IProduct {
     conservation: string;
     preparation: string;
     nutrients: string;
+    categories: ICategory[];
+    discount: IDiscount;
+    percentDiscount: IPercentDiscount;
     allergens: IAllergen[];
+    kForN: IKForN;
+    transaction: ITransaction;
 }
 
 export class Product {
+    private id: number;
     private barcode: string;
     private name: string;
     private description: string;
@@ -29,11 +41,18 @@ export class Product {
     private conservation: string;
     private preparation: string;
     private nutrients: string;
+    private categories: Array<Category>;
+    private discount: Discount;
+    private percentDiscount: PercentDiscount;
     private allergens: Array<Allergen>;
+    private kForN: KForN;
+    private transaction: Transaction;
 
     constructor(product?: IProduct) {
+        this.categories = new Array<Category>();
         this.allergens = new Array<Allergen>();
         if (product) {
+            this.id = product.id;
             this.barcode = product.barcode;
             this.name = product.name;
             this.description = product.description;
@@ -46,10 +65,29 @@ export class Product {
             this.conservation = product.conservation;
             this.preparation = product.preparation;
             this.nutrients = product.nutrients;
-            product.allergens.forEach(element => {
-                this.allergens.push(new Allergen(element));
-            });
+            if (product.categories != null) {
+                product.categories.forEach(element => {
+                    this.categories.push(new Category(element));
+                });
+            }
+            this.discount = new Discount(product.discount);
+            this.percentDiscount = new PercentDiscount(product.percentDiscount);
+            if (product.allergens != null) {
+                product.allergens.forEach(element => {
+                    this.allergens.push(new Allergen(element));
+                });
+            }
+            this.kForN = new KForN(product.kForN);
+            this.transaction = new Transaction(product.transaction);
         }
+    }
+
+    public getId(): number {
+        return this.id;
+    }
+
+    public setId(id: number): void {
+        this.id = id;
     }
 
     public getBarcode(): string {
@@ -148,6 +186,30 @@ export class Product {
         this.nutrients = nutrients;
     }
 
+    public getCategories(): Array<Category> {
+        return this.categories;
+    }
+
+    public setCategories(categories: Array<Category>): void {
+        this.categories = categories;
+    }
+
+    public getDiscount(): Discount {
+        return this.discount;
+    }
+
+    public setDiscount(discount: Discount): void {
+        this.discount = discount;
+    }
+
+    public getPercentDiscount(): PercentDiscount {
+        return this.percentDiscount;
+    }
+
+    public setPercentDiscount(percentDiscount: PercentDiscount): void {
+        this.percentDiscount = percentDiscount;
+    }
+
     public getAllergens(): Array<Allergen> {
         return this.allergens;
     }
@@ -156,4 +218,19 @@ export class Product {
         this.allergens = allergens;
     }
 
+    public getKForN(): KForN {
+        return this.kForN;
+    }
+
+    public setKForN(kForN: KForN): void {
+        this.kForN = kForN;
+    }
+
+    public getTransaction(): Transaction {
+        return this.transaction;
+    }
+
+    public setTransaction(transaction: Transaction): void {
+        this.transaction = transaction;
+    }
 }

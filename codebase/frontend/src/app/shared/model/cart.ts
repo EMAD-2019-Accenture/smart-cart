@@ -1,11 +1,13 @@
 import { CartItem, ICartItem } from './cart-item';
 
 export interface ICart {
+    id: number;
     active: boolean;
     items: ICartItem[];
 }
 
 export class Cart {
+    private id: number;
     private active: boolean;
     private items: Array<CartItem>;
 
@@ -13,11 +15,19 @@ export class Cart {
         this.active = false;
         this.items = new Array<CartItem>();
         if (cart) {
+            this.id = cart.id;
             this.active = cart.active;
             cart.items.forEach(element => {
                 this.items.push(new CartItem(element));
             });
         }
+    }
+
+    public getId(): number {
+        return this.id;
+    }
+    public setId(id: number) {
+        this.id = id;
     }
 
     public isActive(): boolean {
@@ -36,4 +46,3 @@ export class Cart {
         this.items = items;
     }
 }
-
