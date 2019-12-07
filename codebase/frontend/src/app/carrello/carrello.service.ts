@@ -42,7 +42,6 @@ export class CarrelloService {
               users: null
             }
           ],
-          transaction: null,
           kForN: null
         },
         quantity: 10

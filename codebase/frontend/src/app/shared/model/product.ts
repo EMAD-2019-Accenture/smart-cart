@@ -3,7 +3,6 @@ import { ICategory, Category } from './category';
 import { IDiscount, Discount } from './discount';
 import { IPercentDiscount, PercentDiscount } from './percent-discount';
 import { IKForN, KForN } from './k-for-n';
-import { ITransaction, Transaction } from './transaction';
 
 export interface IProduct {
     id: number;
@@ -24,7 +23,6 @@ export interface IProduct {
     percentDiscount: IPercentDiscount;
     allergens: IAllergen[];
     kForN: IKForN;
-    transaction: ITransaction;
 }
 
 export class Product {
@@ -46,7 +44,6 @@ export class Product {
     private percentDiscount: PercentDiscount;
     private allergens: Array<Allergen>;
     private kForN: KForN;
-    private transaction: Transaction;
 
     constructor(product?: IProduct) {
         this.categories = new Array<Category>();
@@ -78,7 +75,6 @@ export class Product {
                 });
             }
             this.kForN = new KForN(product.kForN);
-            this.transaction = new Transaction(product.transaction);
         }
     }
 
@@ -224,13 +220,5 @@ export class Product {
 
     public setKForN(kForN: KForN): void {
         this.kForN = kForN;
-    }
-
-    public getTransaction(): Transaction {
-        return this.transaction;
-    }
-
-    public setTransaction(transaction: Transaction): void {
-        this.transaction = transaction;
     }
 }

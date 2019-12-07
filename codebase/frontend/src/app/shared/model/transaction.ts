@@ -5,18 +5,25 @@ export interface ITransaction {
     id: number;
     date: Date;
     user: IUser;
+    products: IProduct[];
 }
 
 export class Transaction {
     private id: number;
     private date: Date;
     private user: User;
+    private products: Array<Product>;
 
     constructor(transaction?: ITransaction) {
         if (transaction) {
             this.id = transaction.id;
             this.date = transaction.date;
             this.user = new User(transaction.user);
+            if (transaction.products != null) {
+                transaction.products.forEach(element => {
+                    this.products.push(new Product(element));
+                });
+            }
         }
     }
 
