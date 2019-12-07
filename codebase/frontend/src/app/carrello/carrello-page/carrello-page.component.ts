@@ -40,7 +40,7 @@ export class CarrelloPageComponent implements OnInit {
 
   public startScan() {
     const product = this.scanService.startScan();
-    // TODO come attendere che i dati diventino disponibili?
+    // Bisogna trovare un modo per mostrare la pagina dell'articolo
   }
 
   public deleteItem(index: number) {

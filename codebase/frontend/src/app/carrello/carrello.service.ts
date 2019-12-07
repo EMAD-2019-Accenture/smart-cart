@@ -1,5 +1,6 @@
 import { Cart } from '../shared/model/cart';
 import { CartItem, ICartItem } from '../shared/model/cart-item';
+import { isDevMode } from '@angular/core';
 
 // tslint:disable: max-line-length
 export class CarrelloService {
@@ -13,26 +14,28 @@ export class CarrelloService {
     const cart = new Cart();
     // Convert into Array of cartItem
     const items: Array<CartItem> = new Array<CartItem>();
-    const itemJs: ICartItem = {
-      product: {
-        barcode: '2148693000000',
-        name: ' Spiedini rustici di suino Italiano',
-        description: 'Origine, Tracciabilità totale - Filiera di qualità, - Senza glutine, - Alimentazione no OGM*, - Confezionato in atmosfera protettiva, *Relativa alla carne di suino',
-        price: 20,
-        brand: 'ORIGINE',
-        amount: 100,
-        imageUrl: '',
-        source: '',
-        ingredients: 'Salsiccia di suino 45% (carne di suino, acqua, sale iodato (sale, iodato di potassio 0,007%), pepe, zucchero, destrosio da mais, aromi naturali, antiossidante: acido ascorbico, ascorbato di sodio; correttore di acidità: citrato di sodio), Carne di suino 37%, Peperone 16%',
-        conservation: 'CONSERVARE IN FRIGORIFERO DA 0°C A +4°C',
-        preparation: 'Da consumare previa cottura., Suggerimenti per l\'uso, - Piastra pronti in 15 minuti., - Padella pronti in 15 minuti., - Griglia pronti in 15 minuti., - Forno pronti in 15/20 minuti a 180°., I tempi di cottura sono indicativi. Controlla la cottura e regolati secondo il tuo gradimento.',
-        nutrients: 'Energia: 573 kJ, Grassi: 7,5 g, di cui acidi grassi saturi: 3 g, Carboidrati: 0,9 g, di cui zuccheri: 0,6 g, Fibre: 0,4 g, Proteine: 17 g, Sale: 0,3 g',
-        allergens: []
-      },
-      quantity: 10
-    };
-    const item: CartItem = new CartItem(itemJs);
-    items.push(item);
+    if (isDevMode()) {
+      const itemJs: ICartItem = {
+        product: {
+          barcode: '2148693000000',
+          name: ' Spiedini rustici di suino Italiano',
+          description: 'Origine, Tracciabilità totale - Filiera di qualità, - Senza glutine, - Alimentazione no OGM*, - Confezionato in atmosfera protettiva, *Relativa alla carne di suino',
+          price: 20,
+          brand: 'ORIGINE',
+          amount: 100,
+          imageUrl: '',
+          source: '',
+          ingredients: 'Salsiccia di suino 45% (carne di suino, acqua, sale iodato (sale, iodato di potassio 0,007%), pepe, zucchero, destrosio da mais, aromi naturali, antiossidante: acido ascorbico, ascorbato di sodio; correttore di acidità: citrato di sodio), Carne di suino 37%, Peperone 16%',
+          conservation: 'CONSERVARE IN FRIGORIFERO DA 0°C A +4°C',
+          preparation: 'Da consumare previa cottura., Suggerimenti per l\'uso, - Piastra pronti in 15 minuti., - Padella pronti in 15 minuti., - Griglia pronti in 15 minuti., - Forno pronti in 15/20 minuti a 180°., I tempi di cottura sono indicativi. Controlla la cottura e regolati secondo il tuo gradimento.',
+          nutrients: 'Energia: 573 kJ, Grassi: 7,5 g, di cui acidi grassi saturi: 3 g, Carboidrati: 0,9 g, di cui zuccheri: 0,6 g, Fibre: 0,4 g, Proteine: 17 g, Sale: 0,3 g',
+          allergens: []
+        },
+        quantity: 10
+      };
+      const item: CartItem = new CartItem(itemJs);
+      items.push(item);
+    }
     cart.setActive(true);
     cart.setItems(items);
     return cart;

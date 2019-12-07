@@ -1,10 +1,17 @@
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
+import { isDevMode } from '@angular/core';
 
 export class ScanService {
 
   constructor(private barcodeScanner: BarcodeScanner, private http: HttpClient, private storage: Storage) {
+  }
+
+  private isLoggedIn(): Promise<any> {
+    return this.storage.get('ACCESS_TOKEN').catch(() => {
+      console.error('Non sei autorizzato');
+    });
   }
 
   private makeOptions(token: string) {
@@ -17,32 +24,36 @@ export class ScanService {
     };
   }
 
-  private processResponse(response) {
-    // TODO Dovrebbe fare altro per processare la response dal server non la stampa solo
-    console.log('Server response');
-    console.log(response);
-    return response;
+  private fetchProduct(barcode: string, token: string): Promise<any> {
+    const options = this.makeOptions(token);
+    return this.http.get('http://localhost:8080/api/products/scan/' + barcode, options).toPromise().catch(() => {
+      console.error('Errore nella richiesta dell\'articolo');
+    });
   }
 
-  // DEBUG get allergens
-  private mockScan() {
-    this.storage.get('ACCESS_TOKEN')
-      .then(token => {
-        const options = this.makeOptions(token);
-        this.http.get('http://localhost:8080/api/allergens', options).subscribe(response => {
-          return this.processResponse(response);
-        });
-      });
+  // DEBUG
+  private mockScan(): string {
+    return '8001120783806';
   }
 
-  public startScan() {
-    this.mockScan();
-    /*
-    this.barcodeScanner.scan(this.options).then(barcode => {
-      console.log('Dal service: ' + JSON.stringify(barcode));
-      // TODO code
-    }).catch(err => {
-      return '';
-    });*/
+  private scan(): Promise<any> {
+    const options = {
+      resultDisplayDuration: 0
+    };
+    return this.barcodeScanner.scan(options).catch(() => {
+      console.error('Errore nello scan');
+    });
+  }
+
+  public async startScan() {
+    const token: string = await this.isLoggedIn();
+    let barcode: string;
+    if (isDevMode()) {
+      barcode = this.mockScan();
+    } else {
+      barcode = await this.scan();
+    }
+    const product = await this.fetchProduct(barcode, token);
+    console.log(product);
   }
 }
