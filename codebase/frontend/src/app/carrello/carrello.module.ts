@@ -15,8 +15,6 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 const routes: Routes = [
   { path: '', component: CarrelloPageComponent },
-  { path: 'raccomandazioni', component: RaccomandazioniPageComponent }// ,
-  /*{ path: '/raccomandazioni/:id', component: RaccomandazionePageComponent }*/
 ];
 
 @NgModule({
@@ -29,7 +27,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     IonicStorageModule.forRoot(),
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [
     CarrelloService,

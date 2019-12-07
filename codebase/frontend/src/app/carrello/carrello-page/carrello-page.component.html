@@ -54,7 +54,8 @@
           <h3>Non hai articoli nel carrello</h3>
         </ion-text>
       </ng-template>
-      <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index">
+      <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index"
+        routerLink="/articolo/{{item.getProduct().getId()}}">
         <ion-item detail>
           <ion-avatar slot="start">
             <img src="{{item.getProduct().getImageUrl()}}">
