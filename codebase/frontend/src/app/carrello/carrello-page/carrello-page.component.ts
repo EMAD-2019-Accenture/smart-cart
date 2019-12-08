@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cart } from '../../shared/model/cart';
 import { CarrelloService } from '../carrello.service';
 import { ScanService } from '../scan.service';
@@ -14,12 +15,22 @@ export class CarrelloPageComponent implements OnInit {
   cart: Cart;
 
   constructor(private carrelloService: CarrelloService,
-    private scanService: ScanService) {
+    private scanService: ScanService,
+    private router: Router,
+    public activatedRoute: ActivatedRoute) {
     this.cart = this.carrelloService.makeCart();
+    activatedRoute.data.subscribe({
+      next: () => this.checkNewItem(),
+    });
   }
 
   ngOnInit() {
+  }
 
+  private checkNewItem() {
+    if (history.state.item) {
+      this.carrelloService.addItem(this.cart, history.state.item);
+    }
   }
 
   public activateCart() {
@@ -39,8 +50,10 @@ export class CarrelloPageComponent implements OnInit {
   }
 
   public startScan() {
-    const product = this.scanService.startScan();
-    // Bisogna trovare un modo per mostrare la pagina dell'articolo
+    const barcodePromise = this.scanService.startScan();
+    barcodePromise.then((barcode: string) => {
+      this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
+    });
   }
 
   public deleteItem(index: number) {

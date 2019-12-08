@@ -1,60 +1,35 @@
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
-import { Product } from '../shared/model/product';
+import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner/ngx';
+import { Storage } from '@ionic/storage';
 
+// tslint:disable: align
 export class ScanService {
 
-  constructor(private barcodeScanner: BarcodeScanner, private http: HttpClient, private storage: Storage) {
+  private scannerOptions = {
+    resultDisplayDuration: 0
+  };
+
+  constructor(private barcodeScanner: BarcodeScanner) {
   }
 
-  private isLoggedIn(): Promise<any> {
-    return this.storage.get('ACCESS_TOKEN').catch(() => {
-      console.error('Non sei autorizzato');
-    });
-  }
-
-  // DEBUG
-  private mockScan(): string {
+  // DEBUG Remove
+  private async mockScan(): Promise<string> {
     return '8001120783806';
   }
 
-  private scan(): Promise<any> {
-    const options = {
-      resultDisplayDuration: 0
-    };
-    return this.barcodeScanner.scan(options).catch(() => {
-      console.error('Errore nello scan');
-    });
+  private async scan(): Promise<string> {
+    return (await this.barcodeScanner.scan(this.scannerOptions)).text;
   }
 
-  private makeOptions(token: string) {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-        'Access-Control-Allow-Origin': 'http://localhost:8100' // DEBUG In production must change
-      })
-    };
-  }
 
-  private fetchProductByBarcode(barcode: string, token: string): Promise<any> {
-    const options = this.makeOptions(token);
-    return this.http.get('http://localhost:8080/api/products/scan/' + barcode, options).toPromise().catch(() => {
-      console.error('Errore nella richiesta dell\'articolo');
-    });
-  }
-
-  public async startScan() {
-    const token: string = await this.isLoggedIn();
-    let barcode: string;
+  public async startScan(): Promise<string> {
+    let barcode: Promise<string>;
     if (isDevMode()) {
       barcode = this.mockScan();
     } else {
-      barcode = await this.scan();
+      barcode = this.scan();
     }
-    const product: Product = await this.fetchProductByBarcode(barcode, token);
-    console.log(product);
+    return barcode;
   }
 }

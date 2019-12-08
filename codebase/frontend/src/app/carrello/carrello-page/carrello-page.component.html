@@ -54,19 +54,19 @@
           <h3>Non hai articoli nel carrello</h3>
         </ion-text>
       </ng-template>
-      <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index"
-        routerLink="/articolo/{{item.getProduct().getId()}}">
-        <ion-item detail>
+      <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index">
+        <ion-item detail routerLink="/articolo/{{item.getProduct().getBarcode()}}" routerLinkActive="active">
           <ion-avatar slot="start">
             <img src="{{item.getProduct().getImageUrl()}}">
           </ion-avatar>
           <ion-label>
-            <h4>{{item.getProduct().getName()}}</h4>
-            <p>{{item.getProduct().getDescription()}}</p>
-            <p>{{item.getProduct().getPrice()}} €</p>
+            <h4>{{ item.getProduct().getName() }}</h4>
+            <p>{{ item.getProduct().getDescription() }}</p>
+            <p>{{ item.getProduct().getPrice() }} € cad.</p>
           </ion-label>
           <ion-note slot="end">
-            x {{item.getQuantity()}}
+            x {{ item.getQuantity() }}<br>
+            {{ item.getProduct().getPrice() * item.getQuantity() }} € tot.
           </ion-note>
         </ion-item>
         <ion-item-options side="start">

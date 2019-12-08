@@ -13,6 +13,7 @@ export class CarrelloService {
   private mockCart() {
     const cart = new Cart();
     const items: Array<CartItem> = new Array<CartItem>();
+    cart.setItems(items);
     if (isDevMode()) {
       const itemJs: ICartItem = {
         id: 1,
@@ -48,9 +49,8 @@ export class CarrelloService {
       };
       const item: CartItem = new CartItem(itemJs);
       items.push(item);
+      cart.setActive(true);
     }
-    cart.setActive(true);
-    cart.setItems(items);
     return cart;
   }
 
@@ -84,6 +84,10 @@ export class CarrelloService {
     } else {
       return 0;
     }
+  }
+
+  public addItem(cart: Cart, item: ICartItem) {
+    cart.getItems().push(new CartItem(item));
   }
 
   public deleteItem(cart: Cart, index: number) {
