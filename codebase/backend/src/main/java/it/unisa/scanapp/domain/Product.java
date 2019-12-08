@@ -1,4 +1,5 @@
 package it.unisa.scanapp.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -78,23 +79,15 @@ public class Product implements Serializable {
     @JsonIgnoreProperties("products")
     private Discount discount;
 
-    @ManyToOne
-    @JsonIgnoreProperties("products")
-    private PercentDiscount percentDiscount;
-
-    @ManyToOne
-    @JsonIgnoreProperties("products")
-    private KForN kForN;
-
     @ManyToMany
     @JoinTable(name = "product_allergen",
                joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "allergen_id", referencedColumnName = "id"))
     private Set<Allergen> allergens = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("products")
-    private Transaction transaction;
+    @ManyToMany(mappedBy = "products")
+    @JsonIgnore
+    private Set<Transaction> transactions = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -299,32 +292,6 @@ public class Product implements Serializable {
         this.discount = discount;
     }
 
-    public PercentDiscount getPercentDiscount() {
-        return percentDiscount;
-    }
-
-    public Product percentDiscount(PercentDiscount percentDiscount) {
-        this.percentDiscount = percentDiscount;
-        return this;
-    }
-
-    public void setPercentDiscount(PercentDiscount percentDiscount) {
-        this.percentDiscount = percentDiscount;
-    }
-
-    public KForN getKForN() {
-        return kForN;
-    }
-
-    public Product kForN(KForN kForN) {
-        this.kForN = kForN;
-        return this;
-    }
-
-    public void setKForN(KForN kForN) {
-        this.kForN = kForN;
-    }
-
     public Set<Allergen> getAllergens() {
         return allergens;
     }
@@ -350,17 +317,29 @@ public class Product implements Serializable {
         this.allergens = allergens;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public Product transaction(Transaction transaction) {
-        this.transaction = transaction;
+    public Product transactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
         return this;
     }
 
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
+    public Product addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
+        transaction.getProducts().add(this);
+        return this;
+    }
+
+    public Product removeTransaction(Transaction transaction) {
+        this.transactions.remove(transaction);
+        transaction.getProducts().remove(this);
+        return this;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

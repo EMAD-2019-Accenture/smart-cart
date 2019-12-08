@@ -6,25 +6,13 @@
     <!--
         Added the constraints for entity Product.
     -->
-    <changeSet id="20191129085645-2" author="jhipster">
+    <changeSet id="20191208114329-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="discount_id"
                                  baseTableName="product"
                                  constraintName="fk_product_discount_id"
                                  referencedColumnNames="id"
                                  referencedTableName="discount"/>
-
-        <addForeignKeyConstraint baseColumnNames="percent_discount_id"
-                                 baseTableName="product"
-                                 constraintName="product_percent_discount_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="percent_discount"/>
-
-        <addForeignKeyConstraint baseColumnNames="k_forn_id"
-                                 baseTableName="product"
-                                 constraintName="fk_product_k_forn_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="k_for_n"/>
 
         <addForeignKeyConstraint baseColumnNames="product_id"
                                  baseTableName="product_allergen"
@@ -38,11 +26,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="allergen"/>
         
-        <addForeignKeyConstraint baseColumnNames="transaction_id"
-                                 baseTableName="product"
-                                 constraintName="fk_product_transaction_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_transaction"/>
-
     </changeSet>
 </databaseChangeLog>

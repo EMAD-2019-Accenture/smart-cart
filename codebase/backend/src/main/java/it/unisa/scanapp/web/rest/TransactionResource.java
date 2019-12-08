@@ -82,13 +82,13 @@ public class TransactionResource {
     /**
      * {@code GET  /transactions} : get all the transactions.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of transactions in body.
      */
     @GetMapping("/transactions")
-    public List<Transaction> getAllTransactions() {
+    public List<Transaction> getAllTransactions(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Transactions");
-        return transactionRepository.findAll();
+        return transactionRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -100,7 +100,7 @@ public class TransactionResource {
     @GetMapping("/transactions/{id}")
     public ResponseEntity<Transaction> getTransaction(@PathVariable Long id) {
         log.debug("REST request to get Transaction : {}", id);
-        Optional<Transaction> transaction = transactionRepository.findById(id);
+        Optional<Transaction> transaction = transactionRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(transaction);
     }
 

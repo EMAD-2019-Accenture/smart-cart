@@ -8,31 +8,36 @@
 
     
     <!--
-        Added the entity KForN.
+        Added the entity Transaction.
     -->
-    <changeSet id="20191129085649-1" author="jhipster">
-        <createTable tableName="k_for_n">
+    <changeSet id="20191208114333-1" author="jhipster">
+        <createTable tableName="jhi_transx">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="jhi_start" type="date">
+            <column name="jhi_date" type="date">
                 <constraints nullable="false" />
             </column>
-            <column name="jhi_end" type="date">
-                <constraints nullable="false" />
-            </column>
-            <column name="condition" type="integer">
-                <constraints nullable="false" />
-            </column>
-            <column name="free" type="integer">
-                <constraints nullable="false" />
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
     </changeSet>
 
-    <changeSet id="20191129085649-1-relations" author="jhipster">
+    <changeSet id="20191208114333-1-relations" author="jhipster">
 
+        <createTable tableName="jhi_transx_product">
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="transaction_id, product_id" tableName="jhi_transx_product"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
@@ -44,16 +49,13 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20191129085649-1-data" author="jhipster" context="faker">
+    <changeSet id="20191208114333-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/k_for_n.csv"
+                  file="config/liquibase/fake-data/jhi_transx.csv"
                   separator=";"
-                  tableName="k_for_n">
+                  tableName="jhi_transx">
             <column name="id" type="numeric"/>
-            <column name="jhi_start" type="date"/>
-            <column name="jhi_end" type="date"/>
-            <column name="condition" type="numeric"/>
-            <column name="free" type="numeric"/>
+            <column name="jhi_date" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

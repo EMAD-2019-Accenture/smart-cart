@@ -13,7 +13,7 @@ import java.util.Set;
  * A Transaction.
  */
 @Entity
-@Table(name = "jhi_trans")
+@Table(name = "jhi_transx")
 public class Transaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,12 +27,15 @@ public class Transaction implements Serializable {
     @Column(name = "jhi_date", nullable = false)
     private LocalDate date;
 
-    @OneToMany(mappedBy = "transaction")
-    private Set<Product> products = new HashSet<>();
-
     @ManyToOne
     @JsonIgnoreProperties("transactions")
     private User user;
+
+    @ManyToMany
+    @JoinTable(name = "jhi_transx_product",
+               joinColumns = @JoinColumn(name = "transaction_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+    private Set<Product> products = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -56,31 +59,6 @@ public class Transaction implements Serializable {
         this.date = date;
     }
 
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public Transaction products(Set<Product> products) {
-        this.products = products;
-        return this;
-    }
-
-    public Transaction addProduct(Product product) {
-        this.products.add(product);
-        product.setTransaction(this);
-        return this;
-    }
-
-    public Transaction removeProduct(Product product) {
-        this.products.remove(product);
-        product.setTransaction(null);
-        return this;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-
     public User getUser() {
         return user;
     }
@@ -92,6 +70,31 @@ public class Transaction implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public Transaction products(Set<Product> products) {
+        this.products = products;
+        return this;
+    }
+
+    public Transaction addProduct(Product product) {
+        this.products.add(product);
+        product.getTransactions().add(this);
+        return this;
+    }
+
+    public Transaction removeProduct(Product product) {
+        this.products.remove(product);
+        product.getTransactions().remove(this);
+        return this;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Allergen.
     -->
-    <changeSet id="20191129085652-2" author="jhipster">
+    <changeSet id="20191208114334-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="allergen_id"
                                  baseTableName="allergen_user"

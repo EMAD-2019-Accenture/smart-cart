@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Transaction.
+    -->
+    <changeSet id="20191208114333-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="jhi_transx"
+                                 constraintName="fk_jhi_transx_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="transaction_id"
+                                 baseTableName="jhi_transx_product"
+                                 constraintName="jhi_transx_pro_jhi_transx_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_transx"/>
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="jhi_transx_product"
+                                 constraintName="jhi_transx_pro_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+        
+    </changeSet>
+</databaseChangeLog>

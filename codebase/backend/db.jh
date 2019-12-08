@@ -24,24 +24,22 @@ relationship OneToMany {
   Category 
 }
 
+enum DiscountType{
+	SIMPLE_DISCOUNT,
+    PERCENT_DISCOUNT,
+    K_FOR_N
+}
+
 entity Discount {
 	start LocalDate required
     end LocalDate required
     amount Double required min(0)
-}
-
-entity PercentDiscount {
-	start LocalDate required
-    end LocalDate required
-    value Double required min(0) max(100)
-}
-
-entity KForN {
-	start LocalDate required
-    end LocalDate required
-	condition Integer required min(0)
+    perventValue Double required min(0) max(100)
+    condition Integer required min(0)
     free Integer required min(0)
+    type DiscountType required
 }
+
 
 entity Customer {
     birth LocalDate 
@@ -67,12 +65,10 @@ entity Allergen {
 
 relationship ManyToOne{
 	Product to Discount, 
-    Product to PercentDiscount,
-    Product to KForN,
     Transaction to User
 }
 
-relationship OneToMany {
+relationship ManyToMany {
 	Transaction to Product,
 }
 

@@ -10,7 +10,7 @@
     <name>Smart Cart</name>
 
     <repositories>
-    <!-- more information at https://blogs.oracle.com/dev2dev/entry/how_to_get_oracle_jdbc -->
+        <!-- more information at https://blogs.oracle.com/dev2dev/entry/how_to_get_oracle_jdbc -->
         <repository>
             <id>maven.oracle.com</id>
             <name>oracle-maven-repo</name>

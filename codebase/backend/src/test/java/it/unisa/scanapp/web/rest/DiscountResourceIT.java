@@ -29,6 +29,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import it.unisa.scanapp.domain.enumeration.DiscountType;
 /**
  * Integration tests for the {@link DiscountResource} REST controller.
  */
@@ -46,6 +47,21 @@ public class DiscountResourceIT {
     private static final Double DEFAULT_AMOUNT = 0D;
     private static final Double UPDATED_AMOUNT = 1D;
     private static final Double SMALLER_AMOUNT = 0D - 1D;
+
+    private static final Double DEFAULT_PERVENT_VALUE = 0D;
+    private static final Double UPDATED_PERVENT_VALUE = 1D;
+    private static final Double SMALLER_PERVENT_VALUE = 0D - 1D;
+
+    private static final Integer DEFAULT_CONDITION = 0;
+    private static final Integer UPDATED_CONDITION = 1;
+    private static final Integer SMALLER_CONDITION = 0 - 1;
+
+    private static final Integer DEFAULT_FREE = 0;
+    private static final Integer UPDATED_FREE = 1;
+    private static final Integer SMALLER_FREE = 0 - 1;
+
+    private static final DiscountType DEFAULT_TYPE = DiscountType.SIMPLE_DISCOUNT;
+    private static final DiscountType UPDATED_TYPE = DiscountType.PERCENT_DISCOUNT;
 
     @Autowired
     private DiscountRepository discountRepository;
@@ -91,7 +107,11 @@ public class DiscountResourceIT {
         Discount discount = new Discount()
             .start(DEFAULT_START)
             .end(DEFAULT_END)
-            .amount(DEFAULT_AMOUNT);
+            .amount(DEFAULT_AMOUNT)
+            .perventValue(DEFAULT_PERVENT_VALUE)
+            .condition(DEFAULT_CONDITION)
+            .free(DEFAULT_FREE)
+            .type(DEFAULT_TYPE);
         return discount;
     }
     /**
@@ -104,7 +124,11 @@ public class DiscountResourceIT {
         Discount discount = new Discount()
             .start(UPDATED_START)
             .end(UPDATED_END)
-            .amount(UPDATED_AMOUNT);
+            .amount(UPDATED_AMOUNT)
+            .perventValue(UPDATED_PERVENT_VALUE)
+            .condition(UPDATED_CONDITION)
+            .free(UPDATED_FREE)
+            .type(UPDATED_TYPE);
         return discount;
     }
 
@@ -131,6 +155,10 @@ public class DiscountResourceIT {
         assertThat(testDiscount.getStart()).isEqualTo(DEFAULT_START);
         assertThat(testDiscount.getEnd()).isEqualTo(DEFAULT_END);
         assertThat(testDiscount.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testDiscount.getPerventValue()).isEqualTo(DEFAULT_PERVENT_VALUE);
+        assertThat(testDiscount.getCondition()).isEqualTo(DEFAULT_CONDITION);
+        assertThat(testDiscount.getFree()).isEqualTo(DEFAULT_FREE);
+        assertThat(testDiscount.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -209,6 +237,78 @@ public class DiscountResourceIT {
 
     @Test
     @Transactional
+    public void checkPerventValueIsRequired() throws Exception {
+        int databaseSizeBeforeTest = discountRepository.findAll().size();
+        // set the field null
+        discount.setPerventValue(null);
+
+        // Create the Discount, which fails.
+
+        restDiscountMockMvc.perform(post("/api/discounts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(discount)))
+            .andExpect(status().isBadRequest());
+
+        List<Discount> discountList = discountRepository.findAll();
+        assertThat(discountList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkConditionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = discountRepository.findAll().size();
+        // set the field null
+        discount.setCondition(null);
+
+        // Create the Discount, which fails.
+
+        restDiscountMockMvc.perform(post("/api/discounts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(discount)))
+            .andExpect(status().isBadRequest());
+
+        List<Discount> discountList = discountRepository.findAll();
+        assertThat(discountList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkFreeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = discountRepository.findAll().size();
+        // set the field null
+        discount.setFree(null);
+
+        // Create the Discount, which fails.
+
+        restDiscountMockMvc.perform(post("/api/discounts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(discount)))
+            .andExpect(status().isBadRequest());
+
+        List<Discount> discountList = discountRepository.findAll();
+        assertThat(discountList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTypeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = discountRepository.findAll().size();
+        // set the field null
+        discount.setType(null);
+
+        // Create the Discount, which fails.
+
+        restDiscountMockMvc.perform(post("/api/discounts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(discount)))
+            .andExpect(status().isBadRequest());
+
+        List<Discount> discountList = discountRepository.findAll();
+        assertThat(discountList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllDiscounts() throws Exception {
         // Initialize the database
         discountRepository.saveAndFlush(discount);
@@ -220,7 +320,11 @@ public class DiscountResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(discount.getId().intValue())))
             .andExpect(jsonPath("$.[*].start").value(hasItem(DEFAULT_START.toString())))
             .andExpect(jsonPath("$.[*].end").value(hasItem(DEFAULT_END.toString())))
-            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())));
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].perventValue").value(hasItem(DEFAULT_PERVENT_VALUE.doubleValue())))
+            .andExpect(jsonPath("$.[*].condition").value(hasItem(DEFAULT_CONDITION)))
+            .andExpect(jsonPath("$.[*].free").value(hasItem(DEFAULT_FREE)))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
     }
     
     @Test
@@ -236,7 +340,11 @@ public class DiscountResourceIT {
             .andExpect(jsonPath("$.id").value(discount.getId().intValue()))
             .andExpect(jsonPath("$.start").value(DEFAULT_START.toString()))
             .andExpect(jsonPath("$.end").value(DEFAULT_END.toString()))
-            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()));
+            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
+            .andExpect(jsonPath("$.perventValue").value(DEFAULT_PERVENT_VALUE.doubleValue()))
+            .andExpect(jsonPath("$.condition").value(DEFAULT_CONDITION))
+            .andExpect(jsonPath("$.free").value(DEFAULT_FREE))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
     }
 
     @Test
@@ -262,7 +370,11 @@ public class DiscountResourceIT {
         updatedDiscount
             .start(UPDATED_START)
             .end(UPDATED_END)
-            .amount(UPDATED_AMOUNT);
+            .amount(UPDATED_AMOUNT)
+            .perventValue(UPDATED_PERVENT_VALUE)
+            .condition(UPDATED_CONDITION)
+            .free(UPDATED_FREE)
+            .type(UPDATED_TYPE);
 
         restDiscountMockMvc.perform(put("/api/discounts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -276,6 +388,10 @@ public class DiscountResourceIT {
         assertThat(testDiscount.getStart()).isEqualTo(UPDATED_START);
         assertThat(testDiscount.getEnd()).isEqualTo(UPDATED_END);
         assertThat(testDiscount.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testDiscount.getPerventValue()).isEqualTo(UPDATED_PERVENT_VALUE);
+        assertThat(testDiscount.getCondition()).isEqualTo(UPDATED_CONDITION);
+        assertThat(testDiscount.getFree()).isEqualTo(UPDATED_FREE);
+        assertThat(testDiscount.getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test

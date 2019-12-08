@@ -118,10 +118,17 @@ public class ProductResource {
     }
 
 
+    /**
+     * {@code GET  /products/scan/:barcode} : get the "barcode" product.
+     *
+     * @param barcode the barcode of the product to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the product, or with status {@code 404 (Not Found)}.
+     */
     @GetMapping("/products/scan/{barcode}")
-    public ResponseEntity<Product> scanProduct(@PathVariable String barcode){
-        log.debug("REST request to get Product with barcode: {}", barcode);
-        Optional<Product> scannedProduct = productRepository.findOneByBarcodeWithEagerRelationships(barcode);
-        return ResponseUtil.wrapOrNotFound(scannedProduct);
+    public ResponseEntity<Product> getProductByBarcode(@PathVariable String barcode) {
+        log.debug("REST request to get Product with barcode : {}", barcode);
+        Optional<Product> product = productRepository.findByBarcodeWithEagerRelationships(barcode);
+        return ResponseUtil.wrapOrNotFound(product);
     }
+
 }

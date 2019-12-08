@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import it.unisa.scanapp.domain.enumeration.DiscountType;
+
 /**
  * A Discount.
  */
@@ -34,6 +36,27 @@ public class Discount implements Serializable {
     @DecimalMin(value = "0")
     @Column(name = "amount", nullable = false)
     private Double amount;
+
+    @NotNull
+    @DecimalMin(value = "0")
+    @DecimalMax(value = "100")
+    @Column(name = "pervent_value", nullable = false)
+    private Double perventValue;
+
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "condition", nullable = false)
+    private Integer condition;
+
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "free", nullable = false)
+    private Integer free;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "jhi_type", nullable = false)
+    private DiscountType type;
 
     @OneToMany(mappedBy = "discount")
     private Set<Product> products = new HashSet<>();
@@ -86,6 +109,58 @@ public class Discount implements Serializable {
         this.amount = amount;
     }
 
+    public Double getPerventValue() {
+        return perventValue;
+    }
+
+    public Discount perventValue(Double perventValue) {
+        this.perventValue = perventValue;
+        return this;
+    }
+
+    public void setPerventValue(Double perventValue) {
+        this.perventValue = perventValue;
+    }
+
+    public Integer getCondition() {
+        return condition;
+    }
+
+    public Discount condition(Integer condition) {
+        this.condition = condition;
+        return this;
+    }
+
+    public void setCondition(Integer condition) {
+        this.condition = condition;
+    }
+
+    public Integer getFree() {
+        return free;
+    }
+
+    public Discount free(Integer free) {
+        this.free = free;
+        return this;
+    }
+
+    public void setFree(Integer free) {
+        this.free = free;
+    }
+
+    public DiscountType getType() {
+        return type;
+    }
+
+    public Discount type(DiscountType type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(DiscountType type) {
+        this.type = type;
+    }
+
     public Set<Product> getProducts() {
         return products;
     }
@@ -135,6 +210,10 @@ public class Discount implements Serializable {
             ", start='" + getStart() + "'" +
             ", end='" + getEnd() + "'" +
             ", amount=" + getAmount() +
+            ", perventValue=" + getPerventValue() +
+            ", condition=" + getCondition() +
+            ", free=" + getFree() +
+            ", type='" + getType() + "'" +
             "}";
     }
 }

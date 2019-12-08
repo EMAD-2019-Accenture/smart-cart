@@ -23,6 +23,43 @@
                 "min"
             ],
             "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "perventValue",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": 0,
+            "fieldValidateRulesMax": 100
+        },
+        {
+            "fieldName": "condition",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "free",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "DiscountType",
+            "fieldValues": "SIMPLE_DISCOUNT,PERCENT_DISCOUNT,K_FOR_N",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -33,7 +70,7 @@
             "relationshipName": "product"
         }
     ],
-    "changelogDate": "20191129085647",
+    "changelogDate": "20191208114331",
     "entityTableName": "discount",
     "dto": "no",
     "pagination": "no",

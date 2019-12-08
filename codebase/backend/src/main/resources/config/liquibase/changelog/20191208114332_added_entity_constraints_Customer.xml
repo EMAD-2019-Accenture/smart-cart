@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Customer.
     -->
-    <changeSet id="20191129085650-2" author="jhipster">
+    <changeSet id="20191208114332-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="customer"

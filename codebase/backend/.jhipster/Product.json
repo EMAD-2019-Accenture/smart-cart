@@ -93,20 +93,6 @@
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "percentDiscount",
-            "otherEntityRelationshipName": "product",
-            "relationshipName": "percentDiscount",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "kForN",
-            "otherEntityRelationshipName": "product",
-            "relationshipName": "kForN",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipType": "many-to-many",
             "otherEntityName": "allergen",
             "otherEntityRelationshipName": "product",
@@ -115,14 +101,15 @@
             "ownerSide": true
         },
         {
-            "relationshipType": "many-to-one",
+            "relationshipType": "many-to-many",
             "otherEntityName": "transaction",
             "otherEntityRelationshipName": "product",
             "relationshipName": "transaction",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "ownerSide": false
         }
     ],
-    "changelogDate": "20191129085645",
+    "changelogDate": "20191208114329",
     "entityTableName": "product",
     "dto": "no",
     "pagination": "no",

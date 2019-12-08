@@ -10,7 +10,7 @@
     <!--
         Added the entity Customer.
     -->
-    <changeSet id="20191129085650-1" author="jhipster">
+    <changeSet id="20191208114332-1" author="jhipster">
         <createTable tableName="customer">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -37,7 +37,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="20191129085650-1-relations" author="jhipster">
+    <changeSet id="20191208114332-1-relations" author="jhipster">
 
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
@@ -50,7 +50,7 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20191129085650-1-data" author="jhipster" context="faker">
+    <changeSet id="20191208114332-1-data" author="jhipster" context="faker">
         <loadData
                   file="config/liquibase/fake-data/customer.csv"
                   separator=";"
