@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ArticoloService } from '../articolo.service';
+import { Product } from '../model/product';
 
 @Component({
   selector: 'app-articolo-page',
@@ -7,8 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticoloPageComponent implements OnInit {
 
-  constructor() { }
+  product: Product;
 
-  ngOnInit() {}
+  constructor(private articoloService: ArticoloService, private route: ActivatedRoute) {
+    // this.articoloService.getProduct(this.route.snapshot.params.id);
+  }
+
+  ngOnInit() { }
 
 }

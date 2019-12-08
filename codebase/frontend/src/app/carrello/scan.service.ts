@@ -2,6 +2,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { isDevMode } from '@angular/core';
+import { Product } from '../shared/model/product';
 
 export class ScanService {
 
@@ -11,23 +12,6 @@ export class ScanService {
   private isLoggedIn(): Promise<any> {
     return this.storage.get('ACCESS_TOKEN').catch(() => {
       console.error('Non sei autorizzato');
-    });
-  }
-
-  private makeOptions(token: string) {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-        'Access-Control-Allow-Origin': 'http://localhost:8100' // DEBUG In production must change
-      })
-    };
-  }
-
-  private fetchProduct(barcode: string, token: string): Promise<any> {
-    const options = this.makeOptions(token);
-    return this.http.get('http://localhost:8080/api/products/scan/' + barcode, options).toPromise().catch(() => {
-      console.error('Errore nella richiesta dell\'articolo');
     });
   }
 
@@ -45,6 +29,23 @@ export class ScanService {
     });
   }
 
+  private makeOptions(token: string) {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+        'Access-Control-Allow-Origin': 'http://localhost:8100' // DEBUG In production must change
+      })
+    };
+  }
+
+  private fetchProductByBarcode(barcode: string, token: string): Promise<any> {
+    const options = this.makeOptions(token);
+    return this.http.get('http://localhost:8080/api/products/scan/' + barcode, options).toPromise().catch(() => {
+      console.error('Errore nella richiesta dell\'articolo');
+    });
+  }
+
   public async startScan() {
     const token: string = await this.isLoggedIn();
     let barcode: string;
@@ -53,7 +54,7 @@ export class ScanService {
     } else {
       barcode = await this.scan();
     }
-    const product = await this.fetchProduct(barcode, token);
+    const product: Product = await this.fetchProductByBarcode(barcode, token);
     console.log(product);
   }
 }
