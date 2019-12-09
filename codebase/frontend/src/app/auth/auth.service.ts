@@ -36,4 +36,9 @@ export class AuthService {
   isLoggedIn() {
     return this.authSubject.asObservable();
   }
+
+  // TODO CHANGE
+  public isLoggedIn2(): Promise<string> {
+    return this.storage.get('ACCESS_TOKEN');
+  }
 }
