@@ -2,13 +2,6 @@
   --border-radius: 1;
 }
 
-.vertical-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
 .new-cart-text {
   margin-top: 10vh;
 }
@@ -35,4 +28,18 @@
   position: relative;
   bottom: 8px;
   right: 15px;
+}
+
+.background-image {
+  position: relative;
+  left: 0;
+  top: 10vh;
+  right: 0;
+}
+
+.start-session {
+  position: relative;
+  left: 0;
+  top: 20vh;
+  right: 0;
 }

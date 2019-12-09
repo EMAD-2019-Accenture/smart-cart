@@ -24,13 +24,13 @@
       <h3>Non hai un carrello</h3>
       <h1><b>Avvia una sessione di spesa!</b></h1>
     </ion-text>
-    <div class="vertical-center">
+    <div class="background-image">
       <div class="center">
-        <ion-img [src]="'https://www.anartline.com/image/catalog/cartEmpty.png'" class="ion-align-self-end"></ion-img>
+        <ion-img src="assets/img/cartEmpty.png" class="ion-align-self-end"></ion-img>
       </div>
     </div>
     <section>
-      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="activateCart()">Avvia
+      <ion-button expand="block" shape="round" class="ion-margin start-session" (click)="activateCart()">Avvia
         sessione
         <ion-icon slot="end" name="cart"></ion-icon>
       </ion-button>
