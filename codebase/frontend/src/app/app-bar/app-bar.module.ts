@@ -9,13 +9,12 @@ import { PreferenzePageComponent } from '../preferenze/preferenze-page/preferenz
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'index',
     component : BarraNavigazionaleComponent,
-    pathMatch: 'full',
     children: [
-      { path: 'carrello', component: CarrelloPageComponent, pathMatch: 'full'},
-      { path: 'catalogo', component: CatalogoPageComponent, pathMatch: 'full' },
-      { path: 'preferenze', component: PreferenzePageComponent, pathMatch: 'full' }
+      { path: 'carrello', loadChildren: '../carrello/carrello.module#CarrelloModule'},
+      { path: 'catalogo', component: CatalogoPageComponent},
+      { path: 'preferenze', component: PreferenzePageComponent}
     ]
   },
   {
@@ -28,17 +27,13 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     BarraNavigazionaleComponent,
-    CarrelloPageComponent,
     CatalogoPageComponent,
-    PreferenzePageComponent,
+    PreferenzePageComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     IonicModule
-  ],
-  exports: [
-    RouterModule
   ]
 })
 export class AppBarModule {}

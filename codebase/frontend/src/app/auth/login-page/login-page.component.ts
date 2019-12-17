@@ -25,11 +25,10 @@ export class LoginPageComponent implements OnInit {
     try {
       const auth = await this.authService.login(this.model);
       console.log(auth);
-      await this.authService.isLoggedIn();
-
+      
       message = 'Login effettuato!';
       color = 'success';
-      this.router.navigate(['/carrello']);
+      this.router.navigateByUrl('/');
 
     } catch (error) {
       console.log(error);

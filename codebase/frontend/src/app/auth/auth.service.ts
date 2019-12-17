@@ -26,6 +26,7 @@ export class AuthService {
 
         if (res.id_token) {
           await this.storage.set('ACCESS_TOKEN', res.id_token);
+          console.log('Set token', res.id_token);
           this.authSubject.next(true);
         }
       })
@@ -39,12 +40,10 @@ export class AuthService {
 
   async isLoggedIn() {
     const rawToken = await this.storage.get('ACCESS_TOKEN');
-
-    const decodedToken = this.jwtHelper.decodeToken(rawToken);
-    const expirationDate = this.jwtHelper.getTokenExpirationDate(rawToken);
+    console.log('Raw Token', rawToken);
     const isExpired = this.jwtHelper.isTokenExpired(rawToken);
-    console.log(decodedToken, expirationDate, isExpired);
-    return isExpired;
+    console.log('Is token expired?', isExpired);
+    return !isExpired;
   }
 
   // TODO CHANGE

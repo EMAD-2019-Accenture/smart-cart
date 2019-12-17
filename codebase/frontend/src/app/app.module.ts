@@ -18,7 +18,6 @@ import { AppBarModule } from './app-bar/app-bar.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    AppBarModule
   ],
   providers: [
     StatusBar,
