@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { Storage } from '@ionic/storage';
@@ -13,35 +13,47 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
 
   AUTH_SERVER_ADDRESS = 'http://localhost:8080/api/authenticate';
-  private authSubject = new BehaviorSubject(false);
   private jwtHelper: JwtHelperService;
 
   constructor(private httpClient: HttpClient, private storage: Storage) {
     this.jwtHelper = new JwtHelperService();
   }
 
-  login(username: string, password: string) {
-    return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}`, {password, username}).
-      pipe(tap(async (res: any) => {
+  async login(username: string, password: string) {
+    let result = false;
+    try {
+      const response: any = await this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}`, { password, username }).toPromise();
 
-        if (res.id_token) {
-          await this.storage.set('ACCESS_TOKEN', res.id_token);
-          this.authSubject.next(true);
-        }
-      })
-    ).toPromise();
+      if (response.id_token) {
+        await this.storage.set('ACCESS_TOKEN', response.id_token);
+        result = true;
+      }
+
+    } catch (error) {
+      console.log(error);
+      result = false;
+    }
+    return result;
+
+    /*pipe(tap(async (res: any) => {
+
+      if (res.id_token) {
+        
+        const token = await 
+        console.log('Get token in login', this.getAuthToken());
+      }
+    })
+  ).toPromise();*/
   }
 
   async logout() {
     await this.storage.remove('ACCESS_TOKEN');
-    this.authSubject.next(false);
   }
 
   async isLoggedIn(): Promise<boolean> {
     const rawToken = await this.getAuthToken();
     const isExpired = this.jwtHelper.isTokenExpired(rawToken);
     console.log('Is token expired?', isExpired);
-    this.getCurrentUsername();
     return !isExpired;
   }
 
@@ -51,6 +63,9 @@ export class AuthService {
 
   async getCurrentUsername() {
     const token = await this.getAuthToken();
+    if (!token) {
+      return null;
+    }
     const username = (this.jwtHelper.decodeToken(token).sub as string);
     console.log(username);
     return username;

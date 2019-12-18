@@ -22,16 +22,16 @@ export class LoginPageComponent implements OnInit {
   async login() {
     let message = '';
     let color = '';
-    try {
-      const auth = await this.authService.login(this.username, this.password);
-      console.log(auth);
+    const auth = await this.authService.login(this.username, this.password);
+    console.log(auth);
 
+    if (auth) {
       message = 'Login effettuato!';
       color = 'success';
       this.router.navigateByUrl('/');
 
-    } catch (error) {
-      console.log(error);
+    } else {
+      // console.log(error);
       message = 'Login fallito!';
       color = 'danger';
     }
