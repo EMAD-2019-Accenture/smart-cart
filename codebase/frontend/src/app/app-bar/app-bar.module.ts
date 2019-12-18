@@ -3,18 +3,15 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule} from '@angular/router';
 import { BarraNavigazionaleComponent } from './barra-navigazionale/barra-navigazionale.component';
-import { CarrelloPageComponent } from '../carrello/carrello-page/carrello-page.component';
-import { CatalogoPageComponent } from '../catalogo/catalogo-page/catalogo-page.component';
-import { PreferenzePageComponent } from '../preferenze/preferenze-page/preferenze-page.component';
 
 const routes: Routes = [
   {
     path: 'index',
     component : BarraNavigazionaleComponent,
     children: [
-      { path: 'carrello', loadChildren: '../carrello/carrello.module#CarrelloModule'},
-      { path: 'catalogo', component: CatalogoPageComponent},
-      { path: 'preferenze', component: PreferenzePageComponent}
+      { path: 'carrello', loadChildren: () => import('../carrello/carrello.module').then(m => m.CarrelloModule) },
+      { path: 'catalogo', loadChildren: () => import('../catalogo/catalogo.module').then(m => m.CatalogoModule)},
+      { path: 'preferenze', loadChildren: () => import('../preferenze/preferenze.module').then(m => m.PreferenzeModule)}
     ]
   },
   {
@@ -27,8 +24,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     BarraNavigazionaleComponent,
-    CatalogoPageComponent,
-    PreferenzePageComponent
   ],
   imports: [
     CommonModule,

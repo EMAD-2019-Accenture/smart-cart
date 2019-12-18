@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../model/user';
 import { AuthService } from '../auth.service';
 import { ToastNotificationService } from '../../shared/toast/toast-notification.service';
 import { Router } from '@angular/router';
@@ -11,7 +10,8 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
 
-  model: User = { password: '', username: '' };
+  username: string;
+  password: string;
 
   constructor(private authService: AuthService, private toastNotificationService: ToastNotificationService, private router: Router) { }
 
@@ -23,9 +23,9 @@ export class LoginPageComponent implements OnInit {
     let message = '';
     let color = '';
     try {
-      const auth = await this.authService.login(this.model);
+      const auth = await this.authService.login(this.username, this.password);
       console.log(auth);
-      
+
       message = 'Login effettuato!';
       color = 'success';
       this.router.navigateByUrl('/');
