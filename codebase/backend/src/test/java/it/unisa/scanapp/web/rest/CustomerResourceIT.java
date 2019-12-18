@@ -3,6 +3,7 @@ package it.unisa.scanapp.web.rest;
 import it.unisa.scanapp.SmartCartApp;
 import it.unisa.scanapp.domain.Customer;
 import it.unisa.scanapp.repository.CustomerRepository;
+import it.unisa.scanapp.service.CustomerService;
 import it.unisa.scanapp.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -55,6 +56,9 @@ public class CustomerResourceIT {
     private CustomerRepository customerRepository;
 
     @Autowired
+    private CustomerService customerService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -76,7 +80,7 @@ public class CustomerResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CustomerResource customerResource = new CustomerResource(customerRepository);
+        final CustomerResource customerResource = new CustomerResource(customerRepository,customerService);
         this.restCustomerMockMvc = MockMvcBuilders.standaloneSetup(customerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -180,7 +184,7 @@ public class CustomerResourceIT {
             .andExpect(jsonPath("$.[*].vegetarian").value(hasItem(DEFAULT_VEGETARIAN.booleanValue())))
             .andExpect(jsonPath("$.[*].celiac").value(hasItem(DEFAULT_CELIAC.booleanValue())));
     }
-    
+
     @Test
     @Transactional
     public void getCustomer() throws Exception {

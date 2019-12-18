@@ -2,6 +2,7 @@ package it.unisa.scanapp.web.rest;
 
 import it.unisa.scanapp.domain.Customer;
 import it.unisa.scanapp.repository.CustomerRepository;
+import it.unisa.scanapp.service.CustomerService;
 import it.unisa.scanapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -33,9 +34,11 @@ public class CustomerResource {
     private String applicationName;
 
     private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    public CustomerResource(CustomerRepository customerRepository) {
+    public CustomerResource(CustomerRepository customerRepository, CustomerService customerService) {
         this.customerRepository = customerRepository;
+        this.customerService = customerService;
     }
 
     /**
@@ -104,6 +107,19 @@ public class CustomerResource {
     }
 
     /**
+     * {@code GET  /customers/logged} : get the curent logged customer.
+     *
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customer, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/customers/logged")
+    public ResponseEntity<Customer> getCustomerByUser() {
+        log.debug("REST request to get Customer from current logged user");
+        Optional<Customer> customer = customerService.getCustomerFromCurrentUser();
+        return ResponseUtil.wrapOrNotFound(customer);
+    }
+
+    /**
      * {@code DELETE  /customers/:id} : delete the "id" customer.
      *
      * @param id the id of the customer to delete.
@@ -115,4 +131,7 @@ public class CustomerResource {
         customerRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
+
+
+
 }
