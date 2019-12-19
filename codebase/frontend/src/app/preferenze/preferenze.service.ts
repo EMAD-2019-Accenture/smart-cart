@@ -7,6 +7,7 @@ import { User } from '../shared/model/user';
 export class PreferenzeService {
   // DEBUG In production must change
   private getCustomerByUsernamePath = 'http://localhost:8080/api/customers/logged';
+  private updateCustomerPath = 'http://localhost:8080/api/customers/';
   private serverHost = 'http://localhost:8100';
 
   constructor(private http: HttpClient,
@@ -26,11 +27,6 @@ export class PreferenzeService {
         'Access-Control-Allow-Origin': this.serverHost,
       })
     };
-  }
-
-  private fetchCustomerByUser(token: string): Promise<ICustomer> {
-    const httpOptions = this.makeHttpOptions(token);
-    return this.http.get(this.getCustomerByUsernamePath, httpOptions).toPromise() as Promise<ICustomer>;
   }
 
   private fetchCustomerByUserMOCK(token: string): Promise<ICustomer> {
@@ -55,11 +51,14 @@ export class PreferenzeService {
 
   public async getCustomer(): Promise<ICustomer> {
     const token: string = await this.authService.getAuthToken();
-    // TODO change to non MOCK
-    return this.fetchCustomerByUser(token);
+    const httpOptions = this.makeHttpOptions(token);
+    return this.http.get(this.getCustomerByUsernamePath, httpOptions).toPromise() as Promise<ICustomer>;
   }
 
-  public update(customer: Customer) {
-
+  public async update(customer: Customer): Promise<ICustomer> {
+    const token: string = await this.authService.getAuthToken();
+    const httpOptions = this.makeHttpOptions(token);
+    const httpBody = JSON.stringify(customer);
+    return this.http.put(this.updateCustomerPath, httpBody, httpOptions).toPromise() as Promise<ICustomer>;
   }
 }

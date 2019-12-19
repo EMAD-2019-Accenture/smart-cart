@@ -41,7 +41,7 @@
       <ion-thumbnail slot="start">
         <img src="http://getdrawings.com/free-icon/shopping-cart-icon-transparent-70.png">
       </ion-thumbnail>
-      <ion-label>Ciao, Acquirente</ion-label>
+      <ion-label>Carrello di Acquirente</ion-label>
       <ion-note slot="end">
         <div>Totale: <b>{{getTotalPrice()}} €</b></div>
         <div>Pezzi: <b>{{getTotalQuantity()}}</b></div>
@@ -85,11 +85,13 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-    <section>
+  </ng-template>
+</ion-content>
+<ng-template [ngIf]="cart.isActive()">
+    <ion-footer no-shadow no-border>
       <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="deactivateCart()">Chiudi
         sessione
         <ion-icon slot="end" name="checkmark-circle"></ion-icon>
       </ion-button>
-    </section>
+    </ion-footer>
   </ng-template>
-</ion-content>
