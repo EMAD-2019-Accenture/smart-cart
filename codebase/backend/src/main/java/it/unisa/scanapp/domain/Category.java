@@ -5,6 +5,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Category.
@@ -24,9 +26,8 @@ public class Category implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
-    @JsonIgnoreProperties("categories")
-    private Product product;
+    @OneToMany(mappedBy = "category")
+    private Set<Product> products = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -50,18 +51,24 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public Product getProduct() {
-        return product;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public Category product(Product product) {
-        this.product = product;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    public Category addProduct(Product product){
+        this.products.add(product);
         return this;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public Category addRemove(Product product){
+        this.products.remove(product);
+        return this;
     }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

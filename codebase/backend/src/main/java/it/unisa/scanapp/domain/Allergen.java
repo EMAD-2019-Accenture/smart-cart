@@ -37,6 +37,7 @@ public class Allergen implements Serializable {
     @JoinTable(name = "allergen_user",
                joinColumns = @JoinColumn(name = "allergen_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "allergens")

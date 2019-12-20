@@ -32,7 +32,7 @@ public class Product implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    
+
     @Lob
     @Column(name = "description", nullable = false)
     private String description;
@@ -72,8 +72,9 @@ public class Product implements Serializable {
     @Column(name = "nutrients")
     private String nutrients;
 
-    @OneToMany(mappedBy = "product")
-    private Set<Category> categories = new HashSet<>();
+    @ManyToOne()
+    @JsonIgnoreProperties("products")
+    private Category category;
 
     @ManyToOne
     @JsonIgnoreProperties("products")
@@ -254,29 +255,12 @@ public class Product implements Serializable {
         this.nutrients = nutrients;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public Product categories(Set<Category> categories) {
-        this.categories = categories;
-        return this;
-    }
-
-    public Product addCategory(Category category) {
-        this.categories.add(category);
-        category.setProduct(this);
-        return this;
-    }
-
-    public Product removeCategory(Category category) {
-        this.categories.remove(category);
-        category.setProduct(null);
-        return this;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Discount getDiscount() {

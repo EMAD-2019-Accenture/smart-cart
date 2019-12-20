@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="manue (generated)" id="1576845157095-4">
+        <addColumn tableName="product">
+            <column name="category_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="manue (generated)" id="1576845157095-5">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="product" constraintName="FK1mtsbur82frn64de7balymq9s" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="category" validate="true"/>
+    </changeSet>
+    <changeSet author="manue (generated)" id="1576845157095-6">
+        <dropForeignKeyConstraint baseTableName="CATEGORY" constraintName="FK_CATEGORY_PRODUCT_ID"/>
+    </changeSet>
+    <changeSet author="manue (generated)" id="1576845157095-7">
+        <dropColumn columnName="PRODUCT_ID" tableName="CATEGORY"/>
+    </changeSet>
+</databaseChangeLog>
