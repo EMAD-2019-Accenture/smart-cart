@@ -25,7 +25,7 @@ export class CarrelloService {
           price: 1.3,
           brand: 'COOP',
           amount: null,
-          imageUrl: null,
+          imageUrl: 'https://cdn.easycoop.com/media/catalog/product/cache/f03df66a89eb7a38621fcea70cf640b3/r/o/robiola_100_g_6875689_40704_1380580_1.jpeg',
           source: 'Latte: Italia',
           ingredients: ' pastorizzato, , Sale, Caglio',
           conservation: 'Prodotto confezionato in atmosfera protettiva., Conservare in frigorifero tra 0 °C e +4 °C.',

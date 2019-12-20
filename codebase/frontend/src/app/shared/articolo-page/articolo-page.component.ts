@@ -55,6 +55,6 @@ export class ArticoloPageComponent implements OnInit {
   }
 
   public addToCart() {
-    this.router.navigateByUrl('/carrello', { state: { item: this.itemToAdd } });
+    this.router.navigateByUrl('/index/carrello', { state: { item: this.itemToAdd } });
   }
 }
