@@ -1,31 +1,28 @@
 export interface IUser {
     id: number;
     login: string;
-    password: string;
     firstName: string;
     lastName: string;
     email: string;
-    activated: boolean;
+    imageUrl: string;
 }
 
 export class User {
     private id: number;
     private login: string;
-    private password: string;
     private firstName: string;
     private lastName: string;
     private email: string;
-    private activated: boolean;
+    private imageUrl: string;
 
     constructor(user?: IUser) {
         if (user) {
             this.id = user.id;
             this.login = user.login;
-            this.password = user.password;
             this.firstName = user.firstName;
             this.lastName = user.lastName;
             this.email = user.email;
-            this.activated = user.activated;
+            this.imageUrl = user.imageUrl;
         }
     }
 
@@ -43,14 +40,6 @@ export class User {
 
     public setLogin(login: string): void {
         this.login = login;
-    }
-
-    public getPassword(): string {
-        return this.password;
-    }
-
-    public setPassword(password: string): void {
-        this.password = password;
     }
 
     public getFirstName(): string {
@@ -77,11 +66,12 @@ export class User {
         this.email = email;
     }
 
-    public isActivated(): boolean {
-        return this.activated;
+    public getImageUrl(): string {
+        return this.imageUrl;
     }
 
-    public setActivated(activated: boolean): void {
-        this.activated = activated;
+    public setImageUrl(imageUrl: string): void {
+        this.imageUrl = imageUrl;
     }
+
 }
