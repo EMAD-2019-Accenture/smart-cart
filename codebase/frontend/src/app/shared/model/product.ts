@@ -1,8 +1,8 @@
 import { Allergen, IAllergen } from './allergen';
-import { ICategory, Category } from './category';
-import { IDiscount, Discount } from './discount';
-import { IPercentDiscount, PercentDiscount } from './percent-discount';
+import { Category, ICategory } from './category';
+import { Discount, IDiscount } from './discount';
 import { IKForN, KForN } from './k-for-n';
+import { IPercentDiscount, PercentDiscount } from './percent-discount';
 
 export interface IProduct {
     id: number;
@@ -18,7 +18,7 @@ export interface IProduct {
     conservation: string;
     preparation: string;
     nutrients: string;
-    categories: ICategory[];
+    category: ICategory;
     discount: IDiscount;
     percentDiscount: IPercentDiscount;
     allergens: IAllergen[];
@@ -39,14 +39,13 @@ export class Product {
     private conservation: string;
     private preparation: string;
     private nutrients: string;
-    private categories: Array<Category>;
+    private category: Category;
     private discount: Discount;
     private percentDiscount: PercentDiscount;
     private allergens: Array<Allergen>;
     private kForN: KForN;
 
     constructor(product?: IProduct) {
-        this.categories = new Array<Category>();
         this.allergens = new Array<Allergen>();
         if (product) {
             this.id = product.id;
@@ -62,11 +61,7 @@ export class Product {
             this.conservation = product.conservation;
             this.preparation = product.preparation;
             this.nutrients = product.nutrients;
-            if (product.categories != null) {
-                product.categories.forEach(element => {
-                    this.categories.push(new Category(element));
-                });
-            }
+            this.category = new Category(product.category);
             this.discount = new Discount(product.discount);
             this.percentDiscount = new PercentDiscount(product.percentDiscount);
             if (product.allergens != null) {
@@ -182,12 +177,12 @@ export class Product {
         this.nutrients = nutrients;
     }
 
-    public getCategories(): Array<Category> {
-        return this.categories;
+    public getCategory(): Category {
+        return this.category;
     }
 
-    public setCategories(categories: Array<Category>): void {
-        this.categories = categories;
+    public setCategory(category: Category): void {
+        this.category = category;
     }
 
     public getDiscount(): Discount {

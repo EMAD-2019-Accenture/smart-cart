@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from 'src/app/shared/model/category';
 
 @Component({
   selector: 'app-catalogo-page',
@@ -7,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatalogoPageComponent implements OnInit {
 
-  constructor() { }
+  categories: Array<Category>;
 
-  ngOnInit() {}
+  constructor() {
+    this.categories = new Array<Category>();
+  }
+
+  ngOnInit() { }
 
 }

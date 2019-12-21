@@ -1,3 +1,5 @@
+import { Allergen, IAllergen } from './allergen';
+
 export interface IUser {
     id: number;
     login: string;
@@ -5,6 +7,7 @@ export interface IUser {
     lastName: string;
     email: string;
     imageUrl: string;
+    allergens: IAllergen[];
 }
 
 export class User {
@@ -14,8 +17,10 @@ export class User {
     private lastName: string;
     private email: string;
     private imageUrl: string;
+    private allergens: Array<Allergen>;
 
     constructor(user?: IUser) {
+        this.allergens = new Array<Allergen>();
         if (user) {
             this.id = user.id;
             this.login = user.login;
@@ -23,6 +28,11 @@ export class User {
             this.lastName = user.lastName;
             this.email = user.email;
             this.imageUrl = user.imageUrl;
+            if (user.allergens != null) {
+                user.allergens.forEach(element => {
+                    this.allergens.push(new Allergen(element));
+                });
+            }
         }
     }
 
@@ -72,6 +82,14 @@ export class User {
 
     public setImageUrl(imageUrl: string): void {
         this.imageUrl = imageUrl;
+    }
+
+    public getAllergens(): Array<Allergen> {
+        return this.allergens;
+    }
+
+    public setAllergens(allergens: Array<Allergen>): void {
+        this.allergens = allergens;
     }
 
 }

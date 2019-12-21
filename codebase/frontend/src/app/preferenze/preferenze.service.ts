@@ -43,7 +43,15 @@ export class PreferenzeService {
         firstName: 'pippotto',
         lastName: 'cattaneo',
         email: 'pipp8@unisa.it',
-        imageUrl: ''
+        imageUrl: '',
+        allergens: [
+          {
+            id: 1102,
+            name: 'Latte',
+            description: 'Latte e prodotti derivati (compreso lattosio)',
+            imageUrl: null
+          }
+        ]
       }
     };
     return new Promise<ICustomer>((resolve, reject) => resolve(iCustomer));

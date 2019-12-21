@@ -1,5 +1,3 @@
-import { IProduct, Product } from './product';
-
 export interface ICategory {
     id: number;
     name: string;
@@ -8,6 +6,7 @@ export interface ICategory {
 export class Category {
     private id: number;
     private name: string;
+    
     constructor(category?: ICategory) {
         if (category) {
             this.id = category.id;

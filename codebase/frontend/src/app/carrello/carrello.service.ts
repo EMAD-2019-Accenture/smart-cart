@@ -31,7 +31,10 @@ export class CarrelloService {
           conservation: 'Prodotto confezionato in atmosfera protettiva., Conservare in frigorifero tra 0 °C e +4 °C.',
           preparation: '',
           nutrients: 'Energia: 1298 kJ, Energia: 314 kcal, Grassi: 31 g, di cui acidi grassi saturi: 22 g, Carboidrati: 2,4 g, di cui zuccheri: 2,3 g, Proteine: 6,4 g, Sale: 0,67g',
-          categories: null,
+          category: {
+            id: 100,
+            name: 'Alimentari'
+          },
           discount: null,
           percentDiscount: null,
           allergens: [
@@ -39,8 +42,7 @@ export class CarrelloService {
               id: 1051,
               name: 'Latte',
               description: 'Latte e prodotti derivati (compreso lattosio)',
-              imageUrl: null,
-              users: null
+              imageUrl: null
             }
           ],
           kForN: null
