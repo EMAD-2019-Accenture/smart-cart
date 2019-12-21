@@ -1,7 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
-import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner/ngx';
-import { Storage } from '@ionic/storage';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 // tslint:disable: align
 export class ScanService {
