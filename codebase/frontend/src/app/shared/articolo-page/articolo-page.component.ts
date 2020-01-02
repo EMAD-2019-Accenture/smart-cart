@@ -14,43 +14,39 @@ export class ArticoloPageComponent implements OnInit {
 
   product: Product;
   ingredients: string[];
-  fromScan: boolean;
   itemToAdd: CartItem;
 
   constructor(private articoloService: ArticoloService,
     private router: Router,
     private route: ActivatedRoute) {
-    this.product = new Product();
+  }
+
+  ngOnInit() {
     const barcode: number = this.route.snapshot.params.id;
     this.articoloService.getProduct(barcode).then((response: IProduct) => {
       this.updateView(response);
     });
   }
 
-  ngOnInit() {
-  }
-
-  private updateView(product: IProduct) {
-    this.product = new Product(product);
-    this.parseIngredients(product.ingredients);
-    this.fromScan = history.state.scan;
-    if (this.fromScan) {
+  private updateView(iProduct: IProduct) {
+    this.product = new Product(iProduct);
+    this.ingredients = this.parseIngredients(this.product.getIngredients());
+    if (history.state.scan) {
       this.itemToAdd = new CartItem();
       this.itemToAdd.setProduct(this.product);
       this.itemToAdd.setQuantity(1);
     }
   }
 
-  private parseIngredients(ingredients: string) {
-    this.ingredients = ingredients.split(', ');
-    this.ingredients = this.ingredients.filter(value => value !== '' && value !== ' ');
+  private parseIngredients(ingredients: string): string[] {
+    return ingredients.split(', ').map(value => value.trim()).filter(value => value !== '' && value !== ' ');
   }
 
-  public increaseQuantity(index: number) {
+  public increaseQuantity() {
     this.articoloService.increaseQuantity(this.itemToAdd);
   }
 
-  public decreaseQuantity(index: number) {
+  public decreaseQuantity() {
     this.articoloService.decreaseQuantity(this.itemToAdd);
   }
 

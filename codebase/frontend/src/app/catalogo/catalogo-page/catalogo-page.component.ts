@@ -26,23 +26,34 @@ export class CatalogoPageComponent implements OnInit {
     });
     this.catalogoService.getProducts().then(value => {
       this.allProducts = value.map(product => new Product(product));
+      this.allProducts.sort((a, b) => {
+        return a.getName().localeCompare(b.getName());
+      });
       this.filteredProducts = this.allProducts;
     });
   }
 
-  public filter(searchBar: HTMLInputElement, dropdownCategory: HTMLInputElement): void {
-    this.filteredProducts = this.allProducts;
+  public filter(searchBar: HTMLInputElement, dropdownCategory: HTMLInputElement, discountCheck: HTMLInputElement): void {
+    this.filteredProducts = this.allProducts/*.sort((a, b) => {
+      return a.getName().localeCompare(b.getName());
+    })*/;
+    // Category filter
     const selectedIndex: number = Number(dropdownCategory.value);
     if (selectedIndex !== 0) {
       const category: Category = this.categories[selectedIndex - 1];
-      this.filteredProducts = this.filteredProducts.filter(product =>
-        product.getCategory().getId() === category.getId()
-      );
+      this.filteredProducts = this.filteredProducts.filter(product => product.getCategory().getId() === category.getId());
     }
-    const keyword: string = searchBar.value;
-    this.filteredProducts = this.filteredProducts.filter(product => {
-      const regex = new RegExp('^.*(' + keyword + ').*$', 'i');
-      return regex.test(product.getName());
-    });
+    // Keyword filter
+    const regex = new RegExp('^.*(' + searchBar.value + ').*$', 'i');
+    this.filteredProducts = this.filteredProducts.filter(product => regex.test(product.getName()));
+    // Discount filter
+    if (discountCheck.checked) {
+      this.filteredProducts = this.filteredProducts.filter(product => {
+        const discount: string = JSON.stringify(product.getDiscount());
+        // const percentDiscount: string = JSON.stringify(product.getPercentDiscount());
+        // const kForN: string = JSON.stringify(product.getKForN());
+        return discount !== '{}' /*|| percentDiscount !== '{}' || kForN !== '{}'*/;
+      });
+    }
   }
 }

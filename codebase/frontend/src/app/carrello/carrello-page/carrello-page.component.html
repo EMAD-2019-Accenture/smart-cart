@@ -41,7 +41,7 @@
       <ion-thumbnail slot="start">
         <img src="http://getdrawings.com/free-icon/shopping-cart-icon-transparent-70.png">
       </ion-thumbnail>
-      <ion-label>Carrello di Acquirente</ion-label>
+      <ion-label class="ion-text-wrap">Carrello di Acquirente</ion-label>
       <ion-note slot="end">
         <div>Totale: <b>{{getTotalPrice()}} €</b></div>
         <div>Pezzi: <b>{{getTotalQuantity()}}</b></div>
@@ -55,11 +55,11 @@
         </ion-text>
       </ng-template>
       <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index">
-        <ion-item detail routerLink="/articolo/{{item.getProduct().getBarcode()}}" routerLinkActive="active">
+        <ion-item detail [routerLink]="'/articolo/' + item.getProduct().getBarcode()" routerLinkActive="active">
           <ion-avatar slot="start">
-            <img src="{{item.getProduct().getImageUrl()}}">
+            <img [src]="item.getProduct().getImageUrl()">
           </ion-avatar>
-          <ion-label>
+          <ion-label class="ion-text-wrap">
             <h4>{{ item.getProduct().getName() }}</h4>
             <p>{{ item.getProduct().getDescription() }}</p>
             <p>{{ item.getProduct().getPrice() }} € cad.</p>
@@ -88,10 +88,10 @@
   </ng-template>
 </ion-content>
 <ng-template [ngIf]="cart.isActive()">
-    <ion-footer no-shadow no-border>
-      <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="deactivateCart()">Chiudi
-        sessione
-        <ion-icon slot="end" name="checkmark-circle"></ion-icon>
-      </ion-button>
-    </ion-footer>
-  </ng-template>
+  <ion-footer no-shadow no-border>
+    <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="deactivateCart()">Chiudi
+      sessione
+      <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+    </ion-button>
+  </ion-footer>
+</ng-template>
