@@ -38,27 +38,21 @@ public class DiscountResourceIT {
 
     private static final LocalDate DEFAULT_START = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_START = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_START = LocalDate.ofEpochDay(-1L);
 
     private static final LocalDate DEFAULT_END = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_END = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_END = LocalDate.ofEpochDay(-1L);
 
     private static final Double DEFAULT_AMOUNT = 0D;
     private static final Double UPDATED_AMOUNT = 1D;
-    private static final Double SMALLER_AMOUNT = 0D - 1D;
 
     private static final Double DEFAULT_PERVENT_VALUE = 0D;
     private static final Double UPDATED_PERVENT_VALUE = 1D;
-    private static final Double SMALLER_PERVENT_VALUE = 0D - 1D;
 
     private static final Integer DEFAULT_CONDITION = 0;
     private static final Integer UPDATED_CONDITION = 1;
-    private static final Integer SMALLER_CONDITION = 0 - 1;
 
     private static final Integer DEFAULT_FREE = 0;
     private static final Integer UPDATED_FREE = 1;
-    private static final Integer SMALLER_FREE = 0 - 1;
 
     private static final DiscountType DEFAULT_TYPE = DiscountType.SIMPLE_DISCOUNT;
     private static final DiscountType UPDATED_TYPE = DiscountType.PERCENT_DISCOUNT;
@@ -428,20 +422,5 @@ public class DiscountResourceIT {
         // Validate the database contains one less item
         List<Discount> discountList = discountRepository.findAll();
         assertThat(discountList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Discount.class);
-        Discount discount1 = new Discount();
-        discount1.setId(1L);
-        Discount discount2 = new Discount();
-        discount2.setId(discount1.getId());
-        assertThat(discount1).isEqualTo(discount2);
-        discount2.setId(2L);
-        assertThat(discount1).isNotEqualTo(discount2);
-        discount1.setId(null);
-        assertThat(discount1).isNotEqualTo(discount2);
     }
 }

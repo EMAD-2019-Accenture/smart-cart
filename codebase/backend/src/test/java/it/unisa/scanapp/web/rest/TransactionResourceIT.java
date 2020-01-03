@@ -42,7 +42,6 @@ public class TransactionResourceIT {
 
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_DATE = LocalDate.ofEpochDay(-1L);
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -295,20 +294,5 @@ public class TransactionResourceIT {
         // Validate the database contains one less item
         List<Transaction> transactionList = transactionRepository.findAll();
         assertThat(transactionList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Transaction.class);
-        Transaction transaction1 = new Transaction();
-        transaction1.setId(1L);
-        Transaction transaction2 = new Transaction();
-        transaction2.setId(transaction1.getId());
-        assertThat(transaction1).isEqualTo(transaction2);
-        transaction2.setId(2L);
-        assertThat(transaction1).isNotEqualTo(transaction2);
-        transaction1.setId(null);
-        assertThat(transaction1).isNotEqualTo(transaction2);
     }
 }

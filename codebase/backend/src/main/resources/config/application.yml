@@ -96,11 +96,6 @@ spring:
       thread-name-prefix: smart-cart-scheduling-
       pool:
         size: 2
-  thymeleaf:
-    mode: HTML
-  output:
-    ansi:
-      console-available: true
 
 server:
   servlet:

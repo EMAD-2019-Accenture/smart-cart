@@ -11,16 +11,7 @@
 
     <repositories>
         <!-- more information at https://blogs.oracle.com/dev2dev/entry/how_to_get_oracle_jdbc -->
-        <repository>
-            <id>maven.oracle.com</id>
-            <name>oracle-maven-repo</name>
-            <url>https://maven.oracle.com</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-        </repository>
+
         <!-- jhipster-needle-maven-repository -->
     </repositories>
 
@@ -28,7 +19,8 @@
         <!-- jhipster-needle-maven-plugin-repository -->
     </pluginRepositories>
 
-    <!-- jhipster-needle-distribution-management -->
+    <!--
+    -needle-distribution-management -->
 
     <properties>
         <!-- Build properties -->
@@ -49,16 +41,16 @@
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version>3.0.5</jhipster-dependencies.version>
+        <jhipster-dependencies.version>3.1.0</jhipster-dependencies.version>
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/io.github.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
-        <spring-boot.version>2.1.8.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.11.RELEASE</spring-boot.version>
         <!-- The spring framework version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-        <spring.version>5.1.9.RELEASE</spring.version>
+        <spring.version>5.1.12.RELEASE</spring.version>
         <!-- The hibernate version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-        <hibernate.version>5.3.11.Final</hibernate.version>
+        <hibernate.version>5.3.14.Final</hibernate.version>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
         <javassist.version>3.23.2-GA</javassist.version>
@@ -68,27 +60,31 @@
         <liquibase-hibernate5.version>3.6</liquibase-hibernate5.version>
         <!-- The hibernate version to be used to override default version of liquibase maven plugin -->
         <hibernate-core.version>5.3.8.Final</hibernate-core.version>
-        <h2.version>1.4.199</h2.version>
+        <h2.version>1.4.200</h2.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
-        <mapstruct.version>1.3.0.Final</mapstruct.version>
+        <archunit-junit5.version>0.12.0</archunit-junit5.version>
+        <mapstruct.version>1.3.1.Final</mapstruct.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>3.0.0-M3</maven-failsafe-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M4</maven-failsafe-plugin.version>
         <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
-        <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
-        <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
-        <jib-maven-plugin.version>1.5.1</jib-maven-plugin.version>
+        <maven-checkstyle.version>3.1.0</maven-checkstyle.version>
+        <checkstyle.version>8.27</checkstyle.version>
+        <spring-nohttp-checkstyle.version>0.0.4.RELEASE</spring-nohttp-checkstyle.version>
+        <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+        <jib-maven-plugin.version>1.8.0</jib-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
         <jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
         <jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
         <jacoco.itReportFolder>${project.build.directory}/jacoco/integrationTest</jacoco.itReportFolder>
@@ -112,6 +108,11 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -181,10 +182,6 @@
             <artifactId>cache-api</artifactId>
         </dependency>
         <!-- more information at https://blogs.oracle.com/dev2dev/entry/how_to_get_oracle_jdbc -->
-        <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -294,7 +291,7 @@
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5-api</artifactId>
-            <version>0.11.0</version>
+            <version>${archunit-junit5.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Adding the engine dependency to the surefire-plugin unfortunately does not work in the current version. -->
@@ -302,7 +299,7 @@
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5-engine</artifactId>
-            <version>0.11.0</version>
+            <version>${archunit-junit5.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -339,6 +336,14 @@
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-localconfig-connector</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-heroku-connector</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
@@ -378,6 +383,7 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -558,7 +564,7 @@
                         </to>
                         <container>
                             <entrypoint>
-                                <shell>sh</shell>
+                                <shell>bash</shell>
                                 <option>-c</option>
                                 <arg>chmod +x /entrypoint.sh &amp;&amp; sync &amp;&amp; /entrypoint.sh</arg>
                             </entrypoint>
@@ -591,6 +597,11 @@
                         <contexts>!test</contexts>
                     </configuration>
                     <dependencies>
+                        <dependency>
+                            <groupId>io.github.jhipster</groupId>
+                            <artifactId>jhipster-framework</artifactId>
+                            <version>${jhipster-dependencies.version}</version>
+                        </dependency>
                         <dependency>
                             <groupId>org.hibernate</groupId>
                             <artifactId>hibernate-core</artifactId>
@@ -682,8 +693,8 @@
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an incompatible version of Java. JHipster supports JDK 8 to 12.</message>
-                                <version>[1.8,13)</version>
+                                <message>You are running an incompatible version of Java. JHipster supports JDK 8 to 13.</message>
+                                <version>[1.8,14)</version>
                             </requireJavaVersion>
                         </rules>
                     </configuration>
@@ -976,6 +987,60 @@
                         </plugin>
                     </plugins>
                 </pluginManagement>
+            </build>
+        </profile>
+
+        <profile>
+            <id>heroku</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <configuration combine.self="override">
+                            <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
+                            <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
+                            <driver></driver>
+                            <url>${env.JDBC_DATABASE_URL}</url>
+                            <defaultSchemaName></defaultSchemaName>
+                            <username>${env.JDBC_DATABASE_USERNAME}</username>
+                            <password>${env.JDBC_DATABASE_PASSWORD}</password>
+                            <referenceUrl>hibernate:spring:it.unisa.scanapp.domain?dialect=org.hibernate.dialect.MySQL8Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
+                            <verbose>true</verbose>
+                            <logging>debug</logging>
+                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>${maven-clean-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>clean-artifacts</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                                <configuration>
+                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <filesets>
+                                        <fileset>
+                                            <directory>target</directory>
+                                            <excludes>
+                                                <exclude>*.jar</exclude>
+                                            </excludes>
+                                            <followSymlinks>false</followSymlinks>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>node_modules</directory>
+                                            <followSymlinks>false</followSymlinks>
+                                        </fileset>
+                                    </filesets>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
         <!-- jhipster-needle-maven-add-profile -->

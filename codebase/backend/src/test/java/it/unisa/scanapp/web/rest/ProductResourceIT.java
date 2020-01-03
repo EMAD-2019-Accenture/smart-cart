@@ -42,6 +42,7 @@ public class ProductResourceIT {
     private static final String DEFAULT_BARCODE = "1645290541801";
     private static final String UPDATED_BARCODE = "2076256663897";
 
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -50,14 +51,12 @@ public class ProductResourceIT {
 
     private static final Double DEFAULT_PRICE = 0D;
     private static final Double UPDATED_PRICE = 1D;
-    private static final Double SMALLER_PRICE = 0D - 1D;
 
     private static final String DEFAULT_BRAND = "AAAAAAAAAA";
     private static final String UPDATED_BRAND = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_AMOUNT = 0;
     private static final Integer UPDATED_AMOUNT = 1;
-    private static final Integer SMALLER_AMOUNT = 0 - 1;
 
     private static final String DEFAULT_IMAGE_URL = "AAAAAAAAAA";
     private static final String UPDATED_IMAGE_URL = "BBBBBBBBBB";
@@ -296,20 +295,20 @@ public class ProductResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(product.getId().intValue())))
-            .andExpect(jsonPath("$.[*].barcode").value(hasItem(DEFAULT_BARCODE.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].barcode").value(hasItem(DEFAULT_BARCODE)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].brand").value(hasItem(DEFAULT_BRAND.toString())))
+            .andExpect(jsonPath("$.[*].brand").value(hasItem(DEFAULT_BRAND)))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT)))
-            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL.toString())))
-            .andExpect(jsonPath("$.[*].source").value(hasItem(DEFAULT_SOURCE.toString())))
+            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)))
+            .andExpect(jsonPath("$.[*].source").value(hasItem(DEFAULT_SOURCE)))
             .andExpect(jsonPath("$.[*].ingredients").value(hasItem(DEFAULT_INGREDIENTS.toString())))
             .andExpect(jsonPath("$.[*].conservation").value(hasItem(DEFAULT_CONSERVATION.toString())))
             .andExpect(jsonPath("$.[*].preparation").value(hasItem(DEFAULT_PREPARATION.toString())))
             .andExpect(jsonPath("$.[*].nutrients").value(hasItem(DEFAULT_NUTRIENTS.toString())));
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public void getAllProductsWithEagerRelationshipsIsEnabled() throws Exception {
         ProductResource productResource = new ProductResource(productRepositoryMock);
@@ -354,14 +353,14 @@ public class ProductResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(product.getId().intValue()))
-            .andExpect(jsonPath("$.barcode").value(DEFAULT_BARCODE.toString()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.barcode").value(DEFAULT_BARCODE))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.brand").value(DEFAULT_BRAND.toString()))
+            .andExpect(jsonPath("$.brand").value(DEFAULT_BRAND))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT))
-            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL.toString()))
-            .andExpect(jsonPath("$.source").value(DEFAULT_SOURCE.toString()))
+            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL))
+            .andExpect(jsonPath("$.source").value(DEFAULT_SOURCE))
             .andExpect(jsonPath("$.ingredients").value(DEFAULT_INGREDIENTS.toString()))
             .andExpect(jsonPath("$.conservation").value(DEFAULT_CONSERVATION.toString()))
             .andExpect(jsonPath("$.preparation").value(DEFAULT_PREPARATION.toString()))
@@ -459,20 +458,5 @@ public class ProductResourceIT {
         // Validate the database contains one less item
         List<Product> productList = productRepository.findAll();
         assertThat(productList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Product.class);
-        Product product1 = new Product();
-        product1.setId(1L);
-        Product product2 = new Product();
-        product2.setId(product1.getId());
-        assertThat(product1).isEqualTo(product2);
-        product2.setId(2L);
-        assertThat(product1).isNotEqualTo(product2);
-        product1.setId(null);
-        assertThat(product1).isNotEqualTo(product2);
     }
 }

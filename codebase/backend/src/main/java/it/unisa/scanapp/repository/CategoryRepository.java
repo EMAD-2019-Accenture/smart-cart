@@ -1,4 +1,5 @@
 package it.unisa.scanapp.repository;
+
 import it.unisa.scanapp.domain.Category;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;

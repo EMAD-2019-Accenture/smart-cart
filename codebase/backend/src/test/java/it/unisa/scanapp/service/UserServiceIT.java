@@ -5,7 +5,8 @@ import it.unisa.scanapp.config.Constants;
 import it.unisa.scanapp.domain.User;
 import it.unisa.scanapp.repository.UserRepository;
 import it.unisa.scanapp.service.dto.UserDTO;
-import it.unisa.scanapp.service.util.RandomUtil;
+
+import io.github.jhipster.security.RandomUtil;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;

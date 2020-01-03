@@ -1,8 +1,8 @@
 package it.unisa.scanapp;
 
 import it.unisa.scanapp.config.ApplicationProperties;
-import it.unisa.scanapp.config.DefaultProfileUtil;
 
+import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;

@@ -38,7 +38,6 @@ public class CustomerResourceIT {
 
     private static final LocalDate DEFAULT_BIRTH = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_BIRTH = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_BIRTH = LocalDate.ofEpochDay(-1L);
 
     private static final String DEFAULT_NATIONALITY = "AAAAAAAAAA";
     private static final String UPDATED_NATIONALITY = "BBBBBBBBBB";
@@ -179,7 +178,7 @@ public class CustomerResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(customer.getId().intValue())))
             .andExpect(jsonPath("$.[*].birth").value(hasItem(DEFAULT_BIRTH.toString())))
-            .andExpect(jsonPath("$.[*].nationality").value(hasItem(DEFAULT_NATIONALITY.toString())))
+            .andExpect(jsonPath("$.[*].nationality").value(hasItem(DEFAULT_NATIONALITY)))
             .andExpect(jsonPath("$.[*].vegan").value(hasItem(DEFAULT_VEGAN.booleanValue())))
             .andExpect(jsonPath("$.[*].vegetarian").value(hasItem(DEFAULT_VEGETARIAN.booleanValue())))
             .andExpect(jsonPath("$.[*].celiac").value(hasItem(DEFAULT_CELIAC.booleanValue())));
@@ -197,7 +196,7 @@ public class CustomerResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(customer.getId().intValue()))
             .andExpect(jsonPath("$.birth").value(DEFAULT_BIRTH.toString()))
-            .andExpect(jsonPath("$.nationality").value(DEFAULT_NATIONALITY.toString()))
+            .andExpect(jsonPath("$.nationality").value(DEFAULT_NATIONALITY))
             .andExpect(jsonPath("$.vegan").value(DEFAULT_VEGAN.booleanValue()))
             .andExpect(jsonPath("$.vegetarian").value(DEFAULT_VEGETARIAN.booleanValue()))
             .andExpect(jsonPath("$.celiac").value(DEFAULT_CELIAC.booleanValue()));
@@ -280,20 +279,5 @@ public class CustomerResourceIT {
         // Validate the database contains one less item
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Customer.class);
-        Customer customer1 = new Customer();
-        customer1.setId(1L);
-        Customer customer2 = new Customer();
-        customer2.setId(customer1.getId());
-        assertThat(customer1).isEqualTo(customer2);
-        customer2.setId(2L);
-        assertThat(customer1).isNotEqualTo(customer2);
-        customer1.setId(null);
-        assertThat(customer1).isNotEqualTo(customer2);
     }
 }

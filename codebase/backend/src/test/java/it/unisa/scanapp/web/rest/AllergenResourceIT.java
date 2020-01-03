@@ -203,9 +203,9 @@ public class AllergenResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(allergen.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -252,9 +252,9 @@ public class AllergenResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(allergen.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL));
     }
 
     @Test
@@ -330,20 +330,5 @@ public class AllergenResourceIT {
         // Validate the database contains one less item
         List<Allergen> allergenList = allergenRepository.findAll();
         assertThat(allergenList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Allergen.class);
-        Allergen allergen1 = new Allergen();
-        allergen1.setId(1L);
-        Allergen allergen2 = new Allergen();
-        allergen2.setId(allergen1.getId());
-        assertThat(allergen1).isEqualTo(allergen2);
-        allergen2.setId(2L);
-        assertThat(allergen1).isNotEqualTo(allergen2);
-        allergen1.setId(null);
-        assertThat(allergen1).isNotEqualTo(allergen2);
     }
 }

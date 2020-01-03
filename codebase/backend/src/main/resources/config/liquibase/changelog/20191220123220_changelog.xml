@@ -9,9 +9,9 @@
         <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="product" constraintName="FK1mtsbur82frn64de7balymq9s" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="category" validate="true"/>
     </changeSet>
     <changeSet author="manue (generated)" id="1576845157095-6">
-        <dropForeignKeyConstraint baseTableName="CATEGORY" constraintName="FK_CATEGORY_PRODUCT_ID"/>
+        <dropForeignKeyConstraint baseTableName="category" constraintName="fk_category_product_id"/>
     </changeSet>
     <changeSet author="manue (generated)" id="1576845157095-7">
-        <dropColumn columnName="PRODUCT_ID" tableName="CATEGORY"/>
+        <dropColumn columnName="product_id" tableName="category"/>
     </changeSet>
 </databaseChangeLog>

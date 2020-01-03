@@ -12,6 +12,11 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: false
 
 logging:
   level:
@@ -19,13 +24,13 @@ logging:
     io.github.jhipster: INFO
     it.unisa.scanapp: INFO
 
-management:
-  metrics:
-    export:
-      prometheus:
-        enabled: false
-
 spring:
+  profiles:
+    active: prod
+    include:
+      - swagger
+      # Uncomment to activate TLS for the dev profile
+      #- tls
   devtools:
     restart:
       enabled: false
@@ -33,22 +38,28 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: system
-    password: oracle
+    url: jdbc:mysql://localhost:3306/SmartCart?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    password:
     hikari:
       poolName: Hikari
       auto-commit: false
   jpa:
-    database-platform: org.hibernate.dialect.Oracle12cDialect
-    database: ORACLE
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: MYSQL
     show-sql: false
     properties:
-      hibernate.id.new_generator_mappings: true
+      hibernate.id.new_generator_mappings: false
       hibernate.connection.provider_disables_autocommit: true
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
   liquibase:
     contexts: prod

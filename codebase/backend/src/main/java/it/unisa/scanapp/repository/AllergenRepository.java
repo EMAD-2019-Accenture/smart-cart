@@ -1,4 +1,5 @@
 package it.unisa.scanapp.repository;
+
 import it.unisa.scanapp.domain.Allergen;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

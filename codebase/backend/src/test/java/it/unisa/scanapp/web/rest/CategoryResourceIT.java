@@ -165,7 +165,7 @@ public class CategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
     
     @Test
@@ -179,7 +179,7 @@ public class CategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(category.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -251,20 +251,5 @@ public class CategoryResourceIT {
         // Validate the database contains one less item
         List<Category> categoryList = categoryRepository.findAll();
         assertThat(categoryList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Category.class);
-        Category category1 = new Category();
-        category1.setId(1L);
-        Category category2 = new Category();
-        category2.setId(category1.getId());
-        assertThat(category1).isEqualTo(category2);
-        category2.setId(2L);
-        assertThat(category1).isNotEqualTo(category2);
-        category1.setId(null);
-        assertThat(category1).isNotEqualTo(category2);
     }
 }
