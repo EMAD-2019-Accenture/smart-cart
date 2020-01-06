@@ -104,6 +104,13 @@ server:
 # ===================================================================
 
 jhipster:
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
@@ -111,13 +118,6 @@ jhipster:
     ehcache: # Ehcache configuration
       time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
       max-entries: 1000 # Number of objects in each cache entry
-  cors:
-      allowed-origins: '*'
-      allowed-methods: '*'
-      allowed-headers: '*'
-      exposed-headers: 'Authorization,Link,X-Total-Count'
-      allow-credentials: true
-      max-age: 1800
   security:
     authentication:
       jwt:
