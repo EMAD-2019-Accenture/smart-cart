@@ -18,7 +18,7 @@ export class CarrelloService {
       const itemJs: ICartItem = {
         id: 1,
         product: {
-          id: 1252,
+          id: 6,
           barcode: '8001120783806',
           name: ' Robiola 100 g',
           description: 'Senza conservanti, 100g',
@@ -32,14 +32,14 @@ export class CarrelloService {
           preparation: '',
           nutrients: 'Energia: 1298 kJ, Energia: 314 kcal, Grassi: 31 g, di cui acidi grassi saturi: 22 g, Carboidrati: 2,4 g, di cui zuccheri: 2,3 g, Proteine: 6,4 g, Sale: 0,67g',
           category: {
-            id: 100,
+            id: 1,
             name: 'Alimentari'
           },
           discount: null,
           percentDiscount: null,
           allergens: [
             {
-              id: 1051,
+              id: 2,
               name: 'Latte',
               description: 'Latte e prodotti derivati (compreso lattosio)',
               imageUrl: null

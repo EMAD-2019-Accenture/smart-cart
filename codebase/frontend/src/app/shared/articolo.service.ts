@@ -4,8 +4,8 @@ import { IProduct } from './model/product';
 
 // tslint:disable: align
 export class ArticoloService {
-  // DEBUG In production must change
-  private scanPath = 'http://localhost:8080/api/products/scan/';
+  // private scanPath = 'http://localhost:8080/api/products/scan/';
+  private scanPath = 'https://smart-cart-acenture.herokuapp.com/api/products/scan/';
 
   constructor(private http: HttpCommonService) { }
 

@@ -4,8 +4,10 @@ import { User } from '../shared/model/user';
 
 // tslint:disable: align
 export class PreferenzeService {
-  private getCustomerByUsernamePath = 'http://localhost:8080/api/customers/logged';
-  private updateCustomerPath = 'http://localhost:8080/api/customers/';
+  // private getCustomerByUsernamePath = 'http://localhost:8080/api/customers/logged';
+  // private updateCustomerPath = 'http://localhost:8080/api/customers/';
+  private getCustomerByUsernamePath = 'https://smart-cart-acenture.herokuapp.com/api/customers/logged';
+  private updateCustomerPath = 'https://smart-cart-acenture.herokuapp.com/api/customers/';
 
   constructor(private http: HttpCommonService) { }
 

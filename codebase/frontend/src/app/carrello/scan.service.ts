@@ -13,7 +13,7 @@ export class ScanService {
 
   // DEBUG Remove
   private async mockScan(): Promise<string> {
-    return '8020458000324';
+    return '8001120789761';
   }
 
   private async scan(): Promise<string> {
