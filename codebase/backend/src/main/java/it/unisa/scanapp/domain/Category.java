@@ -1,5 +1,5 @@
 package it.unisa.scanapp.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -27,6 +27,7 @@ public class Category implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
