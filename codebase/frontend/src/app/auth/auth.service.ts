@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage';
-import { async } from 'q';
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +19,7 @@ export class AuthService {
   async login(username: string, password: string) {
     let result = false;
     try {
-      const response: any = await this.httpClient.post(this.AUTH_SERVER_ADDRESS, { password, username }/*, {
-        headers: new HttpHeaders({
-          Origin: 'http://smartcart.com'
-        })
-      }*/).toPromise();
+      const response: any = await this.httpClient.post(this.AUTH_SERVER_ADDRESS, { password, username }).toPromise();
       if (response.id_token) {
         await this.storage.set('ACCESS_TOKEN', response.id_token);
         result = true;
