@@ -1,18 +1,16 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap, map } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
-
-import { Storage } from '@ionic/storage';
-import { User } from '../shared/model/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Storage } from '@ionic/storage';
+import { async } from 'q';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
-  AUTH_SERVER_ADDRESS = 'http://localhost:8080/api/authenticate';
+  // TODO Make it use HttpCommonService
+  // AUTH_SERVER_ADDRESS = 'http://localhost:8080/api/authenticate';
+  AUTH_SERVER_ADDRESS = 'https://smart-cart-acenture.herokuapp.com/api/authenticate';
   private jwtHelper: JwtHelperService;
 
   constructor(private httpClient: HttpClient, private storage: Storage) {
@@ -22,13 +20,15 @@ export class AuthService {
   async login(username: string, password: string) {
     let result = false;
     try {
-      const response: any = await this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}`, { password, username }).toPromise();
-
+      const response: any = await this.httpClient.post(this.AUTH_SERVER_ADDRESS, { password, username }/*, {
+        headers: new HttpHeaders({
+          Origin: 'http://smartcart.com'
+        })
+      }*/).toPromise();
       if (response.id_token) {
         await this.storage.set('ACCESS_TOKEN', response.id_token);
         result = true;
       }
-
     } catch (error) {
       console.log(error);
       result = false;
@@ -38,8 +38,8 @@ export class AuthService {
     /*pipe(tap(async (res: any) => {
 
       if (res.id_token) {
-        
-        const token = await 
+
+        const token = await
         console.log('Get token in login', this.getAuthToken());
       }
     })

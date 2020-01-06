@@ -4,8 +4,10 @@ import { IProduct } from '../shared/model/product';
 
 // tslint:disable: align
 export class CatalogoService {
-  private updateCustomerPath = 'http://localhost:8080/api/categories/';
-  private getProductsPath = 'http://localhost:8080/api/products/';
+  // private updateCustomerPath = 'http://localhost:8080/api/categories/';
+  // private getProductsPath = 'http://localhost:8080/api/products/';
+  private updateCustomerPath = 'https://smart-cart-acenture.herokuapp.com/api/categories/';
+  private getProductsPath = 'https://smart-cart-acenture.herokuapp.com/api/products/';
 
   constructor(private http: HttpCommonService) {
   }
@@ -17,5 +19,5 @@ export class CatalogoService {
   public getProducts(): Promise<IProduct[]> {
     return this.http.getRequest(this.getProductsPath) as Promise<IProduct[]>;
   }
-  
+
 }
