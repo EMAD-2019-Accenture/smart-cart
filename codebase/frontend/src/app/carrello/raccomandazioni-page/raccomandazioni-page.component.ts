@@ -8,9 +8,13 @@ import { RaccomandazioniService } from '../raccomandazioni.service';
 })
 export class RaccomandazioniPageComponent implements OnInit {
 
-  constructor(private raccomandazioniService: RaccomandazioniService) { }
+  constructor(private raccomandazioniService: RaccomandazioniService) {
 
-  ngOnInit() { }
+  }
+
+  ngOnInit() {
+    this.raccomandazioniService.enable();
+   }
 
 
 
