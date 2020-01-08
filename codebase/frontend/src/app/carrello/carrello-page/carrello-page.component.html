@@ -3,11 +3,11 @@
     <ion-title>Carrello</ion-title>
     <ng-template [ngIf]="cart.isActive()">
       <ion-buttons slot="start">
-        <ion-button id="notification-btn" routerLink="./raccomandazioni" routerLinkActive="active">
+        <ion-button id="notification-btn" (click)="navigateToRaccomandazioni()">
           <ion-icon name="information-circle"></ion-icon>
         </ion-button>
         <!--Serve conoscere il numero di raccomandazioni... forse questa è una componente a parte...-->
-        <ion-badge id="notification-badge" color="danger" style="font-size: xx-small;">2</ion-badge>
+        <ion-badge id="notification-badge" color="danger" style="font-size: xx-small;">{{ recommendationsNumber }}</ion-badge>
       </ion-buttons>
       <ion-buttons slot="end">
         <ion-button (click)="startScan()">

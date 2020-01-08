@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Product } from 'src/app/shared/model/product';
+import { ToastNotificationService } from 'src/app/shared/toast/toast-notification.service';
 import { Cart } from '../../shared/model/cart';
 import { CarrelloService } from '../carrello.service';
+import { RaccomandazioniService } from '../raccomandazioni.service';
 import { ScanService } from '../scan.service';
 
 @Component({
@@ -10,27 +15,57 @@ import { ScanService } from '../scan.service';
   styleUrls: ['./carrello-page.component.scss'],
 })
 // tslint:disable: align
-export class CarrelloPageComponent implements OnInit {
-
+export class CarrelloPageComponent implements OnInit, OnDestroy {
   cart: Cart;
+  recommendationsNumber: number;
+  private routeSubscription: Subscription;
 
   constructor(private carrelloService: CarrelloService,
     private scanService: ScanService,
+    private raccomandazioniService: RaccomandazioniService,
+    private authService: AuthService,
+    private toastService: ToastNotificationService,
     private router: Router,
-    public activatedRoute: ActivatedRoute) {
-    this.cart = this.carrelloService.makeCart();
-    activatedRoute.data.subscribe({
-      next: () => this.checkNewItem(),
+    private activatedRoute: ActivatedRoute) {
+    this.cart = this.carrelloService.makeEmptyCart();
+    this.recommendationsNumber = 0;
+    this.routeSubscription = activatedRoute.data.subscribe({
+      next: () => this.checkNewItem()
     });
   }
 
   ngOnInit() {
   }
 
-  private checkNewItem() {
+  ngOnDestroy() {
+    this.routeSubscription.unsubscribe();
+  }
+
+  /**
+   * Check if there is some data within a route. If yes, add it to cart and check a new recommendation
+   */
+  private checkNewItem(): void {
     if (history.state.item) {
       this.carrelloService.addItem(this.cart, history.state.item);
+      this.getNewRecommendation();
     }
+  }
+
+  /**
+   * Get a recommendation from the server
+   */
+  private getNewRecommendation(): void {
+    // TODO: Use a probability criterion
+    // TODO: Need a service from AuthService to get logged customer ID instead of username
+    const productsInCart: Product[] = this.cart.getItems().map(value => value.getProduct());
+    this.authService.getCurrentUsername().then(username => {
+      console.log(username);
+      console.log(productsInCart);
+      this.raccomandazioniService.getNewRecommendation(username, productsInCart);
+      // TODO: Improve toast
+      this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
+      this.recommendationsNumber++;
+    });
   }
 
   public activateCart() {
@@ -66,5 +101,10 @@ export class CarrelloPageComponent implements OnInit {
 
   public decreaseItem(index: number) {
     this.carrelloService.decreaseItem(this.cart, index);
+  }
+
+  public navigateToRaccomandazioni() {
+    this.recommendationsNumber = 0;
+    this.router.navigateByUrl('index/carrello/raccomandazioni');
   }
 }

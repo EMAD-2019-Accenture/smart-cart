@@ -9,7 +9,7 @@ export class ArticoloService {
 
   constructor(private http: HttpCommonService) { }
 
-  public getProduct(barcode: number): Promise<IProduct> {
+  public getProductByBarcode(barcode: number): Promise<IProduct> {
     return this.http.getRequest(this.scanPath + barcode) as Promise<IProduct>;
   }
 
