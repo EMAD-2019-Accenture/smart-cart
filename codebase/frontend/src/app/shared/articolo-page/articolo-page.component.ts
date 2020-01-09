@@ -23,7 +23,7 @@ export class ArticoloPageComponent implements OnInit {
 
   ngOnInit() {
     const barcode: number = this.route.snapshot.params.id;
-    this.articoloService.getProduct(barcode).then((response: IProduct) => {
+    this.articoloService.getProductByBarcode(barcode).then((response: IProduct) => {
       this.updateView(response);
     });
   }
