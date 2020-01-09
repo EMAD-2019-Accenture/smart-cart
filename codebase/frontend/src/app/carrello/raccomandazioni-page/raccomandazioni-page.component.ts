@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RaccomandazioniService } from '../raccomandazioni.service';
 import { Recommendation } from 'src/app/shared/model/recommendation';
+import { RaccomandazioniService } from '../raccomandazioni.service';
 
 @Component({
   selector: 'app-raccomandazioni-page',
@@ -11,11 +11,15 @@ export class RaccomandazioniPageComponent implements OnInit {
   recommendations: Recommendation[];
 
   constructor(private raccomandazioniService: RaccomandazioniService) {
-    this.recommendations = this.raccomandazioniService.makeEmptyRecommendations();
-    // TODO: Go to template and show recommendations
+    this.recommendations = this.raccomandazioniService.getRecomendations()
+      .map((value) =>
+        new Recommendation(value)
+      );
   }
 
-  ngOnInit() {
+  ngOnInit() { }
 
+  public getNumberSequence(): number[] {
+    return Array.from(this.recommendations.keys());
   }
 }

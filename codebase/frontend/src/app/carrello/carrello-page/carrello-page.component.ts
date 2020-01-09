@@ -58,14 +58,10 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     // TODO: Use a probability criterion
     // TODO: Need a service from AuthService to get logged customer ID instead of username
     const productsInCart: Product[] = this.cart.getItems().map(value => value.getProduct());
-    this.authService.getCurrentUsername().then(username => {
-      console.log(username);
-      console.log(productsInCart);
-      this.raccomandazioniService.getNewRecommendation(username, productsInCart);
-      // TODO: Improve toast
-      this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
-      this.recommendationsNumber++;
-    });
+    this.raccomandazioniService.getNewRecommendation(productsInCart);
+    // TODO: Improve toast
+    this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
+    this.recommendationsNumber++;
   }
 
   public activateCart() {

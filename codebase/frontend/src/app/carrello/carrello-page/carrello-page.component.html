@@ -2,12 +2,12 @@
   <ion-toolbar color="primary">
     <ion-title>Carrello</ion-title>
     <ng-template [ngIf]="cart.isActive()">
-      <ion-buttons slot="start">
-        <ion-button id="notification-btn" (click)="navigateToRaccomandazioni()">
+      <ion-buttons slot="start" (click)="navigateToRaccomandazioni()">
+        <ion-button id="notification-btn">
           <ion-icon name="information-circle"></ion-icon>
         </ion-button>
-        <!--Serve conoscere il numero di raccomandazioni... forse questa è una componente a parte...-->
-        <ion-badge id="notification-badge" color="danger" style="font-size: xx-small;">{{ recommendationsNumber }}</ion-badge>
+        <ion-badge *ngIf="recommendationsNumber > 0" id="notification-badge" color="danger"
+          style="font-size: xx-small;">{{ recommendationsNumber }}</ion-badge>
       </ion-buttons>
       <ion-buttons slot="end">
         <ion-button (click)="startScan()">
@@ -51,7 +51,7 @@
     <ion-list lines=full>
       <ng-template [ngIf]="cart.getItems().length <= 0">
         <ion-text class="ion-text-center" color="secondary">
-          <h3>Non hai articoli nel carrello</h3>
+          <ion-label>Non hai articoli nel carrello</ion-label>
         </ion-text>
       </ng-template>
       <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index">
@@ -59,10 +59,10 @@
           <ion-avatar slot="start">
             <img [src]="item.getProduct().getImageUrl()">
           </ion-avatar>
-          <ion-label class="ion-text-wrap">
-            <h4>{{ item.getProduct().getName() }}</h4>
-            <p>{{ item.getProduct().getDescription() }}</p>
-            <p>{{ item.getProduct().getPrice() }} € cad.</p>
+          <ion-label>
+            <ion-label color="danger">{{ item.getProduct().getName() }}</ion-label>
+            <ion-label>{{ item.getProduct().getDescription() }}</ion-label>
+            <ion-label>{{ item.getProduct().getPrice() }} € cad.</ion-label>
           </ion-label>
           <ion-note slot="end">
             x {{ item.getQuantity() }}<br>
