@@ -2,7 +2,7 @@ package it.unisa.scanapp.service.dto;
 
 import java.util.List;
 
-public class TransactionDTO {
+public class ProductsDTO {
 
     private List<Long> productsId;
 

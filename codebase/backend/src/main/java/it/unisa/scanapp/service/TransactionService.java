@@ -7,7 +7,7 @@ import it.unisa.scanapp.repository.ProductRepository;
 import it.unisa.scanapp.repository.TransactionRepository;
 import it.unisa.scanapp.repository.UserRepository;
 import it.unisa.scanapp.security.SecurityUtils;
-import it.unisa.scanapp.service.dto.TransactionDTO;
+import it.unisa.scanapp.service.dto.ProductsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class TransactionService {
         this.userRepository = userRepository;
     }
 
-    public Optional<Transaction> registerTransaction(TransactionDTO transactionDTO){
+    public Optional<Transaction> registerTransaction(ProductsDTO productsDTO){
 
         Transaction result = new Transaction();
         Set<Product> transactionProducts = new HashSet<>();
@@ -52,7 +52,7 @@ public class TransactionService {
         User transactionOwner = userOptional.get();
         result.setUser(transactionOwner);
 
-        transactionDTO.getProductsId().forEach(productId ->{
+        productsDTO.getProductsId().forEach(productId ->{
             transactionProducts.add(productRepository.getOne(productId));
         });
 
