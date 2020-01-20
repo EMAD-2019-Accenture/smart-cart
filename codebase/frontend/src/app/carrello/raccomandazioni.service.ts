@@ -31,8 +31,10 @@ export class RaccomandazioniService {
     this.updateRecommendations(recommendations);
   }
 
-  public removeRecommendation() {
-
+  public deleteRecommendation(index: number) {
+    const recommendations: IRecommendation[] = this.getRecomendations();
+    recommendations.splice(index, 1);
+    this.updateRecommendations(recommendations);
   }
 
   private updateRecommendations(recommendations: IRecommendation[]): void {

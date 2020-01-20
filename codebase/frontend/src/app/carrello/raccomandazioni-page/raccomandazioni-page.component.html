@@ -19,13 +19,15 @@
             <ion-card-header>
               <ion-item lines="full">
                 <ion-card-title color="primary">{{ item.getProduct().getName() }}</ion-card-title>
-                <ion-icon name="close" slot="end"></ion-icon>
+                <ion-icon name="close" slot="end" (click)="deleteRecommendation(i)"></ion-icon>
               </ion-item>
               <img [src]="item.getProduct().getImageUrl()">
               <ion-card-subtitle>{{ item.getProduct().getDescription() }}</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-button color="primary" expand="block" size=small><b>Dettagli</b></ion-button>
+              <ion-button color="primary" expand="block" size=small
+                [routerLink]="'/articolo/' + item.getProduct().getBarcode()" routerLinkActive="active"><b>Dettagli</b>
+              </ion-button>
             </ion-card-content>
           </ion-card>
         </ion-col>
