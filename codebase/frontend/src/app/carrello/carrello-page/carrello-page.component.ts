@@ -29,13 +29,12 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute) {
     this.cart = this.carrelloService.makeEmptyCart();
     this.recommendationsNumber = 0;
-    this.routeSubscription = activatedRoute.data.subscribe({
+    this.routeSubscription = this.activatedRoute.data.subscribe({
       next: () => this.checkNewItem()
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
@@ -56,7 +55,7 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
    */
   private getNewRecommendation(): void {
     // TODO: Use a better probability criterion
-    const rand = Math.random() >= 0.5;
+    const rand = Math.random() >= 0.1;
     if (rand) {
       const productsInCart: Product[] = this.cart.getItems().map(value => value.getProduct());
       this.raccomandazioniService.getNewRecommendation(productsInCart);

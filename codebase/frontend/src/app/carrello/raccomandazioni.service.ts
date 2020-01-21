@@ -19,7 +19,7 @@ export class RaccomandazioniService {
     // TODO: Remove this DEBUG object
     const recommendation = {
       id: 1,
-      product: JSON.parse(JSON.stringify(productsInCart[0])),
+      product: JSON.parse(JSON.stringify(productsInCart[1])),
       date: new Date('01-01-2020')
     };
     this.addRecommendation(recommendation);

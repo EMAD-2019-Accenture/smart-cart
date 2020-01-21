@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './raccomandazioni-page.component.html',
   styleUrls: ['./raccomandazioni-page.component.scss'],
 })
+// tslint:disable: align
 export class RaccomandazioniPageComponent implements OnInit {
   recommendations: Recommendation[];
 
@@ -34,11 +35,12 @@ export class RaccomandazioniPageComponent implements OnInit {
       );
   }
 
-  /* Wait to decide if after scan the product must be added instant... this requires
-  a change into scan service that start the scan plugin but wait for the correct barcode!!
-  public navigateToDetail(index: number) {
-    const item: Recommendation = this.recommendations[index];
-    this.router.navigateByUrl('/articolo' + item.getProduct().getBarcode(), { state: { recommendation: true } });
-  }
+  /*
+  * After scan the product must be added instant... this requires
+  * a change into scan service that start the scan plugin but wait for the correct barcode!!
   */
+  public navigateToDetail(index: number) {
+    const recommendation: Recommendation = this.recommendations[index];
+    this.router.navigateByUrl('/articolo/' + recommendation.getProduct().getBarcode(), { state: { recommendation } });
+  }
 }

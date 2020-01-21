@@ -8,26 +8,38 @@ export class ScanService {
     resultDisplayDuration: 0
   };
 
-  constructor(private barcodeScanner: BarcodeScanner) {
-  }
+  constructor(private barcodeScanner: BarcodeScanner) { }
 
-  // DEBUG Remove
-  private async mockScan(): Promise<string> {
-    return '8001120789761';
-  }
-
-  private async scan(): Promise<string> {
+  private async scanAndWait(): Promise<string> {
     return (await this.barcodeScanner.scan(this.scannerOptions)).text;
   }
 
-
-  public async startScan(): Promise<string> {
-    let barcode: Promise<string>;
+  public startScan(): Promise<string> {
+    let scannedBarcodePromise: Promise<string>;
     if (isDevMode()) {
-      barcode = this.mockScan();
+      scannedBarcodePromise = this.fakeScan();
     } else {
-      barcode = this.scan();
+      scannedBarcodePromise = this.scanAndWait();
     }
-    return barcode;
+    return scannedBarcodePromise;
+  }
+
+  public async startSpecificScan(expectedBarcode: string): Promise<boolean> {
+    let scannedBarcode: string;
+    do {
+      if (isDevMode()) {
+        scannedBarcode = await this.fakeScan();
+      } else {
+        scannedBarcode = await this.scanAndWait();
+      }
+      // TODO: What is the value of "barcode" is when phone "back" is pressed?
+    }
+    while (expectedBarcode !== scannedBarcode);
+    return true;
+  }
+
+  // DEBUG Remove
+  private async fakeScan(): Promise<string> {
+    return '8001120789761';
   }
 }

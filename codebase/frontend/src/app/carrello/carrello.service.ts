@@ -8,9 +8,9 @@ export class CarrelloService {
   constructor() { }
 
   /**
-   * Mock a cart with a single item. Only in dev mode
+   * Creates a fake cart with a single item. Only in dev mode
    */
-  private mockCart() {
+  private fakeCart() {
     const cart = new Cart();
     const items: Array<CartItem> = new Array<CartItem>();
     cart.setItems(items);
@@ -56,7 +56,7 @@ export class CarrelloService {
 
   public makeEmptyCart(): Cart {
     if (isDevMode()) {
-      return this.mockCart();
+      return this.fakeCart();
     } else {
       return new Cart();
     }

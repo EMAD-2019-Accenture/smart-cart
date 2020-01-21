@@ -25,8 +25,8 @@
               <ion-card-subtitle>{{ item.getProduct().getDescription() }}</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-button color="primary" expand="block" size=small
-                [routerLink]="'/articolo/' + item.getProduct().getBarcode()" routerLinkActive="active"><b>Dettagli</b>
+              <ion-button color="primary" expand="block" size=small (click)="navigateToDetail(i)">
+                <b>Dettagli</b>
               </ion-button>
             </ion-card-content>
           </ion-card>
