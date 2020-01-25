@@ -29,25 +29,60 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute) {
     this.cart = this.carrelloService.makeEmptyCart();
     this.recommendationsNumber = 0;
-    this.routeSubscription = this.activatedRoute.data.subscribe({
-      next: () => this.checkNewItem()
-    });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.routeSubscription = this.activatedRoute.data.subscribe({
+      next: () => {
+        if (history.state.item) {
+          this.carrelloService.addItem(this.cart, history.state.item);
+          this.getNewRecommendation();
+        }
+      }
+    });
+  }
 
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
   }
 
-  /**
-   * Check if there is some data within a route. If yes, add it to cart and check a new recommendation
-   */
-  private checkNewItem(): void {
-    if (history.state.item) {
-      this.carrelloService.addItem(this.cart, history.state.item);
-      this.getNewRecommendation();
-    }
+  public activateCart() {
+    this.carrelloService.activateCart(this.cart);
+  }
+
+  public deactivateCart() {
+    this.carrelloService.deactivateCart(this.cart);
+  }
+
+  public getTotalPrice(): number {
+    return this.carrelloService.getTotalPrice(this.cart);
+  }
+
+  public getTotalQuantity(): number {
+    return this.carrelloService.getTotalQuantity(this.cart);
+  }
+
+  public deleteItem(index: number) {
+    this.carrelloService.deleteItem(this.cart, index);
+  }
+
+  public increaseItem(index: number) {
+    this.carrelloService.increaseItem(this.cart, index);
+  }
+
+  public decreaseItem(index: number) {
+    this.carrelloService.decreaseItem(this.cart, index);
+  }
+
+  public navigateToScan() {
+    this.scanService.startNormalScan().then((barcode: string) => {
+      this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
+    });
+  }
+
+  public navigateToRaccomandazioni() {
+    this.recommendationsNumber = 0;
+    this.router.navigateByUrl('index/carrello/raccomandazioni');
   }
 
   /**
@@ -64,45 +99,5 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
       this.recommendationsNumber++;
     }
     // TODO: Need a service from AuthService to get logged customer ID instead of username?? Ask Manuel
-  }
-
-  public activateCart() {
-    this.carrelloService.activateCart(this.cart);
-  }
-
-  public deactivateCart() {
-    this.carrelloService.deactivateCart(this.cart);
-  }
-
-  public getTotalPrice() {
-    return this.carrelloService.getTotalPrice(this.cart);
-  }
-
-  public getTotalQuantity() {
-    return this.carrelloService.getTotalQuantity(this.cart);
-  }
-
-  public startScan() {
-    const barcodePromise = this.scanService.startScan();
-    barcodePromise.then((barcode: string) => {
-      this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
-    });
-  }
-
-  public deleteItem(index: number) {
-    this.carrelloService.deleteItem(this.cart, index);
-  }
-
-  public increaseItem(index: number) {
-    this.carrelloService.increaseItem(this.cart, index);
-  }
-
-  public decreaseItem(index: number) {
-    this.carrelloService.decreaseItem(this.cart, index);
-  }
-
-  public navigateToRaccomandazioni() {
-    this.recommendationsNumber = 0;
-    this.router.navigateByUrl('index/carrello/raccomandazioni');
   }
 }

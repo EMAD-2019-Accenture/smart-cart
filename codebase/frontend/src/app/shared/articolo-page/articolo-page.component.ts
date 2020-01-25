@@ -14,7 +14,6 @@ import { Recommendation } from '../model/recommendation';
 })
 // tslint:disable: align
 export class ArticoloPageComponent implements OnInit {
-
   product: Product;
   ingredients: string[];
   preparedCartItem: CartItem;
@@ -30,13 +29,14 @@ export class ArticoloPageComponent implements OnInit {
       this.recommendation = new Recommendation(history.state.recommendation);
     }
     const barcode: number = this.route.snapshot.params.id;
-    this.articoloService.getProductByBarcode(barcode).then((response: IProduct) => {
-      this.product = new Product(response);
-      this.ingredients = this.parseIngredients(this.product.getIngredients());
-      if (history.state.scan) {
-        this.prepareCartItem();
-      }
-    });
+    this.articoloService.getProductByBarcode(barcode)
+      .then((response: IProduct) => {
+        this.product = new Product(response);
+        this.ingredients = this.parseIngredients(this.product.getIngredients());
+        if (history.state.scan) {
+          this.prepareCartItem();
+        }
+      });
   }
 
   private prepareCartItem() {
@@ -58,23 +58,24 @@ export class ArticoloPageComponent implements OnInit {
   }
 
   public startSpecificScan() {
-    this.scanService.startSpecificScan(this.recommendation.getProduct().getBarcode()).then((result) => {
-      if (result) {
-        // TODO: Decide whether to add brutally into cart
-        // this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
-        this.recommendation = undefined;
-        this.prepareCartItem();
-      } else {
+    this.scanService.startSpecificScan(this.recommendation.getProduct().getBarcode())
+      .then((result) => {
+        if (result) {
+          // TODO: Decide whether to add brutally into cart
+          // this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
+          this.recommendation = undefined;
+          this.prepareCartItem();
+        } else {
+          // TODO: What to do?
+          console.log('Then but false: when it happens?');
+        }
+      }).catch((reason) => {
         // TODO: What to do?
-        console.log('Then but false: when it happens?');
-      }
-    }).catch((reason) => {
-      // TODO: What to do?
-      console.log('Catch: when it happens? ' + resolve);
-    });
+        console.log('Catch: when it happens? ' + resolve);
+      });
   }
 
-  // TODO: will be useful as soon it is fixed in the DB?
+  // TODO: will be useful as soon it is fixed in the DB? Maybe remove
   private parseIngredients(ingredients: string): string[] {
     return ingredients.split(', ').map(value => value.trim()).filter(value => value !== '' && value !== ' ');
   }

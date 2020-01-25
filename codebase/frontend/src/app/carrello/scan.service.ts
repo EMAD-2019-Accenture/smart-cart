@@ -10,16 +10,16 @@ export class ScanService {
 
   constructor(private barcodeScanner: BarcodeScanner) { }
 
-  private async scanAndWait(): Promise<string> {
+  private async scan(): Promise<string> {
     return (await this.barcodeScanner.scan(this.scannerOptions)).text;
   }
 
-  public startScan(): Promise<string> {
+  public async startNormalScan(): Promise<string> {
     let scannedBarcodePromise: Promise<string>;
     if (isDevMode()) {
       scannedBarcodePromise = this.fakeScan();
     } else {
-      scannedBarcodePromise = this.scanAndWait();
+      scannedBarcodePromise = this.scan();
     }
     return scannedBarcodePromise;
   }
@@ -27,18 +27,14 @@ export class ScanService {
   public async startSpecificScan(expectedBarcode: string): Promise<boolean> {
     let scannedBarcode: string;
     do {
-      if (isDevMode()) {
-        scannedBarcode = await this.fakeScan();
-      } else {
-        scannedBarcode = await this.scanAndWait();
-      }
-      // TODO: What is the value of "barcode" is when phone "back" is pressed?
+      scannedBarcode = await this.startNormalScan();
+      // TODO: What is the value of "barcode" is when phone "back" is pressed? In that case this method should return false
     }
     while (expectedBarcode !== scannedBarcode);
     return true;
   }
 
-  // DEBUG Remove
+  // DEBUG
   private async fakeScan(): Promise<string> {
     return '8001120789761';
   }
