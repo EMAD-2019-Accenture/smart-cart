@@ -1,8 +1,11 @@
+import { Injectable, isDevMode } from '@angular/core';
 import { Cart } from '../shared/model/cart';
 import { CartItem, ICartItem } from '../shared/model/cart-item';
-import { isDevMode } from '@angular/core';
 
 // tslint:disable: max-line-length
+@Injectable({
+  providedIn: 'root',
+})
 export class CarrelloService {
 
   constructor() { }

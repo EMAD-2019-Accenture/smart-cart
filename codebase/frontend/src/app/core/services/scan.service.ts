@@ -1,7 +1,10 @@
-import { isDevMode } from '@angular/core';
+import { isDevMode, Injectable } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 // tslint:disable: align
+@Injectable({
+  providedIn: 'root',
+})
 export class ScanService {
 
   private scannerOptions = {

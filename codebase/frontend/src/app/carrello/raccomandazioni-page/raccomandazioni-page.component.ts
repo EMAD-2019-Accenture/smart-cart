@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Recommendation } from 'src/app/shared/model/recommendation';
-import { RaccomandazioniService } from '../raccomandazioni.service';
+import { Recommendation, Status } from 'src/app/shared/model/recommendation';
+import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 
 @Component({
   selector: 'app-raccomandazioni-page',
@@ -12,6 +12,7 @@ import { RaccomandazioniService } from '../raccomandazioni.service';
 // tslint:disable: align
 export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
   recommendations: Recommendation[];
+  newRecommendations: Recommendation[];
   subscription: Subscription;
 
   constructor(private raccomandazioniService: RaccomandazioniService,
@@ -19,7 +20,8 @@ export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.raccomandazioniService.getRecommendationSubject()
-      .subscribe(value => this.recommendations = value);
+      .subscribe(value =>
+        this.recommendations = value.filter(r => r.getStatus() === Status.new));
   }
 
   ngOnDestroy() {
@@ -40,6 +42,10 @@ export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
   */
   public navigateToDetail(index: number) {
     const recommendation: Recommendation = this.recommendations[index];
-    this.router.navigateByUrl('/articolo/' + recommendation.getProduct().getBarcode(), { state: { recommendation } });
+    this.router.navigateByUrl('/articolo/' + recommendation.getProduct().getBarcode(), {
+      state: {
+        recommendationId: recommendation.getId()
+      }
+    });
   }
 }

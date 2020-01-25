@@ -1,17 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
-
 import { CarrelloPageComponent } from './carrello-page/carrello-page.component';
 import { RaccomandazioniPageComponent } from './raccomandazioni-page/raccomandazioni-page.component';
-
-import { CarrelloService } from './carrello.service';
-import { ScanService } from './scan.service';
-import { RaccomandazioniService } from './raccomandazioni.service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 const routes: Routes = [
   { path: '', component: CarrelloPageComponent },
@@ -27,14 +20,9 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     RouterModule.forChild(routes),
-    IonicStorageModule.forRoot(),
-    HttpClientModule
+    IonicStorageModule.forRoot()
   ],
   providers: [
-    CarrelloService,
-    ScanService,
-    RaccomandazioniService,
-    BarcodeScanner,
   ]
 })
 export class CarrelloModule { }

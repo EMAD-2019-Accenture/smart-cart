@@ -2,12 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Product } from 'src/app/shared/model/product';
 import { ToastNotificationService } from 'src/app/shared/toast/toast-notification.service';
+import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
+import { ScanService } from '../../core/services/scan.service';
 import { Cart } from '../../shared/model/cart';
+import { Product } from '../../shared/model/product';
 import { CarrelloService } from '../carrello.service';
-import { RaccomandazioniService } from '../raccomandazioni.service';
-import { ScanService } from '../scan.service';
+import { Recommendation } from 'src/app/shared/model/recommendation';
 
 @Component({
   selector: 'app-carrello-page',
@@ -89,15 +90,13 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
    * Get a recommendation from the server
    */
   private getNewRecommendation(): void {
-    // TODO: Use a better probability criterion
-    const rand = Math.random() >= 0.1;
-    if (rand) {
-      const productsInCart: Product[] = this.cart.getItems().map(value => value.getProduct());
-      this.raccomandazioniService.getNewRecommendation(productsInCart);
+    const productsInCart: Product[] = this.cart.getItems()
+      .map(value => value.getProduct());
+    const recommendation: Recommendation = this.raccomandazioniService.getNewRecommendation(productsInCart);
+    if (recommendation) {
       // TODO: Improve toast
       this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
       this.recommendationsNumber++;
     }
-    // TODO: Need a service from AuthService to get logged customer ID instead of username?? Ask Manuel
   }
 }

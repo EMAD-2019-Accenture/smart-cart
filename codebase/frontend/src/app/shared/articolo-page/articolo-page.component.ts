@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { resolve } from 'q';
-import { ScanService } from 'src/app/carrello/scan.service';
-import { ArticoloService } from '../articolo.service';
+import { ArticoloService } from '../../core/services/articolo.service';
+import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
+import { ScanService } from '../../core/services/scan.service';
 import { CartItem } from '../model/cart-item';
 import { IProduct, Product } from '../model/product';
-import { Recommendation } from '../model/recommendation';
 
 @Component({
   selector: 'app-articolo-page',
@@ -17,16 +16,17 @@ export class ArticoloPageComponent implements OnInit {
   product: Product;
   ingredients: string[];
   preparedCartItem: CartItem;
-  recommendation: Recommendation;
+  recommendationId: number;
 
   constructor(private articoloService: ArticoloService,
     private scanService: ScanService,
+    private recommendationService: RaccomandazioniService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (history.state.recommendation) {
-      this.recommendation = new Recommendation(history.state.recommendation);
+    if (history.state.recommendationId !== undefined) {
+      this.recommendationId = history.state.recommendationId;
     }
     const barcode: number = this.route.snapshot.params.id;
     this.articoloService.getProductByBarcode(barcode)
@@ -58,20 +58,21 @@ export class ArticoloPageComponent implements OnInit {
   }
 
   public startSpecificScan() {
-    this.scanService.startSpecificScan(this.recommendation.getProduct().getBarcode())
-      .then((result) => {
+    this.scanService.startSpecificScan(this.product.getBarcode())
+      .then(result => {
         if (result) {
+          this.recommendationService.acceptRecommendation(this.recommendationId);
+          this.recommendationId = undefined;
           // TODO: Decide whether to add brutally into cart
           // this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
-          this.recommendation = undefined;
           this.prepareCartItem();
         } else {
           // TODO: What to do?
           console.log('Then but false: when it happens?');
         }
-      }).catch((reason) => {
+      }).catch(reason => {
         // TODO: What to do?
-        console.log('Catch: when it happens? ' + resolve);
+        console.log('Catch: when it happens? ' + reason);
       });
   }
 
