@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArticoloService } from '../articolo.service';
+import { ArticoloService } from '../../core/services/articolo.service';
+import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
+import { ScanService } from '../../core/services/scan.service';
 import { CartItem } from '../model/cart-item';
 import { IProduct, Product } from '../model/product';
 
@@ -11,46 +13,71 @@ import { IProduct, Product } from '../model/product';
 })
 // tslint:disable: align
 export class ArticoloPageComponent implements OnInit {
-
   product: Product;
   ingredients: string[];
-  itemToAdd: CartItem;
+  preparedCartItem: CartItem;
+  recommendationId: number;
 
   constructor(private articoloService: ArticoloService,
+    private scanService: ScanService,
+    private recommendationService: RaccomandazioniService,
     private router: Router,
-    private route: ActivatedRoute) {
-  }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const barcode: number = this.route.snapshot.params.id;
-    this.articoloService.getProductByBarcode(barcode).then((response: IProduct) => {
-      this.updateView(response);
-    });
-  }
-
-  private updateView(iProduct: IProduct) {
-    this.product = new Product(iProduct);
-    this.ingredients = this.parseIngredients(this.product.getIngredients());
-    if (history.state.scan) {
-      this.itemToAdd = new CartItem();
-      this.itemToAdd.setProduct(this.product);
-      this.itemToAdd.setQuantity(1);
+    if (history.state.recommendationId !== undefined) {
+      this.recommendationId = history.state.recommendationId;
     }
+    const barcode: number = this.route.snapshot.params.id;
+    this.articoloService.getProductByBarcode(barcode)
+      .then((response: IProduct) => {
+        this.product = new Product(response);
+        this.ingredients = this.parseIngredients(this.product.getIngredients());
+        if (history.state.scan) {
+          this.prepareCartItem();
+        }
+      });
   }
 
-  private parseIngredients(ingredients: string): string[] {
-    return ingredients.split(', ').map(value => value.trim()).filter(value => value !== '' && value !== ' ');
+  private prepareCartItem() {
+    this.preparedCartItem = new CartItem();
+    this.preparedCartItem.setProduct(this.product);
+    this.preparedCartItem.setQuantity(1);
   }
 
   public increaseQuantity() {
-    this.articoloService.increaseQuantity(this.itemToAdd);
+    this.articoloService.increaseQuantity(this.preparedCartItem);
   }
 
   public decreaseQuantity() {
-    this.articoloService.decreaseQuantity(this.itemToAdd);
+    this.articoloService.decreaseQuantity(this.preparedCartItem);
   }
 
   public addToCart() {
-    this.router.navigateByUrl('/index/carrello', { state: { item: this.itemToAdd } });
+    this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
+  }
+
+  public startSpecificScan() {
+    this.scanService.startSpecificScan(this.product.getBarcode())
+      .then(result => {
+        if (result) {
+          this.recommendationService.acceptRecommendation(this.recommendationId);
+          this.recommendationId = undefined;
+          // TODO: Decide whether to add brutally into cart
+          // this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
+          this.prepareCartItem();
+        } else {
+          // TODO: What to do?
+          console.log('Then but false: when it happens?');
+        }
+      }).catch(reason => {
+        // TODO: What to do?
+        console.log('Catch: when it happens? ' + reason);
+      });
+  }
+
+  // TODO: will be useful as soon it is fixed in the DB? Maybe remove
+  private parseIngredients(ingredients: string): string[] {
+    return ingredients.split(', ').map(value => value.trim()).filter(value => value !== '' && value !== ' ');
   }
 }

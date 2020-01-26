@@ -6,9 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { ArticoloPageComponent } from './articolo-page/articolo-page.component';
-import { ArticoloService } from './articolo.service';
-import { HttpCommonService } from './http-common.service';
-
 
 const routes: Routes = [
   { path: 'articolo/:id', component: ArticoloPageComponent },
@@ -27,6 +24,7 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     FormsModule,
+    CommonModule,
     RouterModule.forChild(routes),
     IonicStorageModule.forRoot(),
     HttpClientModule
@@ -35,8 +33,7 @@ const routes: Routes = [
     ArticoloPageComponent
   ],
   providers: [
-    ArticoloService,
-    HttpCommonService
+
   ]
 })
 export class SharedModule { }

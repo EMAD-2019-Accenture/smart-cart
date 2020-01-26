@@ -2,12 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Product } from 'src/app/shared/model/product';
 import { ToastNotificationService } from 'src/app/shared/toast/toast-notification.service';
+import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
+import { ScanService } from '../../core/services/scan.service';
 import { Cart } from '../../shared/model/cart';
+import { Product } from '../../shared/model/product';
 import { CarrelloService } from '../carrello.service';
-import { RaccomandazioniService } from '../raccomandazioni.service';
-import { ScanService } from '../scan.service';
+import { Recommendation } from 'src/app/shared/model/recommendation';
 
 @Component({
   selector: 'app-carrello-page',
@@ -29,39 +30,21 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute) {
     this.cart = this.carrelloService.makeEmptyCart();
     this.recommendationsNumber = 0;
-    this.routeSubscription = activatedRoute.data.subscribe({
-      next: () => this.checkNewItem()
-    });
   }
 
   ngOnInit() {
+    this.routeSubscription = this.activatedRoute.data.subscribe({
+      next: () => {
+        if (history.state.item) {
+          this.carrelloService.addItem(this.cart, history.state.item);
+          this.getNewRecommendation();
+        }
+      }
+    });
   }
 
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
-  }
-
-  /**
-   * Check if there is some data within a route. If yes, add it to cart and check a new recommendation
-   */
-  private checkNewItem(): void {
-    if (history.state.item) {
-      this.carrelloService.addItem(this.cart, history.state.item);
-      this.getNewRecommendation();
-    }
-  }
-
-  /**
-   * Get a recommendation from the server
-   */
-  private getNewRecommendation(): void {
-    // TODO: Use a probability criterion
-    // TODO: Need a service from AuthService to get logged customer ID instead of username
-    const productsInCart: Product[] = this.cart.getItems().map(value => value.getProduct());
-    this.raccomandazioniService.getNewRecommendation(productsInCart);
-    // TODO: Improve toast
-    this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
-    this.recommendationsNumber++;
   }
 
   public activateCart() {
@@ -72,19 +55,12 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     this.carrelloService.deactivateCart(this.cart);
   }
 
-  public getTotalPrice() {
+  public getTotalPrice(): number {
     return this.carrelloService.getTotalPrice(this.cart);
   }
 
-  public getTotalQuantity() {
+  public getTotalQuantity(): number {
     return this.carrelloService.getTotalQuantity(this.cart);
-  }
-
-  public startScan() {
-    const barcodePromise = this.scanService.startScan();
-    barcodePromise.then((barcode: string) => {
-      this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
-    });
   }
 
   public deleteItem(index: number) {
@@ -99,8 +75,28 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     this.carrelloService.decreaseItem(this.cart, index);
   }
 
+  public navigateToScan() {
+    this.scanService.startNormalScan().then((barcode: string) => {
+      this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
+    });
+  }
+
   public navigateToRaccomandazioni() {
     this.recommendationsNumber = 0;
     this.router.navigateByUrl('index/carrello/raccomandazioni');
+  }
+
+  /**
+   * Get a recommendation from the server
+   */
+  private getNewRecommendation(): void {
+    const productsInCart: Product[] = this.cart.getItems()
+      .map(value => value.getProduct());
+    const recommendation: Recommendation = this.raccomandazioniService.getNewRecommendation(productsInCart);
+    if (recommendation) {
+      // TODO: Improve toast
+      this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
+      this.recommendationsNumber++;
+    }
   }
 }

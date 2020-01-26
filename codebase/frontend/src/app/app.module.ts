@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-import { AppComponent } from './app.component';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { AppBarModule } from './app-bar/app-bar.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +17,7 @@ import { AppBarModule } from './app-bar/app-bar.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
+    CoreModule
   ],
   providers: [
     StatusBar,

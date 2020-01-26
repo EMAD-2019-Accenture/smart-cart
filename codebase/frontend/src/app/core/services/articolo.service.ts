@@ -1,8 +1,12 @@
+import { Injectable } from '@angular/core';
+import { CartItem } from '../../shared/model/cart-item';
+import { IProduct } from '../../shared/model/product';
 import { HttpCommonService } from './http-common.service';
-import { CartItem } from './model/cart-item';
-import { IProduct } from './model/product';
 
 // tslint:disable: align
+@Injectable({
+  providedIn: 'root',
+})
 export class ArticoloService {
   // private scanPath = 'http://localhost:8080/api/products/scan/';
   private scanPath = 'https://smart-cart-acenture.herokuapp.com/api/products/scan/';

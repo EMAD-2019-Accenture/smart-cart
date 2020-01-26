@@ -41,7 +41,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-        <ng-template [ngIf]="itemToAdd !== undefined">
+        <ng-template [ngIf]="preparedCartItem !== undefined">
           <ion-grid>
             <ion-row>
               Quanti ne vuoi aggungere?
@@ -57,8 +57,8 @@
                   x
                 </ion-label>
                 <ion-label>
-                  {{ itemToAdd.getQuantity() }}<br>
-                  {{ itemToAdd.getProduct().getPrice() * itemToAdd.getQuantity()}}
+                  {{ preparedCartItem.getQuantity() }}<br>
+                  {{ preparedCartItem.getProduct().getPrice() * preparedCartItem.getQuantity()}}
                 </ion-label>
               </ion-col>
               <ion-col size=4>
@@ -71,6 +71,17 @@
               <ion-col>
                 <ion-button color="dark" expand="block" size=small (click)="addToCart()">
                   Aggiungi al carrello
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ng-template>
+        <ng-template [ngIf]="recommendationId !== undefined">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-button color="dark" expand="block" size=small (click)="startSpecificScan()">
+                  Scansiona
                 </ion-button>
               </ion-col>
             </ion-row>

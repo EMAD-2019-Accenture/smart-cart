@@ -1,8 +1,12 @@
-import { HttpCommonService } from '../shared/http-common.service';
+import { Injectable } from '@angular/core';
+import { HttpCommonService } from '../core/services/http-common.service';
 import { ICategory } from '../shared/model/category';
 import { IProduct } from '../shared/model/product';
 
 // tslint:disable: align
+@Injectable({
+  providedIn: 'root',
+})
 export class CatalogoService {
   // private updateCustomerPath = 'http://localhost:8080/api/categories/';
   // private getProductsPath = 'http://localhost:8080/api/products/';

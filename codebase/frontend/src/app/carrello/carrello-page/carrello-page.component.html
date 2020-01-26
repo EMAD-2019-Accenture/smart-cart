@@ -10,7 +10,7 @@
           style="font-size: xx-small;">{{ recommendationsNumber }}</ion-badge>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button (click)="startScan()">
+        <ion-button (click)="navigateToScan()">
           <ion-icon slot="icon-only" name="barcode"></ion-icon>
         </ion-button>
       </ion-buttons>
@@ -47,7 +47,6 @@
         <div>Pezzi: <b>{{getTotalQuantity()}}</b></div>
       </ion-note>
     </ion-item>
-    <!--Fare una componente ad hoc? Non penso ce ne sia bisogno...-->
     <ion-list lines=full>
       <ng-template [ngIf]="cart.getItems().length <= 0">
         <ion-text class="ion-text-center" color="secondary">

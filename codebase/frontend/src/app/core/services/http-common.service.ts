@@ -1,7 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
+import { Injectable } from '@angular/core';
 
 // tslint:disable: align
+@Injectable({
+  providedIn: 'root',
+})
 export class HttpCommonService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }

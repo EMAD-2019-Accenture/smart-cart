@@ -1,8 +1,12 @@
-import { HttpCommonService } from '../shared/http-common.service';
+import { Injectable } from '@angular/core';
+import { HttpCommonService } from '../core/services/http-common.service';
 import { Customer, ICustomer } from '../shared/model/customer';
 import { User } from '../shared/model/user';
 
 // tslint:disable: align
+@Injectable({
+  providedIn: 'root',
+})
 export class PreferenzeService {
   // private getCustomerByUsernamePath = 'http://localhost:8080/api/customers/logged';
   // private updateCustomerPath = 'http://localhost:8080/api/customers/';
