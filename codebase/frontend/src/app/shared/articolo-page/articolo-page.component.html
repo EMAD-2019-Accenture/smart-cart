@@ -6,12 +6,15 @@
     <ng-template [ngIf]="product !== undefined">
       <ion-title>{{ product.getName() }}</ion-title>
     </ng-template>
+    <ng-template [ngIf]="product === undefined">
+      <ion-title>Non trovato :(</ion-title>
+    </ng-template>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <ng-template [ngIf]="product !== undefined">
-    <ion-card>
+  <ion-card>
+    <ng-template [ngIf]="product !== undefined">
       <img [src]="product.getImageUrl()" alt="Immagine non disponibile">
       <ion-card-header>
         <ion-card-subtitle>{{ product.getCategory().getName() }}</ion-card-subtitle>
@@ -88,6 +91,9 @@
           </ion-grid>
         </ng-template>
       </ion-card-content>
-    </ion-card>
-  </ng-template>
+    </ng-template>
+    <ng-template [ngIf]="product === undefined">
+      Mi dispiace, ma questo prodotto che hai scansionato non esiste. Prova con un altro
+    </ng-template>
+  </ion-card>
 </ion-content>

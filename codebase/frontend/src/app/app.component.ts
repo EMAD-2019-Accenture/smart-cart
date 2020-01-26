@@ -20,7 +20,6 @@ export class AppComponent {
     private router: Router
   ) {
     this.initializeApp();
-    // this.init();
   }
 
   initializeApp() {
@@ -29,12 +28,4 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
-
-  /*
-  init() {
-    this.authService.isLoggedIn2().then(
-      (token) => this.router.navigateByUrl('/carrello')
-    );
-  }
-  */
 }

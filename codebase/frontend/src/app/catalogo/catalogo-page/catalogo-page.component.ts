@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IonCheckbox, IonSearchbar, IonSelect } from '@ionic/angular';
 import { Category } from 'src/app/shared/model/category';
 import { Product } from 'src/app/shared/model/product';
 import { CatalogoService } from '../catalogo.service';
@@ -33,7 +34,7 @@ export class CatalogoPageComponent implements OnInit {
     });
   }
 
-  public filter(searchBar: HTMLInputElement, dropdownCategory: HTMLInputElement, discountCheck: HTMLInputElement): void {
+  public filter(searchBar: IonSearchbar, dropdownCategory: IonSelect, discountCheck: IonCheckbox): void {
     this.filteredProducts = this.allProducts/*.sort((a, b) => {
       return a.getName().localeCompare(b.getName());
     })*/;

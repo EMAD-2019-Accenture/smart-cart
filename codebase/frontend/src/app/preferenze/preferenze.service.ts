@@ -10,7 +10,7 @@ import { User } from '../shared/model/user';
 export class PreferenzeService {
   // private getCustomerByUsernamePath = 'http://localhost:8080/api/customers/logged';
   // private updateCustomerPath = 'http://localhost:8080/api/customers/';
-  private getCustomerByUsernamePath = 'https://smart-cart-acenture.herokuapp.com/api/customers/logged';
+  private getLoggedCustomer = 'https://smart-cart-acenture.herokuapp.com/api/customers/logged';
   private updateCustomerPath = 'https://smart-cart-acenture.herokuapp.com/api/customers/';
 
   constructor(private http: HttpCommonService) { }
@@ -50,7 +50,7 @@ export class PreferenzeService {
   }
 
   public async getCustomer(): Promise<ICustomer> {
-    return this.http.getRequest(this.getCustomerByUsernamePath) as Promise<ICustomer>;
+    return this.http.getRequest(this.getLoggedCustomer) as Promise<ICustomer>;
   }
 
   public async update(customer: Customer): Promise<ICustomer> {

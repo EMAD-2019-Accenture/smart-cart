@@ -9,6 +9,7 @@ import { Cart } from '../../shared/model/cart';
 import { Product } from '../../shared/model/product';
 import { CarrelloService } from '../carrello.service';
 import { Recommendation } from 'src/app/shared/model/recommendation';
+import { reject } from 'q';
 
 @Component({
   selector: 'app-carrello-page',
@@ -76,9 +77,15 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   }
 
   public navigateToScan() {
-    this.scanService.startNormalScan().then((barcode: string) => {
-      this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
-    });
+    this.scanService.startNormalScan()
+      .then((barcode: string) => {
+        if (barcode) {
+          this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
+        } else {
+          console.log('Empty barcode');
+        }
+      })
+      .catch(reason => console.log('Scan failed: ' + reason));
   }
 
   public navigateToRaccomandazioni() {
@@ -92,11 +99,13 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   private getNewRecommendation(): void {
     const productsInCart: Product[] = this.cart.getItems()
       .map(value => value.getProduct());
-    const recommendation: Recommendation = this.raccomandazioniService.getNewRecommendation(productsInCart);
-    if (recommendation) {
-      // TODO: Improve toast
-      this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
-      this.recommendationsNumber++;
-    }
+    this.raccomandazioniService.getNewRecommendation(productsInCart)
+      .then(recomm => {
+        if (recomm) {
+          // TODO: Improve toast
+          this.toastService.presentToast('C\'è una raccomandazione per te!', 'success');
+          this.recommendationsNumber++;
+        }
+      });
   }
 }

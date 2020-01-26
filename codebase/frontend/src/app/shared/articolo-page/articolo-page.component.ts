@@ -36,7 +36,9 @@ export class ArticoloPageComponent implements OnInit {
         if (history.state.scan) {
           this.prepareCartItem();
         }
-      });
+      })
+      // TODO: Manage the case when the response has nothing
+      .catch(reason => console.log('Product not found: ' + reason));
   }
 
   private prepareCartItem() {
@@ -67,11 +69,9 @@ export class ArticoloPageComponent implements OnInit {
           // this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
           this.prepareCartItem();
         } else {
-          // TODO: What to do?
           console.log('Then but false: when it happens?');
         }
       }).catch(reason => {
-        // TODO: What to do?
         console.log('Catch: when it happens? ' + reason);
       });
   }

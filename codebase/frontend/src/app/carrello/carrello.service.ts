@@ -46,8 +46,13 @@ export class CarrelloService {
     }
   }
 
-  public addItem(cart: Cart, item: ICartItem) {
-    cart.getItems().push(new CartItem(item));
+  public addItem(cart: Cart, newItem: ICartItem) {
+    const cartItem: CartItem = cart.getItems().find(value => value.getProduct().getId() === newItem.product.id);
+    if (cartItem) {
+      cartItem.setQuantity(cartItem.getQuantity() + newItem.quantity);
+    } else {
+      cart.getItems().push(new CartItem(newItem));
+    }
   }
 
   public deleteItem(cart: Cart, index: number) {

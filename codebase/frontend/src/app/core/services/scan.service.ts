@@ -1,5 +1,5 @@
-import { isDevMode, Injectable } from '@angular/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Injectable, isDevMode } from '@angular/core';
+import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner/ngx';
 
 // tslint:disable: align
 @Injectable({
@@ -13,32 +13,33 @@ export class ScanService {
 
   constructor(private barcodeScanner: BarcodeScanner) { }
 
-  private async scan(): Promise<string> {
-    return (await this.barcodeScanner.scan(this.scannerOptions)).text;
+  private scan(): Promise<BarcodeScanResult> {
+    return this.barcodeScanner.scan(this.scannerOptions);
   }
 
   public async startNormalScan(): Promise<string> {
-    let scannedBarcodePromise: Promise<string>;
+    let scannedBarcode: string;
     if (isDevMode()) {
-      scannedBarcodePromise = this.fakeScan();
+      scannedBarcode = this.fakeScan();
     } else {
-      scannedBarcodePromise = this.scan();
+      scannedBarcode = (await this.scan()).text;
     }
-    return scannedBarcodePromise;
+    return scannedBarcode;
   }
 
   public async startSpecificScan(expectedBarcode: string): Promise<boolean> {
+    let result: BarcodeScanResult;
     let scannedBarcode: string;
     do {
-      scannedBarcode = await this.startNormalScan();
-      // TODO: What is the value of "barcode" is when phone "back" is pressed? In that case this method should return false
+      result = await this.scan();
+      scannedBarcode = result.text;
     }
-    while (expectedBarcode !== scannedBarcode);
-    return true;
+    while (!result.cancelled && scannedBarcode !== expectedBarcode);
+    return !result.cancelled;
   }
 
   // DEBUG
-  private async fakeScan(): Promise<string> {
+  private fakeScan(): string {
     return '8001120789761';
   }
 }
