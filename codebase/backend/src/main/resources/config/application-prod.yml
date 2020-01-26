@@ -105,7 +105,7 @@ server:
 
 jhipster:
   cors:
-    allowed-origins: 'http://localhost:8100'
+    allowed-origins: '*'
     allowed-methods: '*'
     allowed-headers: '*'
     exposed-headers: 'Authorization,Link,X-Total-Count'

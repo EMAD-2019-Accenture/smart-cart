@@ -36,11 +36,14 @@ public class RecommendationService {
     public Optional<Product> getRecommendedFrom(ProductsDTO productList){
         Optional<Customer> currentCustomer = customerService.getCustomerFromCurrentUser();
 
+
         if(!currentCustomer.isPresent()){
+            log.warn("Customer not present in recommendation request!");
             return Optional.empty();
         }
 
         List<Product> inputProducts = getProductListFromIdList(productList.getProductsId());
+        log.info("Input products {}",inputProducts);
 
         return computeRecommendations(currentCustomer.get(),inputProducts);
     }
@@ -55,8 +58,9 @@ public class RecommendationService {
     }
 
     private Optional<Product> computeRecommendations(Customer customer, List<Product> inputProducts) {
-        long randomId =  Math.round(Math.random() * productRepository.count());
-        return productRepository.findOneWithEagerRelationships(randomId);
+        Optional<Product> oneWithEagerRelationships = Optional.ofNullable(productRepository.findAllWithEagerRelationships().get(0));
+        log.info("Recommended product {}",oneWithEagerRelationships);
+        return oneWithEagerRelationships;
     }
 
 

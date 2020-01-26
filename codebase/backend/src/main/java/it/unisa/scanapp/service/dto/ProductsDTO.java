@@ -14,4 +14,11 @@ public class ProductsDTO {
     public void setProductsId(List<Long> productsId) {
         this.productsId = productsId;
     }
+
+    @Override
+    public String toString() {
+        return "ProductsDTO{" +
+            "productsId=" + productsId +
+            '}';
+    }
 }
