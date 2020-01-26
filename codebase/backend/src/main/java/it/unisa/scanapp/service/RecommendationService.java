@@ -17,6 +17,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -54,12 +55,8 @@ public class RecommendationService {
     }
 
     private Optional<Product> computeRecommendations(Customer customer, List<Product> inputProducts) {
-        DataModel model = new GenericDataModel(getData(inputProducts));
-        return null;
-    }
-
-    private FastByIDMap<PreferenceArray> getData(List<Product> inputProducts) {
-        return null;
+        long randomId =  Math.round(Math.random() * productRepository.count());
+        return productRepository.findOneWithEagerRelationships(randomId);
     }
 
 

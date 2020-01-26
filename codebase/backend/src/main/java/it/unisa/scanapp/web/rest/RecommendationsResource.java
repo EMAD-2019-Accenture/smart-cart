@@ -28,6 +28,7 @@ public class RecommendationsResource {
 
     @PostMapping("")
     public ResponseEntity<Product> defaultAction(@RequestBody ProductsDTO productsList) {
+        log.info("POST request to get recommendations from {}",productsList);
         Optional<Product> recommended = recommendationService.getRecommendedFrom(productsList);
         return ResponseUtil.wrapOrNotFound(recommended);
     }
