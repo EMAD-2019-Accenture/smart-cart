@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ActionSheetController, IonRouterOutlet, MenuController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { ToastNotificationService } from './shared/toast/toast-notification.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,7 @@ export class AppComponent {
     private popoverCtrl: PopoverController,
     private modalCtrl: ModalController,
     private menuCtrl: MenuController,
-    private toastCtrl: ToastController,
+    private toast: ToastNotificationService,
     private router: Router
   ) {
     this.initializeApp();
@@ -78,7 +79,7 @@ export class AppComponent {
       // close side menu
       try {
         const element = await this.menuCtrl.getOpen();
-        if (element !== null) {
+        if (element) {
           this.menuCtrl.close();
           return;
         }
@@ -89,21 +90,12 @@ export class AppComponent {
       this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
         if (outlet && outlet.canGoBack()) {
           outlet.pop();
-        } else if (this.router.url === '/index/**') {
+        } else if (this.router.isActive('/index', false)) {
           if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
-            // this.platform.exitApp(); // Exit from app
-            navigator['app'].exitApp(); // work in ionic 4
+            // this.platform.exitApp(); // < Ionic 4
+            navigator['app'].exitApp(); // >= Ionic 4
           } else {
-            // TODO: Use Custom ToastService
-            const toast = await this.toastCtrl.create(
-              {
-                message: 'Premi di nuovo Indietro per uscire',
-                duration: 2000,
-                showCloseButton: false,
-                translucent: true,
-                color: 'green'
-              });
-            toast.present();
+            await this.toast.presentToast('Premi di nuovo Indietro per uscire', 2000, false, 'success', true);
             this.lastTimeBackPress = new Date().getTime();
           }
         }

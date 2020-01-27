@@ -8,33 +8,30 @@ import { Router } from '@angular/router';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
 })
+// tslint:disable: align
 export class LoginPageComponent implements OnInit {
 
   username: string;
   password: string;
 
-  constructor(private authService: AuthService, private toastNotificationService: ToastNotificationService, private router: Router) { }
+  constructor(private authService: AuthService,
+    private toastNotificationService: ToastNotificationService,
+    private router: Router) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   async login() {
     let message = '';
     let color = '';
     const auth = await this.authService.login(this.username, this.password);
-    console.log(auth);
-
     if (auth) {
       message = 'Login effettuato!';
       color = 'success';
       this.router.navigateByUrl('/');
-
     } else {
-      // console.log(error);
       message = 'Login fallito!';
       color = 'danger';
     }
-    this.toastNotificationService.presentToast(message, color);
+    this.toastNotificationService.presentToast(message, 2000, true, color, true);
   }
 }

@@ -49,15 +49,15 @@ export class PreferenzePageComponent implements OnInit {
   public save() {
     let message: string;
     let color: string;
-    this.preferenceService.update(this.customer).then((value) => {
+    this.preferenceService.update(this.customer).then(value => {
       message = 'Preferenze aggiornate';
       color = 'success';
-    }).catch((reason) => {
+    }).catch(reason => {
       message = 'Errore: aggiornamento fallito';
       color = 'danger';
     }).finally(() => {
       this.toastNotificationService.toastController.dismiss().finally(() => {
-        this.toastNotificationService.presentToast(message, color);
+        this.toastNotificationService.presentToast(message, 2000, true, color, true);
       });
     });
   }

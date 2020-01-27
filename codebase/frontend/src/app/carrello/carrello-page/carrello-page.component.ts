@@ -103,7 +103,7 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
       .then(recomm => {
         if (recomm) {
           // TODO: Improve toast
-          this.toastService.presentToast('C\'è una raccomandazione per te!', 'success');
+          this.toastService.presentToast('C\'è una raccomandazione per te!', 2000, true, 'success', true);
           this.recommendationsNumber++;
         }
       });
