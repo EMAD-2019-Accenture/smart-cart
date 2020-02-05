@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { Category } from 'src/app/shared/model/category';
+import { Category } from 'src/app/core/model/category';
 
 @Component({
   selector: 'app-popover',

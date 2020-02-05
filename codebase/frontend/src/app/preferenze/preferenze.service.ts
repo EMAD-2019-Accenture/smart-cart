@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpCommonService } from '../core/services/http-common.service';
-import { Customer, ICustomer } from '../shared/model/customer';
-import { User } from '../shared/model/user';
+import { Customer, ICustomer } from '../core/model/customer';
+import { User } from '../core/model/user';
 
 // tslint:disable: align
 @Injectable({

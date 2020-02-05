@@ -1,8 +1,8 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { AlertService } from '../core/services/alert.service';
 import { HttpCommonService } from '../core/services/http-common.service';
-import { Cart } from '../shared/model/cart';
-import { CartItem, ICartItem } from '../shared/model/cart-item';
+import { Cart } from '../core/model/cart';
+import { CartItem, ICartItem } from '../core/model/cart-item';
 
 // tslint:disable:align
 @Injectable({

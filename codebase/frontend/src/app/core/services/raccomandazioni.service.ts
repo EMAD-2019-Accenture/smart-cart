@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Product, IProduct } from '../../shared/model/product';
-import { Recommendation, Status, IRecommendation } from '../../shared/model/recommendation';
+import { Product, IProduct } from '../model/product';
+import { Recommendation, Status, IRecommendation } from '../model/recommendation';
 import { HttpCommonService } from './http-common.service';
 
 @Injectable({

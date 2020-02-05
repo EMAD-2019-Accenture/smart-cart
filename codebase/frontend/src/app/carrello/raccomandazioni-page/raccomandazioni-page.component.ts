@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Recommendation, Status } from 'src/app/shared/model/recommendation';
+import { Recommendation, Status } from 'src/app/core/model/recommendation';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 
 @Component({

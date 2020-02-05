@@ -3,97 +3,94 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ng-template [ngIf]="product !== undefined">
+    <ng-template [ngIf]="product != undefined">
       <ion-title>{{ product.getName() }}</ion-title>
     </ng-template>
-    <ng-template [ngIf]="product === undefined">
-      <ion-title>Non trovato :(</ion-title>
+    <ng-template [ngIf]="product === null">
+      <ion-title>Non trovato</ion-title>
     </ng-template>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-card>
-    <ng-template [ngIf]="product !== undefined">
-      <img [src]="product.getImageUrl()" alt="Immagine non disponibile">
-      <ion-card-header>
-        <ion-card-subtitle>{{ product.getCategory().getName() }}</ion-card-subtitle>
-        <ion-card-title>{{ product.getName() }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{ product.getDescription() }}<br>
+  <ion-card *ngIf="product != undefined">
+    <img [src]="product.getImageUrl()" alt="Immagine non disponibile">
+    <ion-card-header>
+      <ion-card-subtitle>{{ product.getCategory().getName() }}</ion-card-subtitle>
+      <ion-card-title>{{ product.getName() }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ product.getDescription() }}<br>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <b>Ingredienti</b>
+          </ion-col>
+          <ion-col>
+            <b>Allergeni</b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ul *ngFor="let item of ingredients; let i = index">
+              <li>{{ item }}</li>
+            </ul>
+          </ion-col>
+          <ion-col>
+            <ul *ngFor="let item of product.getAllergens(); let i = index">
+              <li>{{ item.getName() }}</li>
+            </ul>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ng-template [ngIf]="cartItem !== undefined">
         <ion-grid>
           <ion-row>
-            <ion-col>
-              <b>Ingredienti</b>
+            Quanti ne vuoi aggungere?
+          </ion-row>
+          <ion-row>
+            <ion-col size=4>
+              <ion-button expand="block" size=small color="danger" (click)="decreaseQuantity()">
+                <ion-icon style="font-size: medium" slot="icon-only" name="remove-circle-outline"></ion-icon>
+              </ion-button>
             </ion-col>
-            <ion-col>
-              <b>Allergeni</b>
+            <ion-col size=4 class="ion-text-center">
+              <ion-label>
+                x
+              </ion-label>
+              <ion-label>
+                {{ cartItem.getQuantity() }}<br>
+                {{ cartItem.getProduct().getPrice() * cartItem.getQuantity() | number : '1.2-2' }} €
+              </ion-label>
+            </ion-col>
+            <ion-col size=4>
+              <ion-button expand="block" size=small color="success" (click)="increaseQuantity()">
+                <ion-icon style="font-size: medium" slot="icon-only" name="add-circle-outline"></ion-icon>
+              </ion-button>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ul *ngFor="let item of ingredients; let i = index">
-                <li>{{ item }}</li>
-              </ul>
-            </ion-col>
-            <ion-col>
-              <ul *ngFor="let item of product.getAllergens(); let i = index">
-                <li>{{ item.getName() }}</li>
-              </ul>
+              <ion-button color="primary" expand="block" size=small (click)="addToCart()">
+                Aggiungi al carrello
+              </ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
-        <ng-template [ngIf]="preparedCartItem !== undefined">
-          <ion-grid>
-            <ion-row>
-              Quanti ne vuoi aggungere?
-            </ion-row>
-            <ion-row>
-              <ion-col size=4>
-                <ion-button expand="block" size=small color="danger" (click)="decreaseQuantity()">
-                  <ion-icon style="font-size: medium" slot="icon-only" name="remove-circle-outline"></ion-icon>
-                </ion-button>
-              </ion-col>
-              <ion-col size=4 class="ion-text-center">
-                <ion-label>
-                  x
-                </ion-label>
-                <ion-label>
-                  {{ preparedCartItem.getQuantity() }}<br>
-                  {{ preparedCartItem.getProduct().getPrice() * preparedCartItem.getQuantity() | number : '1.2-2' }} €
-                </ion-label>
-              </ion-col>
-              <ion-col size=4>
-                <ion-button expand="block" size=small color="success" (click)="increaseQuantity()">
-                  <ion-icon style="font-size: medium" slot="icon-only" name="add-circle-outline"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-button color="dark" expand="block" size=small (click)="addToCart()">
-                  Aggiungi al carrello
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ng-template>
-        <ng-template [ngIf]="recommendationId !== undefined">
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-button color="dark" expand="block" size=small (click)="startSpecificScan()">
-                  Scansiona
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ng-template>
-      </ion-card-content>
-    </ng-template>
-    <ng-template [ngIf]="product === undefined">
-      Mi dispiace, ma questo prodotto che hai scansionato non esiste. Prova con un altro
-    </ng-template>
+      </ng-template>
+      <ng-template [ngIf]="recommendationId != undefined">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button color="dark" expand="block" size=small (click)="startSpecificScan()">
+                Scansiona
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-template>
+    </ion-card-content>
   </ion-card>
+  <ion-text *ngIf="product === null">Questo prodotto non esiste. Prova con un altro.
+  </ion-text>
 </ion-content>

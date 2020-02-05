@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CartItem } from '../../shared/model/cart-item';
-import { IProduct } from '../../shared/model/product';
+import { CartItem } from '../model/cart-item';
+import { IProduct, Product } from '../model/product';
 import { HttpCommonService } from './http-common.service';
 
 // tslint:disable: align
@@ -25,5 +25,12 @@ export class ArticoloService {
     if (cartItem.getQuantity() > 1) {
       cartItem.setQuantity(cartItem.getQuantity() - 1);
     }
+  }
+
+  public makeCartItem(product: Product): CartItem {
+    const cartItem: CartItem = new CartItem();
+    cartItem.setProduct(product);
+    cartItem.setQuantity(1);
+    return cartItem;
   }
 }

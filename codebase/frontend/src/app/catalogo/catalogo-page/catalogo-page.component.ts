@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { Category } from 'src/app/shared/model/category';
-import { Product } from 'src/app/shared/model/product';
+import { Category } from 'src/app/core/model/category';
+import { Product } from 'src/app/core/model/product';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { CatalogoService } from '../catalogo.service';
 import { PopoverComponent } from '../popover/popover.component';
 
@@ -22,7 +23,8 @@ export class CatalogoPageComponent implements OnInit {
   public discountCheck: boolean;
 
   constructor(private catalogoService: CatalogoService,
-    private popoverController: PopoverController) {
+    private popoverController: PopoverController,
+    private loadingService: LoadingService) {
     this.allProducts = new Array<Product>();
     this.filteredProducts = new Array<Product>();
     this.categories = new Array<Category>();
@@ -32,16 +34,32 @@ export class CatalogoPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.catalogoService.getCategories().then((value) => {
-      this.categories = value.map(category => new Category(category));
-    });
-    this.catalogoService.getProducts().then(value => {
-      this.allProducts = value.map(product => new Product(product));
-      this.allProducts.sort((a, b) => {
-        return a.getName().localeCompare(b.getName());
+    this.getCategoriesAndCatalogue();
+  }
+
+  // TODO: Make it more readable
+  private async getCategoriesAndCatalogue() {
+    const loading: HTMLIonLoadingElement = await this.loadingService.presentWait('Attendi...', true);
+    await this.catalogoService.getCategories()
+      .then(categories => {
+        this.categories = categories.map(category => new Category(category));
+      })
+      .catch(reason => {
+        this.categories = null;
+        console.log('Couldn\'t get categories ' + reason);
       });
-      this.filteredProducts = this.allProducts;
-    });
+    await this.catalogoService.getProducts()
+      .then(products => {
+        this.allProducts = products.map(product => new Product(product));
+        this.allProducts.sort((a, b) => a.getName().localeCompare(b.getName()));
+        this.filteredProducts = this.allProducts;
+      })
+      .catch(reason => {
+        this.allProducts = null;
+        this.filteredProducts = null;
+        console.log('Couldn\'t get products ' + reason);
+      })
+      .finally(() => loading.dismiss());
   }
 
   public filter() {

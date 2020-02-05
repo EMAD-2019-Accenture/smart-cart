@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { Customer } from 'src/app/shared/model/customer';
+import { Customer, ICustomer } from 'src/app/core/model/customer';
 import { PreferenzeService } from '../preferenze.service';
+import { LoadingService } from 'src/app/core/services/loading.service';
 
 @Component({
   selector: 'app-preferenze-page',
@@ -23,12 +25,13 @@ export class PreferenzePageComponent implements OnInit {
     private authService: AuthService,
     private toastService: ToastService,
     private alertService: AlertService,
+    private loadingService: LoadingService,
     private router: Router) {
     this.customer = this.preferenceService.makeEmptyCustomer();
   }
 
   ngOnInit() {
-    this.getCustomer().then((response) => {
+    this.getCustomer().then(response => {
       this.customer = new Customer(response);
       this.veganToggle = this.customer.isVegan();
       this.vegetarianToggle = this.customer.isVegetarian();
@@ -36,8 +39,11 @@ export class PreferenzePageComponent implements OnInit {
     });
   }
 
-  private getCustomer() {
-    return this.preferenceService.getCustomer();
+  private async getCustomer() {
+    const loading: HTMLIonLoadingElement = await this.loadingService.presentWait('Attendi...', true);
+    const customer: ICustomer = await this.preferenceService.getCustomer();
+    loading.dismiss();
+    return customer;
   }
 
   public onVegan() {

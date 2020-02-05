@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 import { ScanService } from '../../core/services/scan.service';
-import { Cart } from '../../shared/model/cart';
-import { Product } from '../../shared/model/product';
+import { Cart } from '../../core/model/cart';
+import { Product } from '../../core/model/product';
 import { CarrelloService } from '../carrello.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 
@@ -112,7 +112,7 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
       .then(recomm => {
         if (recomm) {
           // TODO: Improve toast
-          this.toastService.presentToast('C\'è una raccomandazione per te!', 2000, true, 'success', true);
+          this.toastService.presentToast('C\'è un articolo per te!', 2000, true, 'success', true);
           this.recommendationsNumber++;
         }
       });
