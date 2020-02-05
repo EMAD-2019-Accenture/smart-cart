@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Carrello</ion-title>
-    <ng-template [ngIf]="cart.isActive()">
+    <ng-container *ngIf="cart.isActive()">
       <ion-buttons slot="start" (click)="navigateToRaccomandazioni()">
         <ion-button id="notification-btn">
           <ion-icon name="information-circle"></ion-icon>
@@ -14,12 +14,22 @@
           <ion-icon slot="icon-only" name="barcode"></ion-icon>
         </ion-button>
       </ion-buttons>
-    </ng-template>
+    </ng-container>
   </ion-toolbar>
+  <ion-item *ngIf="cart.isActive()" lines="full" color="light">
+    <ion-thumbnail slot="start">
+      <ion-icon md="md-cart" size="large"></ion-icon>
+    </ion-thumbnail>
+    <ion-label class="ion-text-wrap">Carrello di Acquirente</ion-label>
+    <ion-note slot="end">
+      <div>Totale: <b>{{ getTotalPrice() | number : '1.2-2' }} €</b></div>
+      <div>Pezzi: <b>{{ getTotalQuantity() }}</b></div>
+    </ion-note>
+  </ion-item>
 </ion-header>
 
 <ion-content>
-  <ng-template [ngIf]="!cart.isActive()">
+  <ng-container *ngIf="!cart.isActive(); else itemList">
     <ion-text class="ion-text-center new-cart-text" color="secondary">
       <h3>Non hai un carrello</h3>
       <h1><b>Avvia una sessione di spesa!</b></h1>
@@ -34,19 +44,9 @@
         <ion-icon slot="end" name="cart"></ion-icon>
       </ion-button>
     </section>
-  </ng-template>
-  <ng-template [ngIf]="cart.isActive()">
-    <ion-item lines="full" color="light">
-      <ion-thumbnail slot="start">
-        <ion-icon ios="ios-cart" md="md-cart" size="large"></ion-icon>
-      </ion-thumbnail>
-      <ion-label class="ion-text-wrap">Carrello di Acquirente</ion-label>
-      <ion-note slot="end">
-        <div>Totale: <b>{{ getTotalPrice() | number : '1.2-2' }} €</b></div>
-        <div>Pezzi: <b>{{ getTotalQuantity() }}</b></div>
-      </ion-note>
-    </ion-item>
-    <ion-list lines=full>
+  </ng-container>
+  <ng-template #itemList>
+    <ion-list lines="full">
       <ng-template [ngIf]="cart.getItems().length <= 0">
         <ion-text class="ion-text-center" color="secondary">
           <ion-label>Non hai articoli nel carrello</ion-label>
@@ -85,8 +85,9 @@
     </ion-list>
   </ng-template>
 </ion-content>
+
 <ng-template [ngIf]="cart.isActive()">
-  <ion-footer no-shadow no-border>
+  <ion-footer no-shadow no-border class="ion-no-padding">
     <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="checkout()">Vai al checkout
       <ion-icon slot="end" name="checkmark-circle"></ion-icon>
     </ion-button>

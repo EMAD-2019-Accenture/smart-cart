@@ -10,6 +10,7 @@ import { PopoverComponent } from '../popover/popover.component';
   templateUrl: './catalogo-page.component.html',
   styleUrls: ['./catalogo-page.component.scss'],
 })
+// tslint:disable: align
 export class CatalogoPageComponent implements OnInit {
 
   allProducts: Array<Product>;

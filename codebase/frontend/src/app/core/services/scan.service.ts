@@ -40,6 +40,6 @@ export class ScanService {
 
   // DEBUG
   private fakeScan(): string {
-    return '8001120789761';
+    return '3017760628198';
   }
 }

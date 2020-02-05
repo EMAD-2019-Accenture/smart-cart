@@ -7,14 +7,10 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-searchbar [(ngModel)]="keyword" placeholder="Cerca un prodotto" (ionChange)="filter()">
-  </ion-searchbar>
-  <ion-card>
-    <ion-card-content>
-      <!--
+  <ion-list class="ion-no-padding">
+    <ion-searchbar [(ngModel)]="keyword" placeholder="Cerca un prodotto" (ionChange)="filter()">
+    </ion-searchbar>
+    <!--
       <ion-select interface="popover" #dropdownCategory placeholder="Categoria" value="0" slot="start"
         (ionChange)="filter(searchBar, dropdownCategory, discountCheck)">
         <ion-select-option value="0" class="ion-text-wrap">Nessuna categoria</ion-select-option>
@@ -23,13 +19,15 @@
         </ion-select-option>
       </ion-select>
       -->
-      <ion-item>
-        <ion-label>In offerta</ion-label>
-        <ion-checkbox [(ngModel)]="discountCheck" color="primary" slot="start" value="1" (ionChange)="filter()">
-        </ion-checkbox>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+    <ion-item lines="none">
+      <ion-label>In offerta</ion-label>
+      <ion-checkbox [(ngModel)]="discountCheck" color="primary" slot="start" value="1" (ionChange)="filter()">
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-header>
+
+<ion-content>
   <ng-template [ngIf]="filteredProducts.length > 0">
     <ion-list>
       <ion-item *ngFor="let item of filteredProducts; let i = index" [routerLink]="'/articolo/' + item.getBarcode()"
