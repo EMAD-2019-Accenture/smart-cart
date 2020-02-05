@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CatalogoPageComponent } from './catalogo-page/catalogo-page.component';
+import { PopoverComponent } from './popover/popover.component';
 
 const routes: Routes = [
   { path: '', component: CatalogoPageComponent }
@@ -10,12 +12,17 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    CatalogoPageComponent
+    CatalogoPageComponent,
+    PopoverComponent
+  ],
+  entryComponents: [
+    PopoverComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FormsModule
   ],
   providers: [
   ]

@@ -3,8 +3,8 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ActionSheetController, IonRouterOutlet, MenuController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
-import { ToastNotificationService } from './shared/toast/toast-notification.service';
+import { ActionSheetController, IonRouterOutlet, MenuController, ModalController, Platform, PopoverController } from '@ionic/angular';
+import { ToastService } from './core/services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ export class AppComponent {
     private popoverCtrl: PopoverController,
     private modalCtrl: ModalController,
     private menuCtrl: MenuController,
-    private toast: ToastNotificationService,
+    private toast: ToastService,
     private router: Router
   ) {
     this.initializeApp();
@@ -40,7 +40,6 @@ export class AppComponent {
     });
   }
 
-  // TODO: Does this work?
   initializeBackButton() {
     this.platform.backButton.subscribe(async () => {
       // close action sheet
@@ -95,7 +94,7 @@ export class AppComponent {
             // this.platform.exitApp(); // < Ionic 4
             navigator['app'].exitApp(); // >= Ionic 4
           } else {
-            await this.toast.presentToast('Premi di nuovo Indietro per uscire', 2000, false, 'success', true);
+            await this.toast.presentToast('Premi di nuovo indietro per uscire', 2000, false, 'success', true);
             this.lastTimeBackPress = new Date().getTime();
           }
         }

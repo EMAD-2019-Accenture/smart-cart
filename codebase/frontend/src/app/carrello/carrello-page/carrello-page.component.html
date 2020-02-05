@@ -30,8 +30,7 @@
       </div>
     </div>
     <section>
-      <ion-button expand="block" shape="round" class="ion-margin start-session" (click)="activateCart()">Avvia
-        sessione
+      <ion-button expand="block" shape="round" class="ion-margin start-session" (click)="activateCart()">Avvia sessione
         <ion-icon slot="end" name="cart"></ion-icon>
       </ion-button>
     </section>
@@ -88,8 +87,7 @@
 </ion-content>
 <ng-template [ngIf]="cart.isActive()">
   <ion-footer no-shadow no-border>
-    <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="deactivateCart()">Chiudi
-      sessione
+    <ion-button expand="block" shape="round" class="ion-margin session-button" (click)="checkout()">Vai al checkout
       <ion-icon slot="end" name="checkmark-circle"></ion-icon>
     </ion-button>
   </ion-footer>

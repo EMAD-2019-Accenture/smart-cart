@@ -17,7 +17,7 @@ Questi sono gli step fatti per fare il setup del progetto:
 2. Eseguire `npm install` per installare tutte le dipendenze presenti in *package.json*. Verrà creata la directory `nome_modules/`
 3. Eseguire `ionic capacitor add` e selezionare dal wizard le piattaforme target desiderate
 4. Eseguire `ionic build` per compilare il progetto col profilo development (`ionic build --prod` per il profilo production). Verrà creata la directory `www/` contenente tutti gli asset necessari per il deployment dell'app (indipendentemente dalla piattaforma target);
-5. Eseguire `ionic capacitor sync` per copiare copiare i web asset di `www/` in tutte le piattaforme installate, con annessa risoluzione di dipendenze e di installazione di plugin Capacitor/Cordova.
+5. Eseguire `ionic capacitor sync` per copiare i web asset di `www/` in tutte le piattaforme installate, con annessa risoluzione di dipendenze e di installazione di plugin Capacitor/Cordova.
 6. Eseguire `ionic capacitor run` e selezionare la piattaforma target desiderata per aprire l'IDE di riferimento della piattaforma scelta con il profilo development (`ionic capacitor run --prod` per eseguire con il profilo production se l'app è stata compilata per production).
 
 In caso di esecuzione della piattaforma Android, assicurarsi di avere installato Android Studio. Se `ionic capacitor run` segnala l'assenza di Android Studio, bisogna inserire nel file *capacitor.config.json* l'attributo `linuxAndroidStudioPath` con il path per lo script di Android Studio (ad es. `/opt/android-studio/bin/studio.sh`).

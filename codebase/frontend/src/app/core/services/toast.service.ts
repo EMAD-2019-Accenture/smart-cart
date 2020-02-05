@@ -4,11 +4,11 @@ import { ToastController } from '@ionic/angular';
 @Injectable({
   providedIn: 'root'
 })
-export class ToastNotificationService {
+export class ToastService {
 
-  constructor(public toastController: ToastController) {}
+  constructor(private toastController: ToastController) {}
 
-  async presentToast(message: string, duration: number, showCloseButton: boolean, color: string, translucent: boolean) {
+  public async presentToast(message: string, duration: number, showCloseButton: boolean, color: string, translucent: boolean) {
     const toast = await this.toastController.create({
       message,
       duration,
@@ -17,5 +17,9 @@ export class ToastNotificationService {
       translucent
     });
     toast.present();
+  }
+
+  public async dismiss() {
+    await this.toastController.dismiss();
   }
 }

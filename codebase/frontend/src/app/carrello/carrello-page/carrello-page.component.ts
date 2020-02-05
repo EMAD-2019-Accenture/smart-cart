@@ -1,15 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { ToastNotificationService } from 'src/app/shared/toast/toast-notification.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 import { ScanService } from '../../core/services/scan.service';
 import { Cart } from '../../shared/model/cart';
 import { Product } from '../../shared/model/product';
 import { CarrelloService } from '../carrello.service';
-import { Recommendation } from 'src/app/shared/model/recommendation';
-import { reject } from 'q';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-carrello-page',
@@ -25,8 +23,8 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   constructor(private carrelloService: CarrelloService,
     private scanService: ScanService,
     private raccomandazioniService: RaccomandazioniService,
-    private authService: AuthService,
-    private toastService: ToastNotificationService,
+    private toastService: ToastService,
+    private alertService: AlertService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
     this.cart = this.carrelloService.makeEmptyCart();
@@ -52,8 +50,19 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     this.carrelloService.activateCart(this.cart);
   }
 
-  public deactivateCart() {
-    this.carrelloService.deactivateCart(this.cart);
+  public checkout() {
+    this.alertService.presentConfirm('Procedere al checkout?', [
+      {
+        text: 'Annulla',
+        role: 'cancel',
+      },
+      {
+        text: 'Conferma',
+        handler: () => {
+          this.carrelloService.checkout(this.cart);
+        }
+      }
+    ]);
   }
 
   public getTotalPrice(): number {

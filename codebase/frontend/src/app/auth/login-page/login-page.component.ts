@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { ToastNotificationService } from '../../shared/toast/toast-notification.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../../core/services/toast.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -15,18 +15,20 @@ export class LoginPageComponent implements OnInit {
   password: string;
 
   constructor(private authService: AuthService,
-    private toastNotificationService: ToastNotificationService,
+    private toastNotificationService: ToastService,
     private router: Router) { }
 
   ngOnInit() { }
 
-  async login() {
+  public async login() {
     let message = '';
     let color = '';
     const auth = await this.authService.login(this.username, this.password);
     if (auth) {
       message = 'Login effettuato!';
       color = 'success';
+      this.username = '';
+      this.password = '';
       this.router.navigateByUrl('/');
     } else {
       message = 'Login fallito!';

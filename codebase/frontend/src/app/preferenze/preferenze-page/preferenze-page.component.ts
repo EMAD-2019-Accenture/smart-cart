@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 import { Customer } from 'src/app/shared/model/customer';
-import { ToastNotificationService } from 'src/app/shared/toast/toast-notification.service';
 import { PreferenzeService } from '../preferenze.service';
 
 @Component({
@@ -17,7 +20,10 @@ export class PreferenzePageComponent implements OnInit {
   celiacToggle: boolean;
 
   constructor(private preferenceService: PreferenzeService,
-    private toastNotificationService: ToastNotificationService) {
+    private authService: AuthService,
+    private toastService: ToastService,
+    private alertService: AlertService,
+    private router: Router) {
     this.customer = this.preferenceService.makeEmptyCustomer();
   }
 
@@ -49,16 +55,33 @@ export class PreferenzePageComponent implements OnInit {
   public save() {
     let message: string;
     let color: string;
-    this.preferenceService.update(this.customer).then(value => {
+    this.preferenceService.update(this.customer).then(() => {
       message = 'Preferenze aggiornate';
       color = 'success';
-    }).catch(reason => {
+    }).catch(() => {
       message = 'Errore: aggiornamento fallito';
       color = 'danger';
     }).finally(() => {
-      this.toastNotificationService.toastController.dismiss().finally(() => {
-        this.toastNotificationService.presentToast(message, 2000, true, color, true);
+      this.toastService.dismiss().finally(() => {
+        this.toastService.presentToast(message, 2000, true, color, true);
       });
     });
+  }
+
+  public logout() {
+    this.alertService.presentConfirm('Sei sicuro di procedere al logout?', [
+      {
+        text: 'Annulla',
+        role: 'cancel',
+      },
+      {
+        text: 'Conferma',
+        handler: () => {
+          this.authService.logout().then(() => {
+            this.router.navigateByUrl('auth');
+          });
+        }
+      }
+    ]);
   }
 }

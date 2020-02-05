@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IonCheckbox, IonSearchbar, IonSelect } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { Category } from 'src/app/shared/model/category';
 import { Product } from 'src/app/shared/model/product';
 import { CatalogoService } from '../catalogo.service';
+import { PopoverComponent } from '../popover/popover.component';
 
 @Component({
   selector: 'app-catalogo-page',
@@ -15,10 +16,18 @@ export class CatalogoPageComponent implements OnInit {
   filteredProducts: Array<Product>;
   categories: Array<Category>;
 
-  constructor(private catalogoService: CatalogoService) {
+  public keyword: string;
+  public selectedCategory: number;
+  public discountCheck: boolean;
+
+  constructor(private catalogoService: CatalogoService,
+    private popoverController: PopoverController) {
     this.allProducts = new Array<Product>();
     this.filteredProducts = new Array<Product>();
     this.categories = new Array<Category>();
+    this.keyword = '';
+    this.selectedCategory = 0;
+    this.discountCheck = false;
   }
 
   ngOnInit() {
@@ -34,27 +43,32 @@ export class CatalogoPageComponent implements OnInit {
     });
   }
 
-  public filter(searchBar: IonSearchbar, dropdownCategory: IonSelect, discountCheck: IonCheckbox): void {
-    this.filteredProducts = this.allProducts/*.sort((a, b) => {
+  public filter() {
+    let products: Product[] = this.allProducts/*.sort((a, b) => {
       return a.getName().localeCompare(b.getName());
     })*/;
-    // Category filter
-    const selectedIndex: number = Number(dropdownCategory.value);
-    if (selectedIndex !== 0) {
-      const category: Category = this.categories[selectedIndex - 1];
-      this.filteredProducts = this.filteredProducts.filter(product => product.getCategory().getId() === category.getId());
-    }
-    // Keyword filter
-    const regex = new RegExp('^.*(' + searchBar.value + ').*$', 'i');
-    this.filteredProducts = this.filteredProducts.filter(product => regex.test(product.getName()));
-    // Discount filter
-    if (discountCheck.checked) {
-      this.filteredProducts = this.filteredProducts.filter(product => {
-        const discount: string = JSON.stringify(product.getDiscount());
-        // const percentDiscount: string = JSON.stringify(product.getPercentDiscount());
-        // const kForN: string = JSON.stringify(product.getKForN());
-        return discount !== '{}' /*|| percentDiscount !== '{}' || kForN !== '{}'*/;
-      });
-    }
+    products = this.catalogoService.filterByKeyword(products, this.keyword);
+    products = this.catalogoService.filterByCategory(products, this.categories, this.selectedCategory);
+    products = this.catalogoService.filterByDiscountCheck(products, this.discountCheck);
+    this.filteredProducts = products;
+  }
+
+  public async presentPopover(event: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      componentProps: {
+        categories: this.categories,
+        selectedCategory: this.selectedCategory
+      },
+      event,
+      translucent: true
+    });
+    popover.onWillDismiss().then(result => {
+      if (result.role !== 'backdrop') {
+        this.selectedCategory = result.data;
+        this.filter();
+      }
+    });
+    popover.present();
   }
 }

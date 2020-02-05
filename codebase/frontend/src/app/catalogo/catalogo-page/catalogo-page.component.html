@@ -1,29 +1,32 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Catalogo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="funnel"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar #searchBar placeholder="Cerca un prodotto"
-    (ionChange)="filter(searchBar, dropdownCategory, discountCheck)">
+  <ion-searchbar [(ngModel)]="keyword" placeholder="Cerca un prodotto" (ionChange)="filter()">
   </ion-searchbar>
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>Filtri</ion-card-title>
-    </ion-card-header>
     <ion-card-content>
-      <ion-select #dropdownCategory cancel-text="Annulla" placeholder="Categoria" value="0" slot="start"
+      <!--
+      <ion-select interface="popover" #dropdownCategory placeholder="Categoria" value="0" slot="start"
         (ionChange)="filter(searchBar, dropdownCategory, discountCheck)">
         <ion-select-option value="0" class="ion-text-wrap">Nessuna categoria</ion-select-option>
         <ion-select-option *ngFor="let item of categories; let i = index" [value]="i+1">
           {{ item.getName() }}
         </ion-select-option>
       </ion-select>
+      -->
       <ion-item>
         <ion-label>In offerta</ion-label>
-        <ion-checkbox #discountCheck color="primary" slot="start" value="1"
-          (ionChange)="filter(searchBar, dropdownCategory, discountCheck)"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="discountCheck" color="primary" slot="start" value="1" (ionChange)="filter()">
+        </ion-checkbox>
       </ion-item>
     </ion-card-content>
   </ion-card>

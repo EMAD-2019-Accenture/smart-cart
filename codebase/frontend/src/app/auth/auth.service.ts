@@ -48,7 +48,6 @@ export class AuthService {
   async isLoggedIn(): Promise<boolean> {
     const rawToken = await this.getAuthToken();
     const isExpired = this.jwtHelper.isTokenExpired(rawToken);
-    console.log('Is token expired?', isExpired);
     return !isExpired;
   }
 
@@ -62,7 +61,6 @@ export class AuthService {
       return null;
     }
     const username = (this.jwtHelper.decodeToken(token).sub as string);
-    console.log(username);
     return username;
   }
 

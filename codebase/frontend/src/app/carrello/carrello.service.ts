@@ -1,14 +1,17 @@
 import { Injectable, isDevMode } from '@angular/core';
+import { AlertService } from '../core/services/alert.service';
+import { HttpCommonService } from '../core/services/http-common.service';
 import { Cart } from '../shared/model/cart';
 import { CartItem, ICartItem } from '../shared/model/cart-item';
 
-// tslint:disable: max-line-length
+// tslint:disable:align
 @Injectable({
   providedIn: 'root',
 })
 export class CarrelloService {
+  private addTransactionPath = 'https://smart-cart-acenture.herokuapp.com/api/transactions/';
 
-  constructor() { }
+  constructor(private http: HttpCommonService) { }
 
   public makeEmptyCart(): Cart {
     if (isDevMode()) {
@@ -22,8 +25,18 @@ export class CarrelloService {
     cart.setActive(true);
   }
 
-  public deactivateCart(cart: Cart) {
+  public checkout(cart: Cart) {
+    const productIds: number[] = cart.getItems().map(item => item.getId());
+    const httpBody: string = JSON.stringify({
+      productIds,
+      date: new Date(),
+      // TODO: Get logged user ID
+      user: '1'
+    });
+    // TODO: Uncomment when it works
+    // this.http.postRequest(this.addTransactionPath, httpBody).then(() => {
     cart.setActive(false);
+    // });
   }
 
   public getTotalPrice(cart: Cart) {
@@ -80,6 +93,7 @@ export class CarrelloService {
   /**
    * Creates a fake cart with a single item. Only in dev mode
    */
+  // tslint:disable: max-line-length
   private fakeCart() {
     const cart = new Cart();
     const items: Array<CartItem> = new Array<CartItem>();
