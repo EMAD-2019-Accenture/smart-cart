@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "frontend",
+  "appId": "it.unisa.smartcart",
+  "appName": "Smart Cart",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

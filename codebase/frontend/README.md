@@ -21,3 +21,13 @@ Questi sono gli step fatti per fare il setup del progetto:
 6. Eseguire `ionic capacitor run` e selezionare la piattaforma target desiderata per aprire l'IDE di riferimento della piattaforma scelta con il profilo development (`ionic capacitor run --prod` per eseguire con il profilo production se l'app è stata compilata per production).
 
 In caso di esecuzione della piattaforma Android, assicurarsi di avere installato Android Studio. Se `ionic capacitor run` segnala l'assenza di Android Studio, bisogna inserire nel file *capacitor.config.json* l'attributo `linuxAndroidStudioPath` con il path per lo script di Android Studio (ad es. `/opt/android-studio/bin/studio.sh`).
+
+# Rigenerare icone
+
+Dopo aver installato una piattaforma android o ios:
+
+1. Scegliere un'immagine png 1024x1024px per `resources/icon.png`.
+2. Scegliere un'immagine png 2732x2732px per `resources/splash.png`.
+3. Eseguire il comando `npm run resources`.
+
+Dettagli su: `https://gist.github.com/dalezak/a6b1de39091f4ace220695d72717ac71#file-resources-js`
