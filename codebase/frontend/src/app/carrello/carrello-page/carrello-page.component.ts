@@ -65,11 +65,27 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     ]);
   }
 
-  public getTotalPrice(): number {
-    return this.carrelloService.getTotalPrice(this.cart);
+  public getUnitFullPrice(index: number): number {
+    return this.carrelloService.getUnitFullPrice(this.cart, index);
   }
 
-  public getTotalQuantity(): number {
+  public getFullPrice(index: number): number {
+    return this.carrelloService.getFullPrice(this.cart, index);
+  }
+
+  public getUnitDiscountedPrice(index: number): number {
+    return this.carrelloService.getUnitDiscountedPrice(this.cart, index);
+  }
+
+  public getDiscountedPrice(index: number): number {
+    return this.carrelloService.getDiscountedPrice(this.cart, index);
+  }
+
+  public getCartPrice(): number {
+    return this.carrelloService.getTotalDiscountedPrice(this.cart);
+  }
+
+  public getTotalQuantities(): number {
     return this.carrelloService.getTotalQuantity(this.cart);
   }
 

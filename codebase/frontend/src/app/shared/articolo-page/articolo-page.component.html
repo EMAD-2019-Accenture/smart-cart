@@ -73,7 +73,7 @@
         <ion-row *ngIf="hasAnyDiscount()">
           <ion-col size=12 class="ion-text-center">
             <ion-label>
-              <s>{{ getTotalFullPrice() | number : '1.2-2' }} €</s>
+              <s>{{ getFullPrice() | number : '1.2-2' }} €</s>
             </ion-label>
           </ion-col>
         </ion-row>
@@ -81,11 +81,11 @@
           <ion-col size=12 class="ion-text-center">
             <ng-template [ngIf]="!hasAnyDiscount()">
               <ion-text style="font-size: 1.2em">
-                {{ getTotalFullPrice() | number : '1.2-2' }} €</ion-text>
+                {{ getFullPrice() | number : '1.2-2' }} €</ion-text>
             </ng-template>
             <ng-template [ngIf]="hasAnyDiscount()">
               <ion-text style="font-size: 1.2em">
-                <b>{{ getTotalDiscountedPrice() | number : '1.2-2' }} €</b>
+                <b>{{ getDiscountedPrice() | number : '1.2-2' }} €</b>
               </ion-text>
             </ng-template>
           </ion-col>

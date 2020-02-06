@@ -75,26 +75,19 @@ export class ArticoloPageComponent implements OnInit {
   }
 
   public getUnitFullPrice(): number {
-    return this.product.getPrice();
+    return this.articoloService.getUnitFullPrice(this.product);
   }
 
-  public getTotalFullPrice(): number {
-    return this.getUnitFullPrice() * this.cartItem.getQuantity();
+  public getFullPrice(): number {
+    return this.articoloService.getFullPrice(this.cartItem);
   }
 
   public getUnitDiscountedPrice(): number {
-    let discountedUnitPrice: number = this.getUnitFullPrice();
-    if (this.product.getDiscount().getId()) {
-      discountedUnitPrice -= this.product.getDiscount().getAmount();
-    }
-    if (this.product.getPercentDiscount().getId()) {
-      discountedUnitPrice *= this.product.getPercentDiscount().getValue();
-    }
-    return discountedUnitPrice;
+    return this.articoloService.getUnitDiscountedPrice(this.product);
   }
 
-  public getTotalDiscountedPrice(): number {
-    return this.getUnitDiscountedPrice() * this.cartItem.getQuantity();
+  public getDiscountedPrice(): number {
+    return this.articoloService.getDiscountedPrice(this.cartItem);
   }
 
   public increaseQuantity() {

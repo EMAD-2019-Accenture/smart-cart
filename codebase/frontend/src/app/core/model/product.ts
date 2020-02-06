@@ -73,6 +73,17 @@ export class Product {
         }
     }
 
+    public getDiscountedPrice(): number {
+        let price: number = this.getPrice();
+        if (this.getDiscount().getId()) {
+            price -= this.getDiscount().getAmount();
+        }
+        if (this.getPercentDiscount().getId()) {
+            price *= this.getPercentDiscount().getValue();
+        }
+        return price;
+    }
+
     public getId(): number {
         return this.id;
     }

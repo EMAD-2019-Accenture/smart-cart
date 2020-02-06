@@ -1,8 +1,8 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { AlertService } from '../core/services/alert.service';
-import { HttpCommonService } from '../core/services/http-common.service';
 import { Cart } from '../core/model/cart';
 import { CartItem, ICartItem } from '../core/model/cart-item';
+import { HttpCommonService } from '../core/services/http-common.service';
+import { ArticoloService } from '../core/services/articolo.service';
 
 // tslint:disable:align
 @Injectable({
@@ -11,7 +11,8 @@ import { CartItem, ICartItem } from '../core/model/cart-item';
 export class CarrelloService {
   private addTransactionPath = 'https://smart-cart-acenture.herokuapp.com/api/transactions/';
 
-  constructor(private http: HttpCommonService) { }
+  constructor(private http: HttpCommonService,
+    private articoloService: ArticoloService) { }
 
   public makeEmptyCart(): Cart {
     if (isDevMode()) {
@@ -39,10 +40,36 @@ export class CarrelloService {
     // });
   }
 
-  public getTotalPrice(cart: Cart) {
+  public getUnitFullPrice(cart: Cart, index: number): number {
+    return this.articoloService.getUnitFullPrice(cart.getItems()[index].getProduct());
+  }
+
+  public getFullPrice(cart: Cart, index: number): number {
+    return this.articoloService.getFullPrice(cart.getItems()[index]);
+  }
+
+  public getUnitDiscountedPrice(cart: Cart, index: number): number {
+    return this.articoloService.getUnitDiscountedPrice(cart.getItems()[index].getProduct());
+  }
+
+  public getDiscountedPrice(cart: Cart, index: number): number {
+    return this.articoloService.getDiscountedPrice(cart.getItems()[index]);
+  }
+
+  public getTotalFullPrice(cart: Cart) {
     if (cart.getItems().length > 0) {
       return cart.getItems()
-        .map(item => item.getProduct().getPrice() * item.getQuantity())
+        .map((_, index) => this.getFullPrice(cart, index))
+        .reduce((total, price) => total + price);
+    } else {
+      return 0;
+    }
+  }
+
+  public getTotalDiscountedPrice(cart: Cart) {
+    if (cart.getItems().length > 0) {
+      return cart.getItems()
+        .map((_, index) => this.getDiscountedPrice(cart, index))
         .reduce((total, price) => total + price);
     } else {
       return 0;

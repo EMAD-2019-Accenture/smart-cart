@@ -17,6 +17,22 @@ export class ArticoloService {
     return this.http.getRequest(this.scanPath + barcode) as Promise<IProduct>;
   }
 
+  public getUnitFullPrice(product: Product): number {
+    return product.getPrice();
+  }
+
+  public getFullPrice(cartItem: CartItem): number {
+    return this.getUnitFullPrice(cartItem.getProduct()) * cartItem.getQuantity();
+  }
+
+  public getUnitDiscountedPrice(product: Product): number {
+    return product.getDiscountedPrice();
+  }
+
+  public getDiscountedPrice(cartItem: CartItem): number {
+    return this.getUnitDiscountedPrice(cartItem.getProduct()) * cartItem.getQuantity();
+  }
+
   public increaseQuantity(cartItem: CartItem) {
     cartItem.setQuantity(cartItem.getQuantity() + 1);
   }

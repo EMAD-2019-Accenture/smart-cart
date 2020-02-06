@@ -22,8 +22,8 @@
     </ion-thumbnail>
     <ion-label class="ion-text-wrap">Carrello di Acquirente</ion-label>
     <ion-note slot="end">
-      <div>Totale: <b>{{ getTotalPrice() | number : '1.2-2' }} €</b></div>
-      <div>Pezzi: <b>{{ getTotalQuantity() }}</b></div>
+      <div>Totale: <b>{{ getCartPrice() | number : '1.2-2' }} €</b></div>
+      <div>Pezzi: <b>{{ getTotalQuantities() }}</b></div>
     </ion-note>
   </ion-item>
 </ion-header>
@@ -58,13 +58,12 @@
             <img [src]="item.getProduct().getImageUrl()">
           </ion-avatar>
           <ion-label>
-            <ion-label color="danger">{{ item.getProduct().getName() }}</ion-label>
-            <ion-label>{{ item.getProduct().getDescription() }}</ion-label>
-            <ion-label>{{ item.getProduct().getPrice() | number : '1.2-2' }} € cad.</ion-label>
+            <ion-label color="primary">{{ item.getProduct().getName() }}</ion-label>
+            <ion-label>{{ getUnitDiscountedPrice(i) | number : '1.2-2' }} € cad.</ion-label>
           </ion-label>
           <ion-note slot="end">
-            x {{ item.getQuantity() }}<br>
-            {{ item.getProduct().getPrice() * item.getQuantity() | number : '1.2-2' }} € tot.
+            <div>x {{ item.getQuantity() }}</div>
+            <div>{{ getDiscountedPrice(i) | number : '1.2-2' }} € tot.</div>
           </ion-note>
         </ion-item>
         <ion-item-options side="start">
