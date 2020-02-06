@@ -6,6 +6,7 @@ import { IProduct, Product } from '../../core/model/product';
 import { ArticoloService } from '../../core/services/articolo.service';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 import { ScanService } from '../../core/services/scan.service';
+import { Discount } from 'src/app/core/model/discount';
 
 @Component({
   selector: 'app-articolo-page',
@@ -39,6 +40,13 @@ export class ArticoloPageComponent implements OnInit {
     this.articoloService.getProductByBarcode(barcode)
       .then(response => {
         this.product = new Product(response);
+        // TODO: Fake discount REMOVE
+        this.product.setDiscount(new Discount({
+          id: 1,
+          start: new Date('2019-10-10'),
+          end: new Date('2020-10-10'),
+          amount: 0.5
+        }));
         this.ingredients = this.parseIngredients(this.product.getIngredients());
         if (history.state.scan) {
           this.cartItem = this.articoloService.makeCartItem(this.product);
@@ -50,6 +58,43 @@ export class ArticoloPageComponent implements OnInit {
         console.log('Product not found: ' + reason);
       })
       .finally(() => loading.dismiss());
+  }
+
+  public hasDiscount(): boolean {
+    return (this.product.getDiscount().getId() !== undefined)
+      && (this.product.getDiscount().getStart() < this.product.getDiscount().getEnd());
+  }
+
+  public hasPercentDiscount(): boolean {
+    return (this.product.getPercentDiscount().getId() !== undefined)
+      && (this.product.getPercentDiscount().getStart() < this.product.getPercentDiscount().getEnd());
+  }
+
+  public hasAnyDiscount(): boolean {
+    return this.hasDiscount() || this.hasPercentDiscount();
+  }
+
+  public getUnitFullPrice(): number {
+    return this.product.getPrice();
+  }
+
+  public getTotalFullPrice(): number {
+    return this.getUnitFullPrice() * this.cartItem.getQuantity();
+  }
+
+  public getUnitDiscountedPrice(): number {
+    let discountedUnitPrice: number = this.getUnitFullPrice();
+    if (this.product.getDiscount().getId()) {
+      discountedUnitPrice -= this.product.getDiscount().getAmount();
+    }
+    if (this.product.getPercentDiscount().getId()) {
+      discountedUnitPrice *= this.product.getPercentDiscount().getValue();
+    }
+    return discountedUnitPrice;
+  }
+
+  public getTotalDiscountedPrice(): number {
+    return this.getUnitDiscountedPrice() * this.cartItem.getQuantity();
   }
 
   public increaseQuantity() {
@@ -69,16 +114,16 @@ export class ArticoloPageComponent implements OnInit {
       .then(result => {
         if (result) {
           this.recommendationService.acceptRecommendation(this.recommendationId);
-          this.recommendationId = undefined;
+          this.recommendationId = null;
           // TODO: Decide whether to add brutally into cart
           // this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
-          this.articoloService.makeCartItem(this.product);
+          this.cartItem = this.articoloService.makeCartItem(this.product);
         } else {
           console.log('Then but false: when it happens?');
         }
       })
       .catch(reason => {
-        console.log('Catch: when it happens? ' + reason);
+        console.log('Plugin not available - Reason: ' + reason);
       });
   }
 

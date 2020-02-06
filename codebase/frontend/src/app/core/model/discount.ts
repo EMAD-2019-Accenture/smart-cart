@@ -1,5 +1,3 @@
-import { IProduct, Product } from './product';
-
 export interface IDiscount {
     id: number;
     start: Date;

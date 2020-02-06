@@ -20,7 +20,7 @@ export class ScanService {
   public async startNormalScan(): Promise<string> {
     let scannedBarcode: string;
     if (isDevMode()) {
-      scannedBarcode = this.fakeScan();
+      scannedBarcode = this.fakeNormalScan();
     } else {
       scannedBarcode = (await this.scan()).text;
     }
@@ -30,16 +30,20 @@ export class ScanService {
   public async startSpecificScan(expectedBarcode: string): Promise<boolean> {
     let result: BarcodeScanResult;
     let scannedBarcode: string;
-    do {
-      result = await this.scan();
-      scannedBarcode = result.text;
+    if (isDevMode()) {
+      return true;
+    } else {
+      do {
+        result = await this.scan();
+        scannedBarcode = result.text;
+      }
+      while (!result.cancelled && scannedBarcode !== expectedBarcode);
+      return !result.cancelled;
     }
-    while (!result.cancelled && scannedBarcode !== expectedBarcode);
-    return !result.cancelled;
   }
 
   // DEBUG
-  private fakeScan(): string {
+  private fakeNormalScan(): string {
     return '3017760628198';
   }
 }
