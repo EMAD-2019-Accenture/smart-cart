@@ -3,15 +3,16 @@ from scrapy import Request as Request
 from scrapy_splash import SplashRequest
 
 class AlimentaricoopSpider(scrapy.Spider):
-    name = 'alimentiPreparati'
+    name = 'carne_pesce'
     alim_dict = dict()
-    id = 0
+    id = 22
 
     def start_requests(self):
 
-        alimenti_preparati = ['http://www.catalogoprodotti.coop.it/pam/it/Categorie-PAM/Alimentari-confezionati/Alimenti-preparati-e-altro/c/110102?q=%3Arelevance&page=0&pagesize=36']
+        carne_pesce = ['http://www.catalogoprodotti.coop.it/pam/it/Categorie-PAM/Alimentari-freschi/Carne-e-pesce/c/110201?q=%3Arelevance&page={}&pagesize=36'.format(i) for i in range(3)]
+
         
-        for url in alimenti_preparati:
+        for url in carne_pesce:
             yield SplashRequest(url=url, callback=self.parse_page_products)
 
 
@@ -96,7 +97,7 @@ class AlimentaricoopSpider(scrapy.Spider):
                     'preparation': preparation,
                     'nutrients': nutrients,
                     'discount_id': ' ',
-                    'category_id': 1,
+                    'category_id': 2,
                 }
 
                 print(name)       
