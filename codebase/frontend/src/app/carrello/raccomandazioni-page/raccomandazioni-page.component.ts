@@ -36,10 +36,6 @@ export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
     this.raccomandazioniService.deleteRecommendation(index);
   }
 
-  /*
-  * After scan the product must be added instant... this requires
-  * a change into scan service that start the scan plugin but wait for the correct barcode!!
-  */
   public navigateToDetail(index: number) {
     const recommendation: Recommendation = this.recommendations[index];
     this.router.navigateByUrl('/articolo/' + recommendation.getProduct().getBarcode(), {

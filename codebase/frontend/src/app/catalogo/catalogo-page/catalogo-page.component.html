@@ -25,7 +25,7 @@
       <ion-avatar slot="start">
         <img [src]="item.getImageUrl()">
       </ion-avatar>
-      <ion-label class="ion-text-wrap">{{ item.getName() }}</ion-label>
+      <ion-label class="ion-text-wrap">{{ item.getName() | titlecase }}</ion-label>
     </ion-item>
   </ion-list>
   <ion-text *ngIf="filteredProducts === null" class="ion-text-center">

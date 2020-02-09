@@ -51,17 +51,26 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   }
 
   public checkout() {
-    this.alertService.presentConfirm('Procedere al checkout?', [
+    let text: string;
+    let handler;
+    if (this.cart.getItems().length === 0) {
+      text = 'Non hai elementi, vuoi comunque chiudere la sessione?';
+      handler = () => this.cart = this.carrelloService.makeEmptyCart();
+    } else {
+      text = 'Procedere al checkout?';
+      handler = () => {
+        this.carrelloService.checkout(this.cart);
+        this.cart = this.carrelloService.makeEmptyCart();
+      };
+    }
+    this.alertService.presentConfirm(text, [
       {
         text: 'Annulla',
         role: 'cancel',
       },
       {
         text: 'Conferma',
-        handler: () => {
-          this.carrelloService.checkout(this.cart);
-          this.cart = this.carrelloService.makeEmptyCart();
-        }
+        handler
       }
     ]);
   }

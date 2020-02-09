@@ -25,8 +25,8 @@
             </div>
             <div class="ion-no-padding">
               <ion-item>
-                <ion-label text-wrap class="ion-no-margin" color="primary">
-                  {{ item.getProduct().getName() }}
+                <ion-label class="ion-no-margin ion-text-wrap" color="primary">
+                  {{ item.getProduct().getName() | titlecase }}
                 </ion-label>
               </ion-item>
             </div>
