@@ -19,6 +19,7 @@ export class ArticoloPageComponent implements OnInit {
   ingredients: string[];
   cartItem: CartItem;
   recommendationId: number;
+  hiddenLists: boolean;
 
   constructor(private articoloService: ArticoloService,
     private scanService: ScanService,
@@ -28,6 +29,7 @@ export class ArticoloPageComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.hiddenLists = true;
     if (history.state.recommendationId !== undefined) {
       this.recommendationId = history.state.recommendationId;
     }
@@ -118,6 +120,10 @@ export class ArticoloPageComponent implements OnInit {
       .catch(reason => {
         console.log('Plugin not available - Reason: ' + reason);
       });
+  }
+
+  public switchLists() {
+    this.hiddenLists = !this.hiddenLists;
   }
 
   // TODO: will be useful as soon it is fixed in the DB? Maybe remove

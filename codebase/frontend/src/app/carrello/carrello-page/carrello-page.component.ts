@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
-import { ScanService } from '../../core/services/scan.service';
 import { Cart } from '../../core/model/cart';
 import { Product } from '../../core/model/product';
+import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
+import { ScanService } from '../../core/services/scan.service';
 import { CarrelloService } from '../carrello.service';
-import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-carrello-page',
@@ -60,6 +60,7 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
         text: 'Conferma',
         handler: () => {
           this.carrelloService.checkout(this.cart);
+          this.cart = this.carrelloService.makeEmptyCart();
         }
       }
     ]);

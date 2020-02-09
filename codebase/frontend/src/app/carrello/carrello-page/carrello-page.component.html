@@ -17,14 +17,12 @@
     </ng-container>
   </ion-toolbar>
   <ion-item *ngIf="cart.isActive()" lines="full" color="light">
-    <ion-thumbnail slot="start">
-      <ion-icon md="md-cart" size="large"></ion-icon>
-    </ion-thumbnail>
-    <ion-label class="ion-text-wrap">Carrello di Acquirente</ion-label>
-    <ion-note slot="end">
-      <div>Totale: <b>{{ getCartPrice() | number : '1.2-2' }} €</b></div>
-      <div>Pezzi: <b>{{ getTotalQuantities() }}</b></div>
-    </ion-note>
+    <ion-icon name="cart" size="large" slot="start"></ion-icon>
+    <ion-label>Il tuo carrello</ion-label>
+    <ion-label slot="end" style="text-align: right">
+      <div>x {{ getTotalQuantities() }} Pezzi</div>
+      <div>{{ getCartPrice() | number : '1.2-2' }} € Totale</div>
+    </ion-label>
   </ion-item>
 </ion-header>
 
@@ -49,7 +47,7 @@
     <ion-list lines="full">
       <ng-template [ngIf]="cart.getItems().length <= 0">
         <ion-text class="ion-text-center" color="secondary">
-          <ion-label>Non hai articoli nel carrello</ion-label>
+          <h3>Non hai articoli nel carrello</h3>
         </ion-text>
       </ng-template>
       <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index">
@@ -59,12 +57,14 @@
           </ion-avatar>
           <ion-label>
             <ion-label color="primary">{{ item.getProduct().getName() }}</ion-label>
-            <ion-label>{{ getUnitDiscountedPrice(i) | number : '1.2-2' }} € cad.</ion-label>
+            <ion-note>{{ getUnitDiscountedPrice(i) | number : '1.2-2' }} € cad.</ion-note>
           </ion-label>
-          <ion-note slot="end">
-            <div>x {{ item.getQuantity() }}</div>
-            <div>{{ getDiscountedPrice(i) | number : '1.2-2' }} € tot.</div>
-          </ion-note>
+          <ion-label style="text-align: right">
+            <ion-note slot="end">
+              <div>x {{ item.getQuantity() }} pz.</div>
+              <div>{{ getDiscountedPrice(i) | number : '1.2-2' }} € tot.</div>
+            </ion-note>
+          </ion-label>
         </ion-item>
         <ion-item-options side="start">
           <ion-item-option color="danger" expandable type="reset" (click)="deleteItem(i)"> Elimina

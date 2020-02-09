@@ -15,11 +15,7 @@ export class CarrelloService {
     private articoloService: ArticoloService) { }
 
   public makeEmptyCart(): Cart {
-    if (isDevMode()) {
-      return this.fakeCart();
-    } else {
-      return new Cart();
-    }
+    return new Cart();
   }
 
   public activateCart(cart: Cart) {
@@ -36,7 +32,6 @@ export class CarrelloService {
     });
     // TODO: Uncomment when it works
     // this.http.postRequest(this.addTransactionPath, httpBody).then(() => {
-    cart.setActive(false);
     // });
   }
 

@@ -44,6 +44,6 @@ export class ScanService {
 
   // DEBUG
   private fakeNormalScan(): string {
-    return '3017760628198';
+    return '8001120876362';
   }
 }

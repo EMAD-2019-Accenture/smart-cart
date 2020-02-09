@@ -9,26 +9,31 @@
 
 <ion-content fullscreen>
   <ng-template [ngIf]="recommendations.length <= 0">
-    <ion-label class="text-center">Per adesso non ci sono articoli per te :(</ion-label>
+    <ion-text class="ion-text-center" color="secondary">
+      <h3>Per adesso non ci sono articoli per te</h3>
+    </ion-text>
   </ng-template>
   <ion-grid>
     <ng-container *ngFor="let i of getNumberSequence()">
       <ion-row *ngIf="i % 2 === 0">
         <ion-col size=6 *ngFor="let item of recommendations.slice(i, i+2)">
           <ion-card>
-            <ion-card-header>
-              <ion-item lines="full">
-                <ion-card-title color="primary">{{ item.getProduct().getName() }}</ion-card-title>
-                <ion-icon name="close" slot="end" (click)="deleteRecommendation(i)"></ion-icon>
-              </ion-item>
-              <img [src]="item.getProduct().getImageUrl()">
-              <ion-card-subtitle>{{ item.getProduct().getDescription() }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-button color="primary" expand="block" size=small (click)="navigateToDetail(i)">
-                <b>Dettagli</b>
+            <div style="text-align: right">
+              <ion-button class="ion-no-padding" color="danger" fill="clear" (click)="deleteRecommendation(i)">
+                <ion-icon name="close" slot="icon-only"></ion-icon>
               </ion-button>
-            </ion-card-content>
+            </div>
+            <div class="ion-no-padding">
+              <ion-item>
+                <ion-label text-wrap class="ion-no-margin" color="primary">
+                  {{ item.getProduct().getName() }}
+                </ion-label>
+              </ion-item>
+            </div>
+            <img [src]="item.getProduct().getImageUrl()">
+            <ion-button color="primary" expand="block" size="small" (click)="navigateToDetail(i)">
+              <b>Dettagli</b>
+            </ion-button>
           </ion-card>
         </ion-col>
       </ion-row>
