@@ -20,14 +20,18 @@
 
 <ion-content>
   <ion-list *ngIf="filteredProducts != null">
-    <ion-item *ngFor="let item of filteredProducts; let i = index" [routerLink]="'/articolo/' + item.getBarcode()"
+    <ion-item *ngFor="let item of filteredProducts.slice(0, shownItems); let i = index" [routerLink]="'/articolo/' + item.getBarcode()"
       routerLinkActive="active">
       <ion-avatar slot="start">
-        <img [src]="item.getImageUrl()">
+        <ion-img [src]="item.getImageUrl()"></ion-img>
       </ion-avatar>
       <ion-label class="ion-text-wrap">{{ item.getName() | titlecase }}</ion-label>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadProducts($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Scarico prodotti...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <ion-text *ngIf="filteredProducts === null" class="ion-text-center">
     <h3 class="ion-text-wrap">Nessun articolo da mostrare</h3>
   </ion-text>

@@ -14,6 +14,8 @@ import { PopoverComponent } from '../popover/popover.component';
 // tslint:disable: align
 export class CatalogoPageComponent implements OnInit {
 
+  private static readonly NEW_ITEMS = 30;
+
   allProducts: Array<Product>;
   filteredProducts: Array<Product>;
   categories: Array<Category>;
@@ -21,6 +23,7 @@ export class CatalogoPageComponent implements OnInit {
   public keyword: string;
   public selectedCategory: number;
   public discountCheck: boolean;
+  public shownItems: number;
 
   constructor(private catalogoService: CatalogoService,
     private popoverController: PopoverController,
@@ -31,10 +34,21 @@ export class CatalogoPageComponent implements OnInit {
     this.keyword = '';
     this.selectedCategory = 0;
     this.discountCheck = false;
+    this.restartShownItems();
   }
 
   ngOnInit() {
     this.getCategoriesAndCatalogue();
+  }
+
+  private restartShownItems() {
+    this.shownItems = CatalogoPageComponent.NEW_ITEMS < this.filteredProducts.length ?
+      CatalogoPageComponent.NEW_ITEMS : this.filteredProducts.length + 1;
+  }
+
+  private showMoreItems() {
+    this.shownItems = this.shownItems + CatalogoPageComponent.NEW_ITEMS < this.filteredProducts.length ?
+      this.shownItems + CatalogoPageComponent.NEW_ITEMS : this.filteredProducts.length + 1;
   }
 
   // TODO: Make it more readable
@@ -53,6 +67,7 @@ export class CatalogoPageComponent implements OnInit {
         this.allProducts = products.map(product => new Product(product));
         this.allProducts.sort((a, b) => a.getName().localeCompare(b.getName()));
         this.filteredProducts = this.allProducts;
+        this.restartShownItems();
       })
       .catch(reason => {
         this.allProducts = null;
@@ -70,6 +85,7 @@ export class CatalogoPageComponent implements OnInit {
     products = this.catalogoService.filterByCategory(products, this.categories, this.selectedCategory);
     products = this.catalogoService.filterByDiscountCheck(products, this.discountCheck);
     this.filteredProducts = products;
+    this.restartShownItems();
   }
 
   public async presentPopover(event: any) {
@@ -89,5 +105,12 @@ export class CatalogoPageComponent implements OnInit {
       }
     });
     popover.present();
+  }
+
+  public loadProducts(event) {
+    setTimeout(() => {
+      this.showMoreItems();
+      event.target.complete();
+    }, 500);
   }
 }

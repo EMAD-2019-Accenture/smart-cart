@@ -14,7 +14,7 @@
 
 <ion-content fullscreen>
   <ion-card *ngIf="product">
-    <img [src]="product.getImageUrl()" alt="Immagine non disponibile">
+    <ion-img [src]="product.getImageUrl()" alt="Immagine non disponibile"></ion-img>
     <ion-card-header>
       <ion-card-subtitle>{{ product.getCategory().getName() }}</ion-card-subtitle>
       <ion-card-title>{{ product.getName() | titlecase }}</ion-card-title>
@@ -127,6 +127,6 @@
     </ion-card-content>
   </ion-card>
   <ion-text *ngIf="product === null" class="ion-text-center" color="secondary">
-    <h3>Non hai articoli nel carrello</h3>
+    <h3>Prodotto non trovato</h3>
   </ion-text>
 </ion-content>
