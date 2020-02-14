@@ -128,16 +128,13 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('index/carrello/raccomandazioni');
   }
 
-  /**
-   * Get a recommendation from the server
-   */
+  // TODO: Rete assente error da gestire?
   private getNewRecommendation(): void {
     const productsInCart: Product[] = this.cart.getItems()
       .map(value => value.getProduct());
     this.raccomandazioniService.getNewRecommendation(productsInCart)
       .then(recomm => {
         if (recomm) {
-          // TODO: Improve toast
           this.toastService.presentToast('C\'è un articolo per te!', 2000, true, 'success', true);
           this.recommendationsNumber++;
         }

@@ -22,7 +22,7 @@ export class Customer {
     constructor(customer?: ICustomer) {
         if (customer) {
             this.id = customer.id;
-            this.birth = customer.birth;
+            this.birth = new Date(customer.birth);
             this.nationality = customer.nationality;
             this.vegan = customer.vegan;
             this.vegetarian = customer.vegetarian;

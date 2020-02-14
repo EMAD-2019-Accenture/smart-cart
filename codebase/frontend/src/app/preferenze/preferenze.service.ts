@@ -15,6 +15,16 @@ export class PreferenzeService {
 
   constructor(private http: HttpCommonService) { }
 
+  public async getCustomer(): Promise<ICustomer> {
+    return this.http.getRequest(this.getLoggedCustomer) as Promise<ICustomer>;
+  }
+
+  public async update(customer: Customer): Promise<ICustomer> {
+    const httpBody = JSON.stringify(customer);
+    return this.http.putRequest(this.updateCustomerPath, httpBody);
+  }
+
+  /*
   public makeEmptyCustomer() {
     const customer: Customer = new Customer();
     customer.setUser(new User());
@@ -48,13 +58,5 @@ export class PreferenzeService {
     };
     return new Promise<ICustomer>((resolve, reject) => resolve(iCustomer));
   }
-
-  public async getCustomer(): Promise<ICustomer> {
-    return this.http.getRequest(this.getLoggedCustomer) as Promise<ICustomer>;
-  }
-
-  public async update(customer: Customer): Promise<ICustomer> {
-    const httpBody = JSON.stringify(customer);
-    return this.http.putRequest(this.updateCustomerPath, httpBody);
-  }
+  */
 }

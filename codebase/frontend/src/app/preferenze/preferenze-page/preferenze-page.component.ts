@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -26,24 +26,40 @@ export class PreferenzePageComponent implements OnInit {
     private toastService: ToastService,
     private alertService: AlertService,
     private loadingService: LoadingService,
-    private router: Router) {
-    this.customer = this.preferenceService.makeEmptyCustomer();
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+    this.customer = null;
+    // this.customer = this.preferenceService.makeEmptyCustomer();
   }
 
   ngOnInit() {
-    this.getCustomer().then(response => {
-      this.customer = new Customer(response);
-      this.veganToggle = this.customer.isVegan();
-      this.vegetarianToggle = this.customer.isVegetarian();
-      this.celiacToggle = this.customer.isCeliac();
-    });
+    this.activatedRoute.paramMap.subscribe(() =>
+      this.getCustomer().then(response => {
+        if (response !== null) {
+          this.customer = new Customer(response);
+          this.veganToggle = this.customer.isVegan();
+          this.vegetarianToggle = this.customer.isVegetarian();
+          this.celiacToggle = this.customer.isCeliac();
+        } else {
+          this.customer = null;
+          this.veganToggle = false;
+          this.vegetarianToggle = false;
+          this.celiacToggle = false;
+        }
+      }));
   }
 
   private async getCustomer() {
     const loading: HTMLIonLoadingElement = await this.loadingService.presentWait('Attendi...', true);
-    const customer: ICustomer = await this.preferenceService.getCustomer();
-    loading.dismiss();
-    return customer;
+    return await this.preferenceService.getCustomer()
+      .then(value => value)
+      .catch(reason => {
+        const message = 'Errore: rete assente';
+        this.toastService.presentToast(message, 2000, true, 'danger', true);
+        console.log('Couldn\'t get user ' + reason);
+        return null;
+      })
+      .finally(() => loading.dismiss());
   }
 
   public onVegan() {
@@ -59,19 +75,24 @@ export class PreferenzePageComponent implements OnInit {
   }
 
   public save() {
-    let message: string;
-    let color: string;
-    this.preferenceService.update(this.customer).then(() => {
-      message = 'Preferenze aggiornate';
-      color = 'success';
-    }).catch(() => {
-      message = 'Errore: aggiornamento fallito';
-      color = 'danger';
-    }).finally(() => {
-      this.toastService.dismiss().finally(() => {
-        this.toastService.presentToast(message, 2000, true, color, true);
+    if (this.customer != null) {
+      let message: string;
+      let color: string;
+      this.preferenceService.update(this.customer).then(() => {
+        message = 'Preferenze aggiornate';
+        color = 'success';
+      }).catch(() => {
+        message = 'Errore: aggiornamento fallito';
+        color = 'danger';
+      }).finally(() => {
+        this.toastService.dismiss().finally(() => {
+          this.toastService.presentToast(message, 2000, true, color, true);
+        });
       });
-    });
+    } else {
+      const message = 'Impossibile salvare: rete assente';
+      this.toastService.presentToast(message, 2000, true, 'danger', true);
+    }
   }
 
   public logout() {

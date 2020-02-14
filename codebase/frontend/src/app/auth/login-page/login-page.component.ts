@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoginResponse } from 'src/app/core/model/login-response';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { ToastService } from '../../core/services/toast.service';
 import { AuthService } from '../auth.service';
-import { LoadingService } from 'src/app/core/services/loading.service';
 
 @Component({
   selector: 'app-login-page',
@@ -24,21 +24,31 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() { }
 
   public async login() {
-    let message = '';
-    let color = '';
     const loading: HTMLIonLoadingElement = await this.loadingService.presentWait('Attendi...', true);
-    const auth = await this.authService.login(this.username, this.password);
+    const result: LoginResponse = await this.authService.login(this.username, this.password);
     loading.dismiss();
-    if (auth) {
-      message = 'Login effettuato!';
-      color = 'success';
+    if (result === LoginResponse.SUCCESS) {
       await this.router.navigateByUrl('/');
       this.username = '';
       this.password = '';
     } else {
-      message = 'Login fallito!';
-      color = 'danger';
+      let message = '';
+      switch (result) {
+        case LoginResponse.BAD_REQUEST: {
+          message = 'Errore: compila tutti i campi';
+          break;
+        }
+        case LoginResponse.UNAUTHORIZED: {
+          message = 'Errore: non sei autorizzato';
+          break;
+        }
+        case LoginResponse.NO_NETWORK: {
+          message = 'Errore: rete assente';
+          break;
+        }
+      }
+      this.toastService.presentToast(message, 2000, true, 'danger', true);
     }
-    this.toastService.presentToast(message, 2000, true, color, true);
+
   }
 }

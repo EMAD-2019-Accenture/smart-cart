@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PercentDiscount } from 'src/app/core/model/percent-discount';
 import { LoadingService } from 'src/app/core/services/loading.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 import { CartItem } from '../../core/model/cart-item';
-import { IProduct, Product } from '../../core/model/product';
+import { Product } from '../../core/model/product';
 import { ArticoloService } from '../../core/services/articolo.service';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 import { ScanService } from '../../core/services/scan.service';
-import { Discount } from 'src/app/core/model/discount';
 
 @Component({
   selector: 'app-articolo-page',
@@ -25,6 +26,7 @@ export class ArticoloPageComponent implements OnInit {
     private scanService: ScanService,
     private recommendationService: RaccomandazioniService,
     private loadingService: LoadingService,
+    private toastService: ToastService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -43,21 +45,28 @@ export class ArticoloPageComponent implements OnInit {
       .then(response => {
         this.product = new Product(response);
         // TODO: Fake discount REMOVE
-        this.product.setDiscount(new Discount({
+        this.product.setPercentDiscount(new PercentDiscount({
           id: 1,
           start: new Date('2019-10-10'),
           end: new Date('2020-10-10'),
-          amount: 0.5
+          value: 0.5
         }));
         this.ingredients = this.parseIngredients(this.product.getIngredients());
         if (history.state.scan) {
           this.cartItem = this.articoloService.makeCartItem(this.product);
         }
       })
-      // TODO: Manage the case when the response has nothing
       .catch(reason => {
         this.product = null;
-        console.log('Product not found: ' + reason);
+        let message: string;
+        if (reason.status === 404) {
+          message = 'Errore: articolo non trovato';
+          console.log('Product not found: ' + JSON.stringify(reason));
+        } else {
+          message = 'Errore: rete assente';
+          console.log('Network error: ' + JSON.stringify(reason));
+        }
+        this.toastService.presentToast(message, 2000, true, 'danger', true);
       })
       .finally(() => loading.dismiss());
   }

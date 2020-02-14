@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { Category } from 'src/app/core/model/category';
 import { Product } from 'src/app/core/model/product';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { CatalogoService } from '../catalogo.service';
 import { PopoverComponent } from '../popover/popover.component';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-catalogo-page',
@@ -27,7 +29,9 @@ export class CatalogoPageComponent implements OnInit {
 
   constructor(private catalogoService: CatalogoService,
     private popoverController: PopoverController,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    private toastService: ToastService,
+    private activatedRoute: ActivatedRoute) {
     this.allProducts = new Array<Product>();
     this.filteredProducts = new Array<Product>();
     this.categories = new Array<Category>();
@@ -38,7 +42,7 @@ export class CatalogoPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCategoriesAndCatalogue();
+    this.activatedRoute.paramMap.subscribe(() => this.getCategoriesAndCatalogue());
   }
 
   private restartShownItems() {
@@ -46,15 +50,15 @@ export class CatalogoPageComponent implements OnInit {
       CatalogoPageComponent.NEW_ITEMS : this.filteredProducts.length + 1;
   }
 
-  private showMoreItems() {
-    this.shownItems = this.shownItems + CatalogoPageComponent.NEW_ITEMS < this.filteredProducts.length ?
-      this.shownItems + CatalogoPageComponent.NEW_ITEMS : this.filteredProducts.length + 1;
-  }
-
-  // TODO: Make it more readable
   private async getCategoriesAndCatalogue() {
     const loading: HTMLIonLoadingElement = await this.loadingService.presentWait('Attendi...', true);
-    await this.catalogoService.getCategories()
+    await this.getCategories();
+    await this.getProducts();
+    loading.dismiss();
+  }
+
+  private getCategories(): Promise<void> {
+    return this.catalogoService.getCategories()
       .then(categories => {
         this.categories = categories.map(category => new Category(category));
       })
@@ -62,7 +66,10 @@ export class CatalogoPageComponent implements OnInit {
         this.categories = null;
         console.log('Couldn\'t get categories ' + reason);
       });
-    await this.catalogoService.getProducts()
+  }
+
+  private getProducts(): Promise<void> {
+    return this.catalogoService.getProducts()
       .then(products => {
         this.allProducts = products.map(product => new Product(product));
         this.allProducts.sort((a, b) => a.getName().localeCompare(b.getName()));
@@ -72,9 +79,10 @@ export class CatalogoPageComponent implements OnInit {
       .catch(reason => {
         this.allProducts = null;
         this.filteredProducts = null;
+        const message = 'Errore: rete assente';
+        this.toastService.presentToast(message, 2000, true, 'danger', true);
         console.log('Couldn\'t get products ' + reason);
-      })
-      .finally(() => loading.dismiss());
+      });
   }
 
   public filter() {
@@ -112,5 +120,10 @@ export class CatalogoPageComponent implements OnInit {
       this.showMoreItems();
       event.target.complete();
     }, 500);
+  }
+
+  private showMoreItems() {
+    this.shownItems = this.shownItems + CatalogoPageComponent.NEW_ITEMS < this.filteredProducts.length ?
+      this.shownItems + CatalogoPageComponent.NEW_ITEMS : this.filteredProducts.length + 1;
   }
 }
