@@ -1,12 +1,12 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { Category } from 'src/app/core/model/category';
 import { Product } from 'src/app/core/model/product';
 import { LoadingService } from 'src/app/core/services/loading.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 import { CatalogoService } from '../catalogo.service';
 import { PopoverComponent } from '../popover/popover.component';
-import { ToastService } from 'src/app/core/services/toast.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-catalogo-page',
@@ -61,6 +61,7 @@ export class CatalogoPageComponent implements OnInit {
     return this.catalogoService.getCategories()
       .then(categories => {
         this.categories = categories.map(category => new Category(category));
+        this.categories = this.categories.sort((a, b) => a.getName().localeCompare(b.getName()));
       })
       .catch(reason => {
         this.categories = null;
