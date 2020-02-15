@@ -44,6 +44,10 @@ export class ScanService {
 
   // DEBUG
   private fakeNormalScan(): string {
-    return '8001120876362';
+    if (Math.random() < 0.5) {
+      return '8041790505131';
+    } else {
+      return '5449000000439';
+    }
   }
 }

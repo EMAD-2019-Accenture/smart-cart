@@ -8,6 +8,8 @@ import { Product } from '../../core/model/product';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 import { ScanService } from '../../core/services/scan.service';
 import { CarrelloService } from '../carrello.service';
+import { Recommendation } from 'src/app/core/model/recommendation';
+import { ICartItem } from 'src/app/core/model/cart-item';
 
 @Component({
   selector: 'app-carrello-page',
@@ -34,16 +36,22 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.routeSubscription = this.activatedRoute.data.subscribe({
       next: () => {
-        if (history.state.item) {
-          this.carrelloService.addItem(this.cart, history.state.item);
-          this.getNewRecommendation();
+        const scannedItem: ICartItem = history.state.item;
+        if (scannedItem) {
+          // Uncomment these for: if the added product is new to cart, then evaluate recommendation
+          // const oldNumItems = this.cart.getItems().length;
+          this.carrelloService.addItem(this.cart, scannedItem);
+          // const newNumItems = this.cart.getItems().length;
+          // if (newNumItems > oldNumItems) {
+          this.checkNewRecommendation(scannedItem);
+          // }
         }
       }
     });
   }
 
   ngOnDestroy() {
-    this.routeSubscription.unsubscribe();
+    // this.routeSubscription.unsubscribe();
   }
 
   public activateCart() {
@@ -111,6 +119,31 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     this.carrelloService.decreaseItem(this.cart, index);
   }
 
+  private async checkNewRecommendation(scannedItem: ICartItem) {
+    /* Uncomment this for better recommendation system
+    const productsInCart: Product[] = this.cart.getItems()
+      .map(value => value.getProduct());
+    */
+    // Fake array of product with only the last scanned product
+    const productsInCart: Product[] = new Array<Product>();
+    productsInCart.push(new Product(scannedItem.product));
+
+    const recommendation: Recommendation = await this.raccomandazioniService.getNewRecommendation(productsInCart);
+    if (recommendation !== null) {
+      const isAlreadyInCart: boolean = this.cart.getItems()
+        .map(value => value.getProduct().getId())
+        .includes(recommendation.getProduct().getId(), 0);
+      if (isAlreadyInCart) {
+        console.log('Ce già!');
+      } else {
+        this.raccomandazioniService.addRecommendation(recommendation);
+        const message = 'C\'è un articolo per te!';
+        this.toastService.presentToast(message, 2000, true, 'success', true);
+        this.recommendationsNumber++;
+      }
+    }
+  }
+
   public navigateToScan() {
     this.scanService.startNormalScan()
       .then((barcode: string) => {
@@ -126,18 +159,5 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   public navigateToRaccomandazioni() {
     this.recommendationsNumber = 0;
     this.router.navigateByUrl('index/carrello/raccomandazioni');
-  }
-
-  // TODO: Rete assente error da gestire?
-  private getNewRecommendation(): void {
-    const productsInCart: Product[] = this.cart.getItems()
-      .map(value => value.getProduct());
-    this.raccomandazioniService.getNewRecommendation(productsInCart)
-      .then(recomm => {
-        if (recomm) {
-          this.toastService.presentToast('C\'è un articolo per te!', 2000, true, 'success', true);
-          this.recommendationsNumber++;
-        }
-      });
   }
 }

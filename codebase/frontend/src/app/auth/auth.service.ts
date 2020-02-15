@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage';
-import { LoginResponse } from '../core/model/login-response';
+import { LoginResponse } from '../core/model/login-response.enum';
 
 @Injectable({
   providedIn: 'root',

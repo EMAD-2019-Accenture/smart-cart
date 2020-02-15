@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ng-template [ngIf]="recommendations.length <= 0">
+  <ng-template [ngIf]="newRecommendations.length <= 0">
     <ion-text class="ion-text-center" color="secondary">
       <h3>Per adesso non ci sono articoli per te</h3>
     </ion-text>
@@ -16,7 +16,7 @@
   <ion-grid>
     <ng-container *ngFor="let i of getNumberSequence()">
       <ion-row *ngIf="i % 2 === 0">
-        <ion-col size=6 *ngFor="let item of recommendations.slice(i, i+2)">
+        <ion-col size=6 *ngFor="let item of newRecommendations.slice(i, i+2)">
           <ion-card>
             <div style="text-align: right">
               <ion-button class="ion-no-padding" color="danger" fill="clear" (click)="deleteRecommendation(i)">

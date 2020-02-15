@@ -1,8 +1,8 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Cart } from '../core/model/cart';
 import { CartItem, ICartItem } from '../core/model/cart-item';
-import { HttpCommonService } from '../core/services/http-common.service';
 import { ArticoloService } from '../core/services/articolo.service';
+import { HttpCommonService } from '../core/services/http-common.service';
 
 // tslint:disable:align
 @Injectable({
@@ -81,12 +81,13 @@ export class CarrelloService {
     }
   }
 
-  public addItem(cart: Cart, newItem: ICartItem) {
-    const cartItem: CartItem = cart.getItems().find(value => value.getProduct().getId() === newItem.product.id);
+  public addItem(cart: Cart, scannedItem: ICartItem) {
+    const cartItem: CartItem = cart.getItems()
+      .find(value => value.getProduct().getId() === scannedItem.product.id);
     if (cartItem) {
-      cartItem.setQuantity(cartItem.getQuantity() + newItem.quantity);
+      cartItem.setQuantity(cartItem.getQuantity() + scannedItem.quantity);
     } else {
-      cart.getItems().push(new CartItem(newItem));
+      cart.getItems().push(new CartItem(scannedItem));
     }
   }
 
@@ -112,10 +113,8 @@ export class CarrelloService {
     }
   }
 
-  /**
-   * Creates a fake cart with a single item. Only in dev mode
-   */
   // tslint:disable: max-line-length
+  /*
   private fakeCart() {
     const cart = new Cart();
     const items: Array<CartItem> = new Array<CartItem>();
@@ -159,4 +158,5 @@ export class CarrelloService {
     cart.setActive(true);
     return cart;
   }
+  */
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginResponse } from 'src/app/core/model/login-response';
+import { LoginResponse } from 'src/app/core/model/login-response.enum';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { ToastService } from '../../core/services/toast.service';
 import { AuthService } from '../auth.service';
