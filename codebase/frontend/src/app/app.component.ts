@@ -35,9 +35,12 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      //this.splashScreen.hide();
       this.initializeBackButton();
     });
+    setTimeout(() => {
+      this.splashScreen.hide();
+    }, 300);
   }
 
   initializeBackButton() {

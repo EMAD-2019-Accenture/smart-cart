@@ -28,6 +28,12 @@ Dopo aver installato una piattaforma android o ios:
 
 1. Scegliere un'immagine png 1024x1024px per `resources/icon.png`.
 2. Scegliere un'immagine png 2732x2732px per `resources/splash.png`.
-3. Eseguire il comando `npm run resources`.
+3. In `codebase/frontend`, eseguire il comando `npm run resources`.
+
+Con Capacitor, potrebbe essere necessario rimuovere dal manifest principale `android:theme="@style/AppTheme.NoActionBarLaunch"` dal tag `<activity>` per rimuovere uno dei due splash screen che compaiono.
 
 Dettagli su: `https://gist.github.com/dalezak/a6b1de39091f4ace220695d72717ac71#file-resources-js`
+
+# Fix assenza immagini Android
+
+Nel manifest principale, aggiungere l'attributo `android:usesCleartextTraffic="true"` nel tag `<application>`
