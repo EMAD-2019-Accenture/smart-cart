@@ -1,7 +1,7 @@
 // tslint:disable: max-line-length
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { Plugins } from '@capacitor/core';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ActionSheetController, IonRouterOutlet, MenuController, ModalController, Platform, PopoverController } from '@ionic/angular';
 import { ToastService } from './core/services/toast.service';
@@ -20,7 +20,6 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private actionSheetCtrl: ActionSheetController,
     private popoverCtrl: PopoverController,
@@ -35,12 +34,10 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      //this.splashScreen.hide();
+      Plugins.SplashScreen.hide({ fadeOutDuration: 500 });
+      // this.splashScreen.hide();
       this.initializeBackButton();
     });
-    setTimeout(() => {
-      this.splashScreen.hide();
-    }, 300);
   }
 
   initializeBackButton() {
