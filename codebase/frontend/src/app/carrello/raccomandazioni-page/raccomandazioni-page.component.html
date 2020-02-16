@@ -9,9 +9,9 @@
 
 <ion-content fullscreen>
   <ng-template [ngIf]="newRecommendations.length <= 0">
-    <ion-text class="ion-text-center" color="secondary">
-      <h3>Per adesso non ci sono articoli per te</h3>
-    </ion-text>
+    <div class="background-image">
+      <ion-img src="assets/img/emptyList.png" class="ion-align-self-end bigger-image"></ion-img>
+    </div>
   </ng-template>
   <ion-grid>
     <ng-container *ngFor="let i of getNumberSequence()">

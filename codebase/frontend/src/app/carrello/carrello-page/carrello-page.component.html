@@ -47,7 +47,18 @@
     <ion-list lines="full">
       <ng-template [ngIf]="cart.getItems().length <= 0">
         <ion-text class="ion-text-center" color="secondary">
-          <h3>Non hai articoli nel carrello</h3>
+          <ion-text class="ion-text-center new-cart-text" color="secondary">
+            <h2><b>Non hai ancora articoli nel tuo carrello</b></h2>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h5>Aggiungi qualche prodotto!</h5>
+            <br>
+          </ion-text>
+          <div class="background-image">
+              <ion-img src="assets/img/scanPhoneExample.png" class="image-small"></ion-img>
+          </div>
         </ion-text>
       </ng-template>
       <ion-item-sliding *ngFor="let item of cart.getItems(); let i = index">
