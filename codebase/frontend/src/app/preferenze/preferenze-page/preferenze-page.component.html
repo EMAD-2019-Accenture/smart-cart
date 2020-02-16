@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Preferenze</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="exit"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,8 +16,8 @@
         <!--<img src="https://www.italiasera.it/wp-content/uploads/2019/08/Don-Matteo-11-prima-puntata.002_e.jpeg">-->
         <img src="https://img.icons8.com/plasticine/2x/user.png">
       </ion-avatar>
-      <ion-label class="name-label">
-        <h2>{{customer.getUser().getFirstName()}}</h2>
+      <ion-label *ngIf="customer != null" class="name-label">
+        <h2>{{customer.getUser().getFirstName()}} {{customer.getUser().getLastName()}}</h2>
         <!--<p>Parroco Impiccione</p>-->
       </ion-label>
     </ion-item>
@@ -22,13 +27,16 @@
     <ion-list>
       <ion-item>
         <ion-label>Data Nascita</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleziona Data" [value]="customer.getBirth()">
+        <ion-datetime *ngIf="customer != null" displayFormat="DD/MM/YYYY" placeholder="Seleziona Data"
+          [value]="customer.getBirth().toISOString()">
         </ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label>Nazionalità</ion-label>
-        <ion-label slot="end" style="text-align: right;">{{customer.getNationality()}}</ion-label>
+        <ion-label *ngIf="customer != null" slot="end" style="text-align: right;">{{customer.getNationality()}}
+        </ion-label>
       </ion-item>
+      <!--
       <ion-item>
         <ion-label>Salute</ion-label>
         <ion-select placeholder="Scegli">
@@ -37,7 +45,7 @@
           <ion-select-option value="sovrappeso">Sovrappeso</ion-select-option>
           <ion-select-option value="sottopeso">Sottopeso</ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-item>-->
       <ion-item>
         <ion-label>Vegano</ion-label>
         <ion-toggle [(ngModel)]="veganToggle" (ngModelChange)="onVegan()"></ion-toggle>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpCommonService } from '../core/services/http-common.service';
-import { Customer, ICustomer } from '../shared/model/customer';
-import { User } from '../shared/model/user';
+import { Customer, ICustomer } from '../core/model/customer';
+import { User } from '../core/model/user';
 
 // tslint:disable: align
 @Injectable({
@@ -10,11 +10,21 @@ import { User } from '../shared/model/user';
 export class PreferenzeService {
   // private getCustomerByUsernamePath = 'http://localhost:8080/api/customers/logged';
   // private updateCustomerPath = 'http://localhost:8080/api/customers/';
-  private getCustomerByUsernamePath = 'https://smart-cart-acenture.herokuapp.com/api/customers/logged';
+  private getLoggedCustomer = 'https://smart-cart-acenture.herokuapp.com/api/customers/logged';
   private updateCustomerPath = 'https://smart-cart-acenture.herokuapp.com/api/customers/';
 
   constructor(private http: HttpCommonService) { }
 
+  public async getCustomer(): Promise<ICustomer> {
+    return this.http.getRequest(this.getLoggedCustomer) as Promise<ICustomer>;
+  }
+
+  public async update(customer: Customer): Promise<ICustomer> {
+    const httpBody = JSON.stringify(customer);
+    return this.http.putRequest(this.updateCustomerPath, httpBody);
+  }
+
+  /*
   public makeEmptyCustomer() {
     const customer: Customer = new Customer();
     customer.setUser(new User());
@@ -48,13 +58,5 @@ export class PreferenzeService {
     };
     return new Promise<ICustomer>((resolve, reject) => resolve(iCustomer));
   }
-
-  public async getCustomer(): Promise<ICustomer> {
-    return this.http.getRequest(this.getCustomerByUsernamePath) as Promise<ICustomer>;
-  }
-
-  public async update(customer: Customer): Promise<ICustomer> {
-    const httpBody = JSON.stringify(customer);
-    return this.http.putRequest(this.updateCustomerPath, httpBody);
-  }
+  */
 }

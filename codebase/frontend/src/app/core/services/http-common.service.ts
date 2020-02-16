@@ -13,7 +13,8 @@ export class HttpCommonService {
   private makeHttpOptions(token: string) {
     return {
       headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json'
       })
     };
   }
@@ -22,6 +23,12 @@ export class HttpCommonService {
     const token: string = await this.authService.getAuthToken();
     const httpOptions = this.makeHttpOptions(token);
     return this.http.get(path, httpOptions).toPromise();
+  }
+
+  public async postRequest(path: string, httpBody: string): Promise<any> {
+    const token: string = await this.authService.getAuthToken();
+    const httpOptions = this.makeHttpOptions(token);
+    return this.http.post(path, httpBody, httpOptions).toPromise();
   }
 
   public async putRequest(path: string, httpBody: string): Promise<any> {

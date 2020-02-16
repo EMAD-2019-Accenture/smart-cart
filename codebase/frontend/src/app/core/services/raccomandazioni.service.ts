@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Product } from '../../shared/model/product';
-import { Recommendation, Status } from '../../shared/model/recommendation';
+import { Product, IProduct } from '../model/product';
+import { Recommendation, Status, IRecommendation } from '../model/recommendation';
 import { HttpCommonService } from './http-common.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RaccomandazioniService {
-  private static readonly THRESHOLD = 0.4;
+  private static readonly THRESHOLD = 0.1;
   private recommendations: Recommendation[];
   private recommendationSubject: BehaviorSubject<Recommendation[]>;
+  private recommendationsPath = 'https://smart-cart-acenture.herokuapp.com/api/recommendations';
 
   constructor(private http: HttpCommonService) {
     this.recommendations = [];
@@ -26,34 +27,48 @@ export class RaccomandazioniService {
     this.recommendationSubject.next(this.recommendations);
   }
 
-  public deleteRecommendation(index: number) {
-    this.recommendations[index].setStatus(Status.deleted);
-    this.recommendationSubject.next(this.recommendations);
-  }
-
-  public acceptRecommendation(id: number) {
-    const recommendation: Recommendation = this.recommendations.find(r => r.getId() === id);
-    if (recommendation) {
-      recommendation.setStatus(Status.accepted);
+  public deleteRecommendation(id: number) {
+    const recommToDelete = this.recommendations.find(r => r.getId() === id);
+    if (recommToDelete) {
+      recommToDelete.setStatus(Status.deleted);
       this.recommendationSubject.next(this.recommendations);
     }
   }
 
-  public getNewRecommendation(productsInCart: Product[]): Recommendation {
-    // TODO: Do not recommend if a similar product has recently been scanned
-    if (Math.random() >= RaccomandazioniService.THRESHOLD) {
-      // TODO: Need a service from AuthService to get logged customer ID instead of username?? Ask Manuel
-      // TODO: Post request that sends these data and get a new recommendation and remove this DEBUG oject
-      const recommendation = new Recommendation({
-        id: Math.floor(Math.random() * 1000) + 1,
-        product: JSON.parse(JSON.stringify(productsInCart[1])),
-        date: new Date('01-01-2020'),
-        status: Status.new
-      });
-      this.addRecommendation(recommendation);
-      return recommendation;
-    } else {
-      return undefined;
+  public acceptRecommendation(id: number) {
+    const recommToAccept: Recommendation = this.recommendations.find(r => r.getId() === id);
+    if (recommToAccept) {
+      recommToAccept.setStatus(Status.accepted);
+      this.recommendationSubject.next(this.recommendations);
     }
+  }
+
+  public async getNewRecommendation(productsInCart: Product[]): Promise<Recommendation> {
+    if (Math.random() < RaccomandazioniService.THRESHOLD) {
+      console.log('Probability fail');
+      return null;
+    }
+
+    const productsId: string = JSON.stringify({
+      productsId: productsInCart.map(prod => prod.getId())
+    });
+    return await this.http.postRequest(this.recommendationsPath, productsId)
+      .then((recomm: IProduct) => {
+        const recommendation = new Recommendation({
+          id: Math.floor(Math.random() * 10000) + 1,
+          product: JSON.parse(JSON.stringify(recomm)),
+          date: new Date(),
+          status: Status.new
+        });
+        return recommendation;
+      })
+      .catch(reason => {
+        if (reason.status === 404) {
+          console.log('There is no recommendation for this product');
+        } else {
+          console.log('Network error');
+        }
+        return null;
+      });
   }
 }

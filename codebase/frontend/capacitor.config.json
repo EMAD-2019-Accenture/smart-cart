@@ -1,9 +1,14 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "frontend",
+  "appId": "it.unisa.smartcart",
+  "appName": "Smart Cart",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
   "cordova": {},
-  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh"
+  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
 }

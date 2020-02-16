@@ -1,46 +1,38 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Catalogo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="funnel"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+  <ion-list class="ion-no-padding">
+    <ion-searchbar [(ngModel)]="keyword" placeholder="Cerca un prodotto" (ionChange)="filter()">
+    </ion-searchbar>
+    <ion-item lines="none">
+      <ion-label>In offerta</ion-label>
+      <ion-checkbox [(ngModel)]="discountCheck" color="primary" slot="start" value="1" (ionChange)="filter()">
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar #searchBar placeholder="Cerca un prodotto"
-    (ionChange)="filter(searchBar, dropdownCategory, discountCheck)">
-  </ion-searchbar>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Filtri</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-select #dropdownCategory cancel-text="Annulla" placeholder="Categoria" value="0" slot="start"
-        (ionChange)="filter(searchBar, dropdownCategory, discountCheck)">
-        <ion-select-option value="0" class="ion-text-wrap">Nessuna categoria</ion-select-option>
-        <ion-select-option *ngFor="let item of categories; let i = index" [value]="i+1">
-          {{ item.getName() }}
-        </ion-select-option>
-      </ion-select>
-      <ion-item>
-        <ion-label>In offerta</ion-label>
-        <ion-checkbox #discountCheck color="primary" slot="start" value="1"
-          (ionChange)="filter(searchBar, dropdownCategory, discountCheck)"></ion-checkbox>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
-  <ng-template [ngIf]="filteredProducts.length > 0">
-    <ion-list>
-      <ion-item *ngFor="let item of filteredProducts; let i = index" [routerLink]="'/articolo/' + item.getBarcode()"
-        routerLinkActive="active">
-        <ion-avatar slot="start">
-          <img [src]="item.getImageUrl()">
-        </ion-avatar>
-        <ion-label class="ion-text-wrap">{{ item.getName() }}</ion-label>
-      </ion-item>
-    </ion-list>
-  </ng-template>
-  <ng-template [ngIf]="filteredProducts.length <= 0">
-    <ion-text class="ion-text-center">
-      <h3 class="ion-text-wrap">Nessun articolo da mostrare</h3>
-    </ion-text>
-  </ng-template>
+  <ion-list *ngIf="filteredProducts != null">
+    <ion-item *ngFor="let item of filteredProducts.slice(0, shownItems); let i = index"
+      [routerLink]="'/articolo/' + item.getBarcode()" routerLinkActive="active">
+      <ion-avatar slot="start">
+        <ion-img [src]="item.getImageUrl()"></ion-img>
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">{{ item.getName() | titlecase }}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll *ngIf="filteredProducts != null" threshold="100px" (ionInfinite)="loadProducts($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Scarico prodotti...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-text *ngIf="filteredProducts === null" class="ion-text-center" color="secondary">
+    <h3 class="ion-text-wrap">Nessun articolo da mostrare</h3>
+  </ion-text>
 </ion-content>

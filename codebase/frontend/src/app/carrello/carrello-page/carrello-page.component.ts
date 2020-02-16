@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { ToastNotificationService } from 'src/app/shared/toast/toast-notification.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { Cart } from '../../core/model/cart';
+import { Product } from '../../core/model/product';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 import { ScanService } from '../../core/services/scan.service';
-import { Cart } from '../../shared/model/cart';
-import { Product } from '../../shared/model/product';
 import { CarrelloService } from '../carrello.service';
-import { Recommendation } from 'src/app/shared/model/recommendation';
+import { Recommendation } from 'src/app/core/model/recommendation';
+import { ICartItem } from 'src/app/core/model/cart-item';
 
 @Component({
   selector: 'app-carrello-page',
@@ -24,8 +25,8 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   constructor(private carrelloService: CarrelloService,
     private scanService: ScanService,
     private raccomandazioniService: RaccomandazioniService,
-    private authService: AuthService,
-    private toastService: ToastNotificationService,
+    private toastService: ToastService,
+    private alertService: AlertService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
     this.cart = this.carrelloService.makeEmptyCart();
@@ -35,31 +36,74 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.routeSubscription = this.activatedRoute.data.subscribe({
       next: () => {
-        if (history.state.item) {
-          this.carrelloService.addItem(this.cart, history.state.item);
-          this.getNewRecommendation();
+        const scannedItem: ICartItem = history.state.item;
+        if (scannedItem) {
+          // Uncomment these for: if the added product is new to cart, then evaluate recommendation
+          // const oldNumItems = this.cart.getItems().length;
+          this.carrelloService.addItem(this.cart, scannedItem);
+          // const newNumItems = this.cart.getItems().length;
+          // if (newNumItems > oldNumItems) {
+          this.checkNewRecommendation(scannedItem);
+          // }
         }
       }
     });
   }
 
   ngOnDestroy() {
-    this.routeSubscription.unsubscribe();
+    // this.routeSubscription.unsubscribe();
   }
 
   public activateCart() {
     this.carrelloService.activateCart(this.cart);
   }
 
-  public deactivateCart() {
-    this.carrelloService.deactivateCart(this.cart);
+  public checkout() {
+    let text: string;
+    let handler;
+    if (this.cart.getItems().length === 0) {
+      text = 'Non hai elementi, vuoi comunque chiudere la sessione?';
+      handler = () => this.cart = this.carrelloService.makeEmptyCart();
+    } else {
+      text = 'Procedere al checkout?';
+      handler = () => {
+        this.carrelloService.checkout(this.cart);
+        this.cart = this.carrelloService.makeEmptyCart();
+      };
+    }
+    this.alertService.presentConfirm(text, [
+      {
+        text: 'Annulla',
+        role: 'cancel',
+      },
+      {
+        text: 'Conferma',
+        handler
+      }
+    ]);
   }
 
-  public getTotalPrice(): number {
-    return this.carrelloService.getTotalPrice(this.cart);
+  public getUnitFullPrice(index: number): number {
+    return this.carrelloService.getUnitFullPrice(this.cart, index);
   }
 
-  public getTotalQuantity(): number {
+  public getFullPrice(index: number): number {
+    return this.carrelloService.getFullPrice(this.cart, index);
+  }
+
+  public getUnitDiscountedPrice(index: number): number {
+    return this.carrelloService.getUnitDiscountedPrice(this.cart, index);
+  }
+
+  public getDiscountedPrice(index: number): number {
+    return this.carrelloService.getDiscountedPrice(this.cart, index);
+  }
+
+  public getCartPrice(): number {
+    return this.carrelloService.getTotalDiscountedPrice(this.cart);
+  }
+
+  public getTotalQuantities(): number {
     return this.carrelloService.getTotalQuantity(this.cart);
   }
 
@@ -75,28 +119,45 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
     this.carrelloService.decreaseItem(this.cart, index);
   }
 
+  private async checkNewRecommendation(scannedItem: ICartItem) {
+    /* Uncomment this for better recommendation system
+    const productsInCart: Product[] = this.cart.getItems()
+      .map(value => value.getProduct());
+    */
+    // Fake array of product with only the last scanned product
+    const productsInCart: Product[] = new Array<Product>();
+    productsInCart.push(new Product(scannedItem.product));
+
+    const recommendation: Recommendation = await this.raccomandazioniService.getNewRecommendation(productsInCart);
+    if (recommendation !== null) {
+      const isAlreadyInCart: boolean = this.cart.getItems()
+        .map(value => value.getProduct().getId())
+        .includes(recommendation.getProduct().getId(), 0);
+      if (isAlreadyInCart) {
+        console.log('Ce già!');
+      } else {
+        this.raccomandazioniService.addRecommendation(recommendation);
+        const message = 'C\'è un articolo per te!';
+        this.toastService.presentToast(message, 2000, true, 'success', true);
+        this.recommendationsNumber++;
+      }
+    }
+  }
+
   public navigateToScan() {
-    this.scanService.startNormalScan().then((barcode: string) => {
-      this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
-    });
+    this.scanService.startNormalScan()
+      .then((barcode: string) => {
+        if (barcode) {
+          this.router.navigateByUrl('/articolo/' + barcode, { state: { scan: true } });
+        } else {
+          console.log('Empty barcode');
+        }
+      })
+      .catch(reason => console.log('Scan failed: ' + reason));
   }
 
   public navigateToRaccomandazioni() {
     this.recommendationsNumber = 0;
     this.router.navigateByUrl('index/carrello/raccomandazioni');
-  }
-
-  /**
-   * Get a recommendation from the server
-   */
-  private getNewRecommendation(): void {
-    const productsInCart: Product[] = this.cart.getItems()
-      .map(value => value.getProduct());
-    const recommendation: Recommendation = this.raccomandazioniService.getNewRecommendation(productsInCart);
-    if (recommendation) {
-      // TODO: Improve toast
-      this.toastService.presentToast('C\' è una raccomandazione per te!', 'success');
-      this.recommendationsNumber++;
-    }
   }
 }

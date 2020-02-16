@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Recommendation, Status } from 'src/app/shared/model/recommendation';
+import { Recommendation, Status } from 'src/app/core/model/recommendation';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 
 @Component({
@@ -11,17 +11,17 @@ import { RaccomandazioniService } from '../../core/services/raccomandazioni.serv
 })
 // tslint:disable: align
 export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
-  recommendations: Recommendation[];
   newRecommendations: Recommendation[];
   subscription: Subscription;
 
   constructor(private raccomandazioniService: RaccomandazioniService,
-    private router: Router) { }
+    private router: Router) {
+    this.subscription = this.raccomandazioniService.getRecommendationSubject()
+      .subscribe(value => this.newRecommendations = value.filter(r => r.getStatus() === Status.new));
+  }
 
   ngOnInit() {
-    this.subscription = this.raccomandazioniService.getRecommendationSubject()
-      .subscribe(value =>
-        this.recommendations = value.filter(r => r.getStatus() === Status.new));
+
   }
 
   ngOnDestroy() {
@@ -29,19 +29,16 @@ export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
   }
 
   public getNumberSequence(): number[] {
-    return Array.from(this.recommendations.keys());
+    return Array.from(this.newRecommendations.keys());
   }
 
   public deleteRecommendation(index: number) {
-    this.raccomandazioniService.deleteRecommendation(index);
+    const idToDelete = this.newRecommendations[index].getId();
+    this.raccomandazioniService.deleteRecommendation(idToDelete);
   }
 
-  /*
-  * After scan the product must be added instant... this requires
-  * a change into scan service that start the scan plugin but wait for the correct barcode!!
-  */
   public navigateToDetail(index: number) {
-    const recommendation: Recommendation = this.recommendations[index];
+    const recommendation: Recommendation = this.newRecommendations[index];
     this.router.navigateByUrl('/articolo/' + recommendation.getProduct().getBarcode(), {
       state: {
         recommendationId: recommendation.getId()

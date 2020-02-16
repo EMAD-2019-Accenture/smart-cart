@@ -1,35 +1,70 @@
-import { Injectable, isDevMode } from '@angular/core';
-import { Cart } from '../shared/model/cart';
-import { CartItem, ICartItem } from '../shared/model/cart-item';
+import { Injectable } from '@angular/core';
+import { Cart } from '../core/model/cart';
+import { CartItem, ICartItem } from '../core/model/cart-item';
+import { ArticoloService } from '../core/services/articolo.service';
+import { HttpCommonService } from '../core/services/http-common.service';
 
-// tslint:disable: max-line-length
+// tslint:disable:align
 @Injectable({
   providedIn: 'root',
 })
 export class CarrelloService {
+  private addTransactionPath = 'https://smart-cart-acenture.herokuapp.com/api/transactions/';
 
-  constructor() { }
+  constructor(private http: HttpCommonService,
+    private articoloService: ArticoloService) { }
 
   public makeEmptyCart(): Cart {
-    if (isDevMode()) {
-      return this.fakeCart();
-    } else {
-      return new Cart();
-    }
+    return new Cart();
   }
 
   public activateCart(cart: Cart) {
     cart.setActive(true);
   }
 
-  public deactivateCart(cart: Cart) {
-    cart.setActive(false);
+  public checkout(cart: Cart) {
+    const productIds: number[] = cart.getItems().map(item => item.getId());
+    const httpBody: string = JSON.stringify({
+      productIds,
+      date: new Date(),
+      // TODO: Get logged user ID
+      user: '1'
+    });
+    // TODO: Uncomment when it works
+    // this.http.postRequest(this.addTransactionPath, httpBody).then(() => {
+    // });
   }
 
-  public getTotalPrice(cart: Cart) {
+  public getUnitFullPrice(cart: Cart, index: number): number {
+    return this.articoloService.getUnitFullPrice(cart.getItems()[index].getProduct());
+  }
+
+  public getFullPrice(cart: Cart, index: number): number {
+    return this.articoloService.getFullPrice(cart.getItems()[index]);
+  }
+
+  public getUnitDiscountedPrice(cart: Cart, index: number): number {
+    return this.articoloService.getUnitDiscountedPrice(cart.getItems()[index].getProduct());
+  }
+
+  public getDiscountedPrice(cart: Cart, index: number): number {
+    return this.articoloService.getDiscountedPrice(cart.getItems()[index]);
+  }
+
+  public getTotalFullPrice(cart: Cart) {
     if (cart.getItems().length > 0) {
       return cart.getItems()
-        .map(item => item.getProduct().getPrice() * item.getQuantity())
+        .map((_, index) => this.getFullPrice(cart, index))
+        .reduce((total, price) => total + price);
+    } else {
+      return 0;
+    }
+  }
+
+  public getTotalDiscountedPrice(cart: Cart) {
+    if (cart.getItems().length > 0) {
+      return cart.getItems()
+        .map((_, index) => this.getDiscountedPrice(cart, index))
         .reduce((total, price) => total + price);
     } else {
       return 0;
@@ -46,8 +81,14 @@ export class CarrelloService {
     }
   }
 
-  public addItem(cart: Cart, item: ICartItem) {
-    cart.getItems().push(new CartItem(item));
+  public addItem(cart: Cart, scannedItem: ICartItem) {
+    const cartItem: CartItem = cart.getItems()
+      .find(value => value.getProduct().getId() === scannedItem.product.id);
+    if (cartItem) {
+      cartItem.setQuantity(cartItem.getQuantity() + scannedItem.quantity);
+    } else {
+      cart.getItems().push(new CartItem(scannedItem));
+    }
   }
 
   public deleteItem(cart: Cart, index: number) {
@@ -72,9 +113,8 @@ export class CarrelloService {
     }
   }
 
-  /**
-   * Creates a fake cart with a single item. Only in dev mode
-   */
+  // tslint:disable: max-line-length
+  /*
   private fakeCart() {
     const cart = new Cart();
     const items: Array<CartItem> = new Array<CartItem>();
@@ -118,4 +158,5 @@ export class CarrelloService {
     cart.setActive(true);
     return cart;
   }
+  */
 }

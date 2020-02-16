@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage';
+import { LoginResponse } from '../core/model/login-response.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -17,16 +18,26 @@ export class AuthService {
   }
 
   async login(username: string, password: string) {
-    let result = false;
+    let result: LoginResponse;
     try {
       const response: any = await this.httpClient.post(this.AUTH_SERVER_ADDRESS, { password, username }).toPromise();
       if (response.id_token) {
         await this.storage.set('ACCESS_TOKEN', response.id_token);
-        result = true;
+        result = LoginResponse.SUCCESS;
       }
     } catch (error) {
+      switch (error.status) {
+        case 400:
+          result = LoginResponse.BAD_REQUEST;
+          break;
+        case 401:
+          result = LoginResponse.UNAUTHORIZED;
+          break;
+        default:
+          result = LoginResponse.NO_NETWORK;
+          break;
+      }
       console.log(error);
-      result = false;
     }
     return result;
 
@@ -48,7 +59,6 @@ export class AuthService {
   async isLoggedIn(): Promise<boolean> {
     const rawToken = await this.getAuthToken();
     const isExpired = this.jwtHelper.isTokenExpired(rawToken);
-    console.log('Is token expired?', isExpired);
     return !isExpired;
   }
 
@@ -62,7 +72,6 @@ export class AuthService {
       return null;
     }
     const username = (this.jwtHelper.decodeToken(token).sub as string);
-    console.log(username);
     return username;
   }
 

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PercentDiscount } from 'src/app/core/model/percent-discount';
+import { LoadingService } from 'src/app/core/services/loading.service';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { CartItem } from '../../core/model/cart-item';
+import { Product } from '../../core/model/product';
 import { ArticoloService } from '../../core/services/articolo.service';
 import { RaccomandazioniService } from '../../core/services/raccomandazioni.service';
 import { ScanService } from '../../core/services/scan.service';
-import { CartItem } from '../model/cart-item';
-import { IProduct, Product } from '../model/product';
 
 @Component({
   selector: 'app-articolo-page',
@@ -15,46 +18,99 @@ import { IProduct, Product } from '../model/product';
 export class ArticoloPageComponent implements OnInit {
   product: Product;
   ingredients: string[];
-  preparedCartItem: CartItem;
+  cartItem: CartItem;
   recommendationId: number;
+  hiddenLists: boolean;
 
   constructor(private articoloService: ArticoloService,
     private scanService: ScanService,
     private recommendationService: RaccomandazioniService,
+    private loadingService: LoadingService,
+    private toastService: ToastService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.hiddenLists = true;
     if (history.state.recommendationId !== undefined) {
       this.recommendationId = history.state.recommendationId;
     }
     const barcode: number = this.route.snapshot.params.id;
-    this.articoloService.getProductByBarcode(barcode)
-      .then((response: IProduct) => {
-        this.product = new Product(response);
-        this.ingredients = this.parseIngredients(this.product.getIngredients());
-        if (history.state.scan) {
-          this.prepareCartItem();
-        }
-      });
+    this.getProductByBarcode(barcode);
   }
 
-  private prepareCartItem() {
-    this.preparedCartItem = new CartItem();
-    this.preparedCartItem.setProduct(this.product);
-    this.preparedCartItem.setQuantity(1);
+  private async getProductByBarcode(barcode: number) {
+    const loading: HTMLIonLoadingElement = await this.loadingService.presentWait('Attendi...', true);
+    this.articoloService.getProductByBarcode(barcode)
+      .then(response => {
+        this.product = new Product(response);
+        // TODO: Fake discount REMOVE
+        this.product.setPercentDiscount(new PercentDiscount({
+          id: 1,
+          start: new Date('2019-10-10'),
+          end: new Date('2020-10-10'),
+          value: 0.5
+        }));
+        this.ingredients = this.parseIngredients(this.product.getIngredients());
+        if (history.state.scan) {
+          this.cartItem = this.articoloService.makeCartItem(this.product);
+        }
+      })
+      .catch(reason => {
+        this.product = null;
+        let message: string;
+        if (reason.status === 404) {
+          message = 'Errore: articolo non trovato';
+          console.log('Product not found: ' + JSON.stringify(reason));
+        } else {
+          message = 'Errore: rete assente';
+          console.log('Network error: ' + JSON.stringify(reason));
+        }
+        this.toastService.presentToast(message, 2000, true, 'danger', true);
+      })
+      .finally(() => loading.dismiss());
+  }
+
+  public hasDiscount(): boolean {
+    return (this.product.getDiscount().getId() !== undefined)
+      && (this.product.getDiscount().getStart() < this.product.getDiscount().getEnd());
+  }
+
+  public hasPercentDiscount(): boolean {
+    return (this.product.getPercentDiscount().getId() !== undefined)
+      && (this.product.getPercentDiscount().getStart() < this.product.getPercentDiscount().getEnd());
+  }
+
+  public hasAnyDiscount(): boolean {
+    return this.hasDiscount() || this.hasPercentDiscount();
+  }
+
+  public getUnitFullPrice(): number {
+    return this.articoloService.getUnitFullPrice(this.product);
+  }
+
+  public getFullPrice(): number {
+    return this.articoloService.getFullPrice(this.cartItem);
+  }
+
+  public getUnitDiscountedPrice(): number {
+    return this.articoloService.getUnitDiscountedPrice(this.product);
+  }
+
+  public getDiscountedPrice(): number {
+    return this.articoloService.getDiscountedPrice(this.cartItem);
   }
 
   public increaseQuantity() {
-    this.articoloService.increaseQuantity(this.preparedCartItem);
+    this.articoloService.increaseQuantity(this.cartItem);
   }
 
   public decreaseQuantity() {
-    this.articoloService.decreaseQuantity(this.preparedCartItem);
+    this.articoloService.decreaseQuantity(this.cartItem);
   }
 
   public addToCart() {
-    this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
+    this.router.navigateByUrl('/index/carrello', { state: { item: this.cartItem } });
   }
 
   public startSpecificScan() {
@@ -62,18 +118,21 @@ export class ArticoloPageComponent implements OnInit {
       .then(result => {
         if (result) {
           this.recommendationService.acceptRecommendation(this.recommendationId);
-          this.recommendationId = undefined;
+          this.recommendationId = null;
           // TODO: Decide whether to add brutally into cart
           // this.router.navigateByUrl('/index/carrello', { state: { item: this.preparedCartItem } });
-          this.prepareCartItem();
+          this.cartItem = this.articoloService.makeCartItem(this.product);
         } else {
-          // TODO: What to do?
           console.log('Then but false: when it happens?');
         }
-      }).catch(reason => {
-        // TODO: What to do?
-        console.log('Catch: when it happens? ' + reason);
+      })
+      .catch(reason => {
+        console.log('Plugin not available - Reason: ' + reason);
       });
+  }
+
+  public switchLists() {
+    this.hiddenLists = !this.hiddenLists;
   }
 
   // TODO: will be useful as soon it is fixed in the DB? Maybe remove
