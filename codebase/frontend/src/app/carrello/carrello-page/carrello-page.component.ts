@@ -61,14 +61,20 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
   public checkout() {
     let text: string;
     let handler;
+    let checkoutMessage = 'Sessione di acquisto terminata';
+
     if (this.cart.getItems().length === 0) {
       text = 'Non hai elementi, vuoi comunque chiudere la sessione?';
-      handler = () => this.cart = this.carrelloService.makeEmptyCart();
+      handler = () => {
+        this.cart = this.carrelloService.makeEmptyCart();
+        this.toastService.presentToast(checkoutMessage, 2000, true, 'primary', true);
+      }
     } else {
       text = 'Procedere al checkout?';
       handler = () => {
         this.carrelloService.checkout(this.cart);
         this.cart = this.carrelloService.makeEmptyCart();
+        this.toastService.presentToast(checkoutMessage, 2000, true, 'primary', true);
       };
     }
     this.alertService.presentConfirm(text, [
@@ -81,6 +87,7 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
         handler
       }
     ]);
+
   }
 
   public getUnitFullPrice(index: number): number {
