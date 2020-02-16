@@ -94,7 +94,7 @@ export class AppComponent {
             // this.platform.exitApp(); // < Ionic 4
             navigator['app'].exitApp(); // >= Ionic 4
           } else {
-            await this.toast.presentToast('Premi di nuovo indietro per uscire', 2000, false, 'success', true);
+            await this.toast.presentToast('Premi di nuovo indietro per uscire', 2000, false, 'primary', true);
             this.lastTimeBackPress = new Date().getTime();
           }
         }

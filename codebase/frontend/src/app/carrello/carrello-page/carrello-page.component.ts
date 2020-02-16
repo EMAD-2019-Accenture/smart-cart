@@ -145,7 +145,7 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
       } else {
         this.raccomandazioniService.addRecommendation(recommendation);
         const message = 'C\'è un articolo per te!';
-        this.toastService.presentToast(message, 2000, true, 'success', true);
+        this.toastService.presentToast(message, 2000, true, 'primary', true);
         this.recommendationsNumber++;
       }
     }
