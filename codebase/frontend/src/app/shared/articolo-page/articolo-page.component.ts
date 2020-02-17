@@ -85,6 +85,10 @@ export class ArticoloPageComponent implements OnInit {
     return this.hasDiscount() || this.hasPercentDiscount();
   }
 
+  public hasIngredientsOrAllergens(): boolean {
+    return this.product.getIngredients() !== '' || this.product.getAllergens.length > 0;
+  }
+
   public getUnitFullPrice(): number {
     return this.articoloService.getUnitFullPrice(this.product);
   }

@@ -41,31 +41,33 @@
             {{ product.getDescription() }}
           </ion-text>
         </ion-row>
-        <ion-row>
-          <ion-col size=12>
-            <ion-item lines="none" (click)="switchLists()">
-              <b>Ingredienti e allergeni</b>
-              <ion-button fill="clear" size="small">
-                <ion-icon *ngIf="hiddenLists" name="arrow-dropdown" slot="icon-only"></ion-icon>
-                <ion-icon *ngIf="!hiddenLists" name="arrow-dropup" slot="icon-only"></ion-icon>
-              </ion-button>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row [hidden]="hiddenLists">
-          <ion-col size=6>
-            <b>Ingredienti</b>
-            <ul>
-              <li *ngFor="let item of ingredients; let i = index">{{ item }}</li>
-            </ul>
-          </ion-col>
-          <ion-col size=6>
-            <b>Allergeni</b>
-            <ul>
-              <li *ngFor="let item of product.getAllergens(); let i = index">{{ item.getName() }}</li>
-            </ul>
-          </ion-col>
-        </ion-row>
+        <div *ngIf="hasIngredientsOrAllergens()">
+          <ion-row>
+            <ion-col size=12>
+              <ion-item lines="none" (click)="switchLists()">
+                <b>Ingredienti e allergeni</b>
+                <ion-button fill="clear" size="small">
+                  <ion-icon *ngIf="hiddenLists" name="arrow-dropdown" slot="icon-only"></ion-icon>
+                  <ion-icon *ngIf="!hiddenLists" name="arrow-dropup" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row [hidden]="hiddenLists">
+            <ion-col size=6>
+              <b>Ingredienti</b>
+              <ul>
+                <li *ngFor="let item of ingredients; let i = index">{{ item }}</li>
+              </ul>
+            </ion-col>
+            <ion-col size=6>
+              <b>Allergeni</b>
+              <ul>
+                <li *ngFor="let item of product.getAllergens(); let i = index">{{ item.getName() }}</li>
+              </ul>
+            </ion-col>
+          </ion-row>
+        </div>
       </ion-grid>
       <ion-grid *ngIf="recommendationId != null">
         <ion-row>
