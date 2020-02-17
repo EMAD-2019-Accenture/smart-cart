@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CartItem } from '../model/cart-item';
 import { IProduct, Product } from '../model/product';
 import { HttpCommonService } from './http-common.service';
+import { PercentDiscount } from '../model/percent-discount';
 
 // tslint:disable: align
 @Injectable({
@@ -48,5 +49,14 @@ export class ArticoloService {
     cartItem.setProduct(product);
     cartItem.setQuantity(1);
     return cartItem;
+  }
+
+  public getFakeDiscount(value: number) {
+    return new PercentDiscount({
+      id: 1,
+      start: new Date('2019-10-10'),
+      end: new Date('2020-10-10'),
+      value
+    });
   }
 }

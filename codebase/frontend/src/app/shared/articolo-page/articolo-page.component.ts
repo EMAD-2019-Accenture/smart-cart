@@ -44,15 +44,18 @@ export class ArticoloPageComponent implements OnInit {
     this.articoloService.getProductByBarcode(barcode)
       .then(response => {
         this.product = new Product(response);
-        // TODO: Fake discount REMOVE
-        /*
-        this.product.setPercentDiscount(new PercentDiscount({
-          id: 1,
-          start: new Date('2019-10-10'),
-          end: new Date('2020-10-10'),
-          value: 0.5
-        }));
-        */
+        // TODO: Fake discounts REMOVE
+        // Gran Tramezzino
+        if (this.product.getBarcode() === '8017596062239') {
+          const pd: PercentDiscount = this.articoloService.getFakeDiscount(0.5);
+          this.product.setPercentDiscount(pd);
+        }
+        // Coca cola
+        if (this.product.getBarcode() === '5449000000439') {
+          const pd: PercentDiscount = this.articoloService.getFakeDiscount(0.4);
+          this.product.setPercentDiscount(pd);
+        }
+
         this.ingredients = this.parseIngredients(this.product.getIngredients());
         if (history.state.scan) {
           this.cartItem = this.articoloService.makeCartItem(this.product);
@@ -143,6 +146,8 @@ export class ArticoloPageComponent implements OnInit {
 
   // TODO: will be useful as soon it is fixed in the DB? Maybe remove
   private parseIngredients(ingredients: string): string[] {
-    return ingredients.split(', ').map(value => value.trim()).filter(value => value !== '' && value !== ' ');
+    return ingredients.split(', ')
+      .map(value => value.trim())
+      .filter(value => value !== '' && value !== ' ');
   }
 }

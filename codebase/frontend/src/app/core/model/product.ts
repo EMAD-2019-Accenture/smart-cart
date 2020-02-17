@@ -79,7 +79,7 @@ export class Product {
             price -= this.getDiscount().getAmount();
         }
         if (this.getPercentDiscount().getId()) {
-            price *= this.getPercentDiscount().getValue();
+            price -= price * this.getPercentDiscount().getValue();
         }
         return price;
     }

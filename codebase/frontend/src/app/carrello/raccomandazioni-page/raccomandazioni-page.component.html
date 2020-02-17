@@ -14,9 +14,9 @@
     </div>
   </ng-template>
   <ion-grid>
-    <ng-container *ngFor="let i of getNumberSequence()">
-      <ion-row *ngIf="i % 2 === 0">
-        <ion-col size=6 *ngFor="let item of newRecommendations.slice(i, i+2)">
+    <ng-container *ngFor="let ns of getNumberSequence()">
+      <ion-row *ngIf="ns % 2 === 0">
+        <ion-col size=6 *ngFor="let item of newRecommendations.slice(ns, ns+2); let i = index">
           <ion-card>
             <ion-item class="ion-no-padding">
               <ion-grid class="ion-no-padding">
@@ -27,7 +27,7 @@
                     </ion-label>
                   </ion-col>
                   <ion-col size=3 class="ion-no-padding delete-button">
-                    <ion-button color="danger" fill="clear" (click)="deleteRecommendation(i)">
+                    <ion-button color="danger" fill="clear" (click)="deleteRecommendation(ns + i)">
                       <ion-icon style="font-size: medium" name="close" slot="icon-only"></ion-icon>
                     </ion-button>
                   </ion-col>
@@ -37,7 +37,7 @@
             <ion-item class="ion-no-padding">
               <img class="card-image" [src]="item.getProduct().getImageUrl()">
             </ion-item>
-            <ion-button color="primary" expand="block" size="small" (click)="navigateToDetail(i)">
+            <ion-button color="primary" expand="block" size="small" (click)="navigateToDetail(ns + i)">
               <b>Dettagli</b>
             </ion-button>
           </ion-card>

@@ -65,7 +65,7 @@ export class RaccomandazioniService {
     return await this.http.postRequest(this.recommendationsPath, productsId)
       .then((recomm: IProduct) => {
         const recommendation = new Recommendation({
-          id: Math.floor(Math.random() * 10000) + 1,
+          id: this.recommendations.length + 1,
           product: JSON.parse(JSON.stringify(recomm)),
           date: new Date(),
           status: Status.new

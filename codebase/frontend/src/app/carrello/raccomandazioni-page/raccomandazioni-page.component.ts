@@ -12,7 +12,6 @@ import { RaccomandazioniService } from '../../core/services/raccomandazioni.serv
 // tslint:disable: align
 export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
   newRecommendations: Recommendation[];
-  shownRecommendations: Recommendation[];
   subscription: Subscription;
 
   constructor(private raccomandazioniService: RaccomandazioniService,
@@ -21,11 +20,6 @@ export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
       .subscribe(allRecommendations => {
         this.newRecommendations = allRecommendations
           .filter(r => r.getStatus() === Status.new);
-        /*
-      this.shownRecommendations = this.newRecommendations
-        .filter((a, b) => a.getProduct().getId() === this.newRecommendations[b].getProduct().getId());
-      console.log(this.shownRecommendations);
-      */
       });
   }
 

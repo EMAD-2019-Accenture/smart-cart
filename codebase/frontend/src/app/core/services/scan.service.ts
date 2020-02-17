@@ -45,9 +45,17 @@ export class ScanService {
   // DEBUG
   private fakeNormalScan(): string {
     if (Math.random() < 0.5) {
-      return '8041790505131';
+      if (Math.random() < 0.5) {
+        return '8041790505131';
+      } else {
+        return '5449000000439';
+      }
     } else {
-      return '5449000000439';
+      if (Math.random() < 0.5) {
+        return '8000500340622';
+      } else {
+        return '8017596062239';
+      }
     }
   }
 }
