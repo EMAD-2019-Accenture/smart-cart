@@ -45,12 +45,14 @@ export class ArticoloPageComponent implements OnInit {
       .then(response => {
         this.product = new Product(response);
         // TODO: Fake discount REMOVE
+        /*
         this.product.setPercentDiscount(new PercentDiscount({
           id: 1,
           start: new Date('2019-10-10'),
           end: new Date('2020-10-10'),
           value: 0.5
         }));
+        */
         this.ingredients = this.parseIngredients(this.product.getIngredients());
         if (history.state.scan) {
           this.cartItem = this.articoloService.makeCartItem(this.product);

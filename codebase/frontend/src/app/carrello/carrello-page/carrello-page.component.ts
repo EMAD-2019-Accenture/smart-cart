@@ -60,20 +60,20 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
 
   public checkout() {
     let text: string;
-    let handler;
-    let checkoutMessage = 'Sessione di acquisto terminata';
+    let handler: { (): void; (): void; };
+    const checkoutMessage = 'Sessione di acquisto terminata';
 
     if (this.cart.getItems().length === 0) {
       text = 'Non hai elementi, vuoi comunque chiudere la sessione?';
       handler = () => {
-        this.cart = this.carrelloService.makeEmptyCart();
+        this.clearSession();
         this.toastService.presentToast(checkoutMessage, 2000, true, 'primary', true);
-      }
+      };
     } else {
       text = 'Procedere al checkout?';
       handler = () => {
         this.carrelloService.checkout(this.cart);
-        this.cart = this.carrelloService.makeEmptyCart();
+        this.clearSession();
         this.toastService.presentToast(checkoutMessage, 2000, true, 'primary', true);
       };
     }
@@ -87,7 +87,11 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
         handler
       }
     ]);
+  }
 
+  private clearSession() {
+    this.raccomandazioniService.purgeRecommendations();
+    this.cart = this.carrelloService.makeEmptyCart();
   }
 
   public getUnitFullPrice(index: number): number {
@@ -140,13 +144,17 @@ export class CarrelloPageComponent implements OnInit, OnDestroy {
       const isAlreadyInCart: boolean = this.cart.getItems()
         .map(value => value.getProduct().getId())
         .includes(recommendation.getProduct().getId(), 0);
-      if (isAlreadyInCart) {
-        console.log('Ce già!');
+      if (!isAlreadyInCart) {
+        const added: boolean = this.raccomandazioniService.addRecommendation(recommendation);
+        if (added) {
+          const message = 'C\'è un articolo per te!';
+          this.toastService.presentToast(message, 2000, true, 'primary', true);
+          this.recommendationsNumber++;
+        } else {
+          console.log('Già raccomandato');
+        }
       } else {
-        this.raccomandazioniService.addRecommendation(recommendation);
-        const message = 'C\'è un articolo per te!';
-        this.toastService.presentToast(message, 2000, true, 'primary', true);
-        this.recommendationsNumber++;
+        console.log('Ce già!');
       }
     }
   }

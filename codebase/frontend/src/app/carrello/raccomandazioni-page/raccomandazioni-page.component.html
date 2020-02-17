@@ -20,9 +20,9 @@
           <ion-card>
             <ion-item class="ion-no-padding">
               <ion-grid class="ion-no-padding">
-                <ion-row style="padding-top: 1vh">
+                <ion-row class="card-top-row">
                   <ion-col size=9 class="ion-no-padding product-label">
-                    <ion-label class="ion-no-margin ion-text-wrap bold-label" color="primary">
+                    <ion-label class="ion-no-margin ion-text-wrap cart-top-label" color="primary">
                       {{ item.getProduct().getName() | titlecase }}
                     </ion-label>
                   </ion-col>
@@ -35,7 +35,7 @@
               </ion-grid>
             </ion-item>
             <ion-item class="ion-no-padding">
-              <img [src]="item.getProduct().getImageUrl()">
+              <img class="card-image" [src]="item.getProduct().getImageUrl()">
             </ion-item>
             <ion-button color="primary" expand="block" size="small" (click)="navigateToDetail(i)">
               <b>Dettagli</b>

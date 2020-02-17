@@ -12,12 +12,21 @@ import { RaccomandazioniService } from '../../core/services/raccomandazioni.serv
 // tslint:disable: align
 export class RaccomandazioniPageComponent implements OnInit, OnDestroy {
   newRecommendations: Recommendation[];
+  shownRecommendations: Recommendation[];
   subscription: Subscription;
 
   constructor(private raccomandazioniService: RaccomandazioniService,
     private router: Router) {
     this.subscription = this.raccomandazioniService.getRecommendationSubject()
-      .subscribe(value => this.newRecommendations = value.filter(r => r.getStatus() === Status.new));
+      .subscribe(allRecommendations => {
+        this.newRecommendations = allRecommendations
+          .filter(r => r.getStatus() === Status.new);
+        /*
+      this.shownRecommendations = this.newRecommendations
+        .filter((a, b) => a.getProduct().getId() === this.newRecommendations[b].getProduct().getId());
+      console.log(this.shownRecommendations);
+      */
+      });
   }
 
   ngOnInit() {

@@ -22,9 +22,17 @@ export class RaccomandazioniService {
     return this.recommendationSubject;
   }
 
-  public addRecommendation(recommendation: Recommendation) {
-    this.recommendations.push(recommendation);
-    this.recommendationSubject.next(this.recommendations);
+  public addRecommendation(recommendation: Recommendation): boolean {
+    const isAlreadyRecommended: boolean = this.recommendations
+      .map(value => value.getProduct().getId())
+      .includes(recommendation.getProduct().getId(), 0);
+    if (isAlreadyRecommended) {
+      return false;
+    } else {
+      this.recommendations.push(recommendation);
+      this.recommendationSubject.next(this.recommendations);
+      return true;
+    }
   }
 
   public deleteRecommendation(id: number) {
@@ -44,10 +52,12 @@ export class RaccomandazioniService {
   }
 
   public async getNewRecommendation(productsInCart: Product[]): Promise<Recommendation> {
+    /*
     if (Math.random() < RaccomandazioniService.THRESHOLD) {
       console.log('Probability fail');
       return null;
     }
+    */
 
     const productsId: string = JSON.stringify({
       productsId: productsInCart.map(prod => prod.getId())
@@ -70,5 +80,9 @@ export class RaccomandazioniService {
         }
         return null;
       });
+  }
+
+  public purgeRecommendations() {
+    this.recommendations = [];
   }
 }

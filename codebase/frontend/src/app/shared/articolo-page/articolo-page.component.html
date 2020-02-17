@@ -14,7 +14,7 @@
 
 <ion-content fullscreen>
   <ion-card *ngIf="product">
-    <ion-img [src]="product.getImageUrl()" alt="Immagine non disponibile"></ion-img>
+    <img [src]="product.getImageUrl()" alt="Immagine non disponibile">
     <ion-card-header>
       <ion-card-subtitle>{{ product.getCategory().getName() }}</ion-card-subtitle>
       <ion-card-title>{{ product.getName() | titlecase }}</ion-card-title>
@@ -24,14 +24,14 @@
         <ion-row>
           <ng-template [ngIf]="!hasAnyDiscount()">
             <ion-text style="font-size: small">
-              {{ getUnitFullPrice() | number : '1.2-2' }}</ion-text>
+              {{ getUnitFullPrice() | number : '1.2-2' }} €</ion-text>
           </ng-template>
           <ng-template [ngIf]="hasAnyDiscount()">
             <ion-text style="font-size: small">
-              <s>{{ getUnitFullPrice() | number : '1.2-2' }}</s>
+              <s>{{ getUnitFullPrice() | number : '1.2-2' }} €</s>
             </ion-text>
             <ion-text style="font-size: small">
-              <b>&nbsp;{{ getUnitDiscountedPrice() | number : '1.2-2' }}</b>
+              <b>&nbsp;{{ getUnitDiscountedPrice() | number : '1.2-2' }} €</b>
               € cad.
             </ion-text>
           </ng-template>

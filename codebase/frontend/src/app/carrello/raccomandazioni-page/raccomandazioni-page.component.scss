@@ -12,7 +12,7 @@ ion-item {
   right: 0;
 }
 
-.bold-label {
+.cart-top-label {
   font-weight: bold;
   font-size: medium;
 }
@@ -27,4 +27,13 @@ ion-item {
   position: relative;
   left: 6vw;
   bottom: 0.5 vh;
+}
+
+/* .card-image {
+  height: 30vh;
+}
+ */
+.card-top-row {
+  padding-top: 1vh;
+  //height: 10vh;
 }
