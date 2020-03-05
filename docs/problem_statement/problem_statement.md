@@ -1,13 +1,3 @@
----
-numbersections: true
-include-before:
-- |
-  ```{=latex}
-  \tableofcontents
-  \newpage{}
-  ```
----
-
 # Dominio del Problema
 
 La grande distribuzione rappresenta il principale mezzo di vendita al dettaglio di prodotti di qualsiasi categoria. Il suo successo deriva dalla grande varietà di prodotti in vendita, dalla loro grande disponibilità e dalla grande diffusione di filiali, quali supermercati o ipermercati, nel terrotorio (locale, regionale, nazionale o internazionale).
