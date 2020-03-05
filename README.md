@@ -8,7 +8,7 @@
     + [Run App](#run-app)
         * [Fix Icone e Immagini](#fix-icone-e-immagini)
 
-# Smart Cart ITA
+# Smart Cart (ITA)
 Il progetto è sviluppato nel contesto del corso di esame [Enterprise Mobile Application Development](https://docenti.unisa.it/004763/didattica?anno=2016&id=511231&cId=10004-2015&pId=N0*N0*S1) (**EMAD**) presso l'Università degli Studi di Salerno, in collaborazione con [Accenture Itaia](https://www.accenture.com). \
 Il progetto ha come fine ultimo quello di realizzare un'applicazione in ambito enterprise che prenda parte alla competizione [App Challange](https://it-it.facebook.com/pages/category/Event/App-Challenge-Sfida-allultima-App-UNISA-2034368809926084/) organizzata dalla prof.ssa [Rita Francese](https://docenti.unisa.it/004763/home) e il [Dipartimento di Informatica](https://corsi.unisa.it/informatica).
 
