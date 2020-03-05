@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-img src="/assets/img/smartCartAlt.png"></ion-img>
+  <form class="login-form" #loginForm="ngForm">
+    <ion-grid>
+      <ion-row color="primary" class="ion-justify-content-center">
+        <ion-col class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
+            <h1><b>Smart Cart</b></h1>
+          </div>
+          <div class="ion-padding">
+            <ion-item>
+              <ion-input class="ion-padding" name="username" type="text" placeholder="Nome" [(ngModel)]="username"
+                required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input class="ion-padding" name="password" type="password" placeholder="Password"
+                [(ngModel)]="password" required></ion-input>
+            </ion-item>
+          </div>
+          <ion-button class="login-button" size="large" type="submit" expand="block" shape="round" (click)="login()">
+            Login
+            <ion-icon name="log-in" slot="end"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

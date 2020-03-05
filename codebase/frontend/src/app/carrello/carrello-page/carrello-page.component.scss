@@ -1,0 +1,53 @@
+.ion-thumbnail {
+  --border-radius: 1;
+}
+
+.new-cart-text {
+  margin-top: 10vh;
+}
+
+.session-button {
+  margin-bottom: 5vh;
+}
+
+.top-note {
+  font-size: small;
+}
+
+#cartItems ion-note {
+  padding-right: 1vw;
+  font-size: small;
+}
+
+#notification-btn {
+  position: relative;
+}
+
+#notification-badge {
+  font-size: small;
+  position: relative;
+  bottom: 8px;
+  right: 15px;
+}
+
+.background-image {
+  position: relative;
+  left: 0;
+  top: 10vh;
+  right: 0;
+}
+
+.start-session {
+  position: relative;
+  left: 0;
+  top: 20vh;
+  right: 0;
+}
+
+.image-small { 
+  width: 50%;
+  height: 50%;
+  position: relative;
+  left: 26vw;
+  bottom: 10vh;
+}

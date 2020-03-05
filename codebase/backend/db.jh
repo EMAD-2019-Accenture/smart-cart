@@ -1,0 +1,81 @@
+
+entity Product {
+  barcode String required pattern(/^\d{13}$/)
+  name String required
+  description TextBlob required
+  price Double required min(0)
+  brand String required
+  amount Integer min(0)
+  imageUrl String
+  source String 
+  ingredients TextBlob 
+  conservation TextBlob 
+  preparation TextBlob
+  nutrients TextBlob
+}
+
+entity Category{
+	name String required
+}
+
+relationship OneToMany {
+  Product
+  to 
+  Category 
+}
+
+enum DiscountType{
+	SIMPLE_DISCOUNT,
+    PERCENT_DISCOUNT,
+    K_FOR_N
+}
+
+entity Discount {
+	start LocalDate required
+    end LocalDate required
+    amount Double required min(0)
+    perventValue Double required min(0) max(100)
+    condition Integer required min(0)
+    free Integer required min(0)
+    type DiscountType required
+}
+
+
+entity Customer {
+    birth LocalDate 
+    nationality String
+    vegan Boolean
+    vegetarian Boolean
+    celiac Boolean    
+}
+
+relationship OneToOne{
+	Customer{user} to User
+}
+
+entity Transaction {
+	date LocalDate required
+}
+
+entity Allergen {
+	name String required
+    description String required
+    imageUrl String
+}
+
+relationship ManyToOne{
+	Product to Discount, 
+    Transaction to User
+}
+
+relationship ManyToMany {
+	Transaction to Product,
+}
+
+relationship ManyToMany{
+	Product to Allergen,
+    Allergen{user} to User
+}
+
+
+

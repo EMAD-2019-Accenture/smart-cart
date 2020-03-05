@@ -1,0 +1,12 @@
+<ion-list radio-group>
+  <ion-radio-group [value]="selectedCategory">
+    <ion-item class="ion-text-wrap">
+      <ion-radio slot="start" [value]="0" (click)="sendCategory(0)"></ion-radio>
+      <ion-label>Nessuna categoria</ion-label>
+    </ion-item>
+    <ion-item *ngFor="let item of categories; let i = index">
+      <ion-radio slot="start" [value]="i+1" (click)="sendCategory(i+1)"></ion-radio>
+      <ion-label>{{ item.getName() }}</ion-label>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>
