@@ -1,13 +1,3 @@
----
-numbersections: true
-include-before:
-- |
-  ```{=latex}
-  \tableofcontents
-  \newpage{}
-  ```
----
-
 # Introduzione
 
 ## Scopo del sistema
@@ -89,7 +79,7 @@ Attualmente il cliente dispone di un proprio sistema informativo, con il quale �
 Il sistema è composto da due parti principali: 
 
 - un sottosistema **front-end** fornito tramite un'app per smartphone Android e iOS accessibile direttamente dagli acquirenti;
-- un sottosistema **back-end** che si occupa dell'interrogazione della base di dati del supermercato tramite opportuni web service. Tutto il back-end è deployato sulla piattaforma *Oracle Cloud*.
+- un sottosistema **back-end** che si occupa dell'interrogazione della base di dati del supermercato tramite opportuni web service. Tutto il back-end è deployato sulla piattaforma *Heroku*.
 
 Gli attori del sistema sono gli **Acquirenti** e i **Gestori** (del supermercato).
 
@@ -208,14 +198,14 @@ Di seguito sono elencati i requisiti non funzionali del sistema, raggruppate per
 
 ### Implementazione
 
-- **NFR_C1** - **App multipiattaforma e back-end su Oracle Cloud**
-  - Descrizione: Il back-end sarà messo in esercizio sulla piattaforma Oracle Cloud, mentre l'app sarà disponibile negli store Android e iOS e sviluppata usando Cordova, Angular e Ionic, framework per app multipiattaforma
+- **NFR_C1** - **App multipiattaforma e back-end su Heroku**
+  - Descrizione: Il back-end sarà messo in esercizio sulla piattaforma Heroku, mentre l'app sarà disponibile negli store Android e iOS e sviluppata usando Cordova, Angular e Ionic, framework per app multipiattaforma
   - Priorità: Alta
 
 ### Interfaccia
 
-- **NFR_C2** - **Interfacciamento con servizi Oracle Cloud**
-  - Descrizione: Il sistema dovrà interfacciarsi con i servizi forniti da Oracle Cloud
+- **NFR_C2** - **Interfacciamento con servizi deployati su Heroku**
+  - Descrizione: Il sistema dovrà interfacciarsi con i servizi deployati su Heroku
   - Priorità: Alta
 
 ### Operazioni
