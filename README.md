@@ -15,7 +15,7 @@ Il progetto ha come fine ultimo quello di realizzare un'applicazione in ambito e
 ## Sistema proposto
 Viene proposta un'app per smartphone a supporto degli acquisti in una singola catena di supermercati. L'app vuole dare la possibilità ai clienti di poter leggere il codice a barre dei prodotti presenti sugli scaffali con il proprio smartphone e di poterne ottenere delle informazioni dettagliate, sia quelle già presenti sull'etichetta (allergeni, valori nutrizionali, ecc.), sia altre aggiuntive, come le valutazioni di altri acquirenti e suggerimenti dei prodotti. Il sistema sarà di supporto sia alle vendite del supermercato, proponendo articoli per i quali è necessario aumentare le vendite, sia al compratore, al quale saranno presentate delle offerte sui prodotti. Il sistema suggerirà prodotti correlati a quelli visionati dal cliente durante la sessione di acquisto corrente, e prodotti da vendere secondo le priorità del supermarket (scadenze vicine, prodotti poco venduti, ecc.)
 
-Il sistema si compone di un back-end, che verrà messo in esercizio su servizi [Oracle Cloud](https://en.wikipedia.org/wiki/Oracle_Cloud), e di un front-end, un'app mobile multipiattaforma (Android, iOS).
+Il sistema si compone di un back-end, che verrà messo in esercizio sul servizio PaaS [Heroku](https://www.heroku.com/), e di un front-end, un'app mobile multipiattaforma (Android, iOS).
 
 ### Obiettivi e criteri di successo del progetto
 
