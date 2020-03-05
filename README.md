@@ -44,6 +44,8 @@ Sono riportate di seguito le presentazioni realizzate per presentare i vari stad
 
 [Presentazione App Challange](https://docs.google.com/presentation/d/1GQsWLQSfWDhM_0LFhZG48rJcqyhhnBDaPY3lhChTYj4/edit?usp=sharing)
 
+---
+
 ## Setup
 Di seguito sono presentati gli step necessari per la **creazione del progetto frontend** e successivamente quelli necessari alla **compilazione** e al ***run*** dell'applicazione.
 
